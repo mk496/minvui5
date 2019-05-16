@@ -1,0 +1,186 @@
+{
+	"_version": "1.8.0",
+	"sap.app": {
+		"_version": "1.3.0",
+		"id": "com.sap.build.standard.smartStore",
+		"type": "application",
+		"i18n": "i18n/i18n.properties",
+		"applicationVersion": {
+			"version": "1.2.2"
+		},
+		"dataSources": {
+			"local": {
+				"uri": "/here/goes/your/serviceUrl/local/",
+				"type": "OData",
+				"settings": {
+					"odataVersion": "2.0",
+					"localUri": "localService/metadata.xml"
+				}
+			},
+			"mobinv.local": {
+				"uri": "http://localhost:8081/mobinv/services/odata.svc/",
+				"type": "OData",
+				"settings": {
+					"odataVersion": "2.0"
+				}
+			}
+		},
+		"title": "{{appTitle}}",
+		"description": "{{appDescription}}",
+		"ach": "ach",
+		"resources": "resources.json",
+		"sourceTemplate": {
+			"id": "ui5template.basicSAPUI5ApplicationProject",
+			"version": "1.32.0"
+		}
+	},
+	"sap.ui": {
+		"_version": "1.3.0",
+		"technology": "UI5",
+		"icons": {
+			"icon": "",
+			"favIcon": "",
+			"phone": "",
+			"phone@2": "",
+			"tablet": "",
+			"tablet@2": ""
+		},
+		"deviceTypes": {
+			"desktop": true,
+			"tablet": true,
+			"phone": true
+		}
+	},
+	"sap.ui5": {
+		"_version": "1.3.0",
+		"rootView": {
+			"viewName": "generated.app.view.10fba274c5fcd1720d8123c83_S3",
+			"type": "XML"
+		},
+		"dependencies": {
+			"minUI5Version": "1.50.0",
+			"libs": {
+				"sap.ui.core": {},
+				"sap.m": {},
+				"sap.ui.layout": {}
+			}
+		},
+		"contentDensities": {
+			"compact": true,
+			"cozy": true
+		},
+		"models": {
+			"i18n": {
+				"type": "sap.ui.model.resource.ResourceModel",
+				"uri": "i18n/i18n.properties"
+			},
+			"": {
+				"dataSource": "mobinv.local",
+				"type": "sap.ui.model.odata.v2.ODataModel",
+				"settings": {
+					"loadMetadataAsync": false,
+					"json": true,
+					"bJSON": true,
+					"defaultBindingMode": "TwoWay",
+					"defaultCountMode": "Inline",
+					"useBatch": true,
+					"refreshAfterChange": false,
+					"disableHeadRequestForToken": true
+				}
+			}
+		},
+		"resources": {
+			"css": []
+		},
+		"routing": {
+			"config": {
+				"routerClass": "sap.m.routing.Router",
+				"viewType": "XML",
+				"viewPath": "com.sap.build.standard.smartStore.view",
+				"controlId": "App",
+				"clearTarget": false,
+				"controlAggregation": "pages",
+				"bypassed": {
+					"target": ["Inventory_S1"]
+				}
+			},
+			"targets": {
+				"AlertInfo_S2": {
+					"controlAggregation": "pages",
+					"viewName": "AlertInfo_S2",
+					"viewId": "AlertInfo_S2",
+					"viewLevel": 6,
+					"transition": "slide"
+				},
+				"Inventory_S1": {
+					"controlAggregation": "pages",
+					"viewName": "Inventory_S1",
+					"viewId": "Inventory_S1",
+					"viewLevel": 5,
+					"transition": "slide"
+				},
+				"a8138e965e4e48e60d84a5545_S5": {
+					"controlAggregation": "pages",
+					"viewName": "a8138e965e4e48e60d84a5545_S5",
+					"viewId": "a8138e965e4e48e60d84a5545_S5",
+					"viewLevel": 2,
+					"transition": "slide"
+				},
+				"7f3446de6ee0a8ea0d67ae610_S0": {
+					"controlAggregation": "pages",
+					"viewName": "7f3446de6ee0a8ea0d67ae610_S0",
+					"viewId": "7f3446de6ee0a8ea0d67ae610_S0",
+					"viewLevel": 1,
+					"transition": "slide"
+				},
+				"security": {
+					"controlAggregation": "pages",
+					"viewName": "security",
+					"viewId": "security",
+					"viewLevel": 3,
+					"transition": "slide"
+				},
+				"10fba274c5fcd1720d8123c83_S3": {
+					"controlAggregation": "pages",
+					"viewName": "10fba274c5fcd1720d8123c83_S3",
+					"viewId": "10fba274c5fcd1720d8123c83_S3",
+					"viewLevel": 4,
+					"transition": "slide"
+				}
+			},
+			"routes": [{
+				"pattern": "AlertInfo_S2/:context:",
+				"name": "AlertInfo_S2",
+				"target": ["AlertInfo_S2"]
+			}, {
+				"pattern": "",
+				"name": "Inventory_S1",
+				"target": ["AlertInfo_S2"]
+			}, {
+				"pattern": "Inventory_S1/:context:",
+				"name": "Inventory_S1",
+				"target": ["Inventory_S1"]
+			}, {
+				"pattern": "a8138e965e4e48e60d84a5545_S5/:context:",
+				"name": "a8138e965e4e48e60d84a5545_S5",
+				"target": ["a8138e965e4e48e60d84a5545_S5"]
+			}, {
+				"pattern": "7f3446de6ee0a8ea0d67ae610_S0/:context:",
+				"name": "7f3446de6ee0a8ea0d67ae610_S0",
+				"target": ["7f3446de6ee0a8ea0d67ae610_S0"]
+			}, {
+				"pattern": "security/:context:",
+				"name": "security",
+				"target": ["security"]
+			}, {
+				"pattern": "10fba274c5fcd1720d8123c83_S3/:context:",
+				"name": "10fba274c5fcd1720d8123c83_S3",
+				"target": ["10fba274c5fcd1720d8123c83_S3"]
+			}]
+		}
+	},
+	"sap.platform.hcp": {
+		"uri": "webapp",
+		"_version": "1.1.0"
+	}
+}

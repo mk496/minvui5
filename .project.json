@@ -1,0 +1,22 @@
+{
+    "dataBinding": {
+        "/webapp/view/AlertInfo_S2.view.xml": {
+            "entitySet": "/InventorySet"
+        }, 
+        "/webapp/view/Inventory_S1.view.xml": {
+            "entitySet": ""
+        }, 
+        "/webapp/view/a8138e965e4e48e60d84a5545_S5.view.xml": {
+            "entitySet": ""
+        }, 
+        "/webapp/view/7f3446de6ee0a8ea0d67ae610_S0.view.xml": {
+            "entitySet": ""
+        }, 
+        "/webapp/view/security.view.xml": {
+            "entitySet": ""
+        }, 
+        "/webapp/view/10fba274c5fcd1720d8123c83_S3.view.xml": {
+            "entitySet": ""
+        } 
+    }
+}

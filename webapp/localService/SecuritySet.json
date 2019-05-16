@@ -1,0 +1,1 @@
+[{"ID":"C1","Description":"Cameras","Items":128,"Unit":"Cameras","Attribute1":"Cameras on","Status1":"98","Attribute2":"Cameras recording","Status2":"30","Icon":"sap-icon://web-cam"},{"ID":"S1","Description":"Alarm","Items":16,"Unit":"Alarms","Attribute1":"Alarms on","Status1":"10","Attribute2":"Alarms active","Status2":"6","Icon":"sap-icon://shield"}]
