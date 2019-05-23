@@ -29,7 +29,7 @@
                                     </Column>
                                     <Column width="auto" hAlign="Left" vAlign="Top" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
                                         <header>
-                                            <Text text="{i18n>ShelfStockDescription}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                                            <Text text="{i18n>ShelfStockDescription}" width="auto" maxLines="1" wrapping="false" textAlign="Center" textDirection="Inherit" visible="true"/>
                                         </header>
                                         <footer/>
                                     </Column>
@@ -57,7 +57,9 @@
                                         <cells>
                                             <ObjectIdentifier text="{ProductDescription}" titleActive="false" visible="true"/>
                                             <ObjectNumber number="{Price}" unit="{Currency}" emphasized="true" state="None"/>
-                                            <ObjectNumber number="{ShelfStock}" unit="{Unit}" emphasized="true" state="None"/>
+                                            <!--<ObjectNumber number="{ShelfStock}" unit="{Unit}" emphasized="true" state="None"/>-->
+                                            <StepInput value="{ShelfStock}"	min="0"	max="999" width="230px"	step="1" enabled="{enabled}" editable="{editable}" description="{Unit}"	fieldWidth="50%" textAlign="Center"
+												change="_onStockChange"/>
                                             <Text text="{Location}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                             <Image src="/webapp/localService/{Image}" height="50px" width="50px" visible="true" densityAware="false" tooltip="{i18n>imageTooltip}"/>
                                             <ObjectStatus title="" text="{Status}" state="{StatusColor}" visible="true"/>

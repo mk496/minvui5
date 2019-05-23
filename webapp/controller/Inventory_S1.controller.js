@@ -1,8 +1,9 @@
 sap.ui.define(["sap/ui/core/mvc/Controller",
 	"sap/m/MessageBox",
 	"./utilities",
-	"sap/ui/core/routing/History"
-], function(BaseController, MessageBox, Utilities, History) {
+	"sap/ui/core/routing/History",
+	"sap/m/MessageToast"
+], function(BaseController, MessageBox, Utilities, History, MessageToast) {
 	"use strict";
 
 	return BaseController.extend("com.sap.build.standard.smartStore.controller.Inventory_S1", {
@@ -162,6 +163,11 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 			});
 
 		},
+		
+		_onStockChange: function(oEvent) {
+			console.log("Stock value changed to '" + oEvent.getParameter("value") + "'");
+		},
+		
 		updateBindingOptions: function(sCollectionId, oBindingData, sSourceId) {
 			this.mBindingOptions = this.mBindingOptions || {};
 			this.mBindingOptions[sCollectionId] = this.mBindingOptions[sCollectionId] || {};
