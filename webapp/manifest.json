@@ -84,7 +84,7 @@
 					"defaultBindingMode": "TwoWay",
 					"defaultCountMode": "Inline",
 					"useBatch": true,
-					"refreshAfterChange": false,
+					"refreshAfterChange": true,
 					"disableHeadRequestForToken": true
 				}
 			}
