@@ -6,14 +6,6 @@
                 <statuses/>
                 <markers/>
             </ObjectHeader>
-            <Button
-            	id="btnSave"		
-				type="Emphasized"
-				text="Save"
-				visible="false"
-				class="sapUiSmallMargin"
-				press="_onSave"
-				/>
             <IconTabBar expandable="false" expanded="true" applyContentPadding="false" backgroundDesign="Solid" upperCase="false" visible="true" selectedKey="Ok">
                 <items>
                     <IconTabFilter icon="sap-icon://drop-down-list" iconColor="Neutral" text="All Items" count="" design="Vertical" showAll="false" textDirection="Inherit" enabled="true" visible="true" iconDensityAware="false">
@@ -254,8 +246,6 @@
                             </Table>
                         </content>
                     </IconTabFilter>
-                    <IconTabSeparator icon="" iconDensityAware="false"/>
-                    
                 </items>
                 <content>
                     <Text text="Tab Bar Content goes here ..." width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>

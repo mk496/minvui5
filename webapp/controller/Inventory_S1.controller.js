@@ -2,9 +2,8 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 	"sap/m/MessageBox",
 	"./utilities",
 	"sap/ui/core/routing/History",
-	"sap/m/MessageToast",
-	"sap/ui/core/UIComponent"
-], function(BaseController, MessageBox, Utilities, History, MessageToast, UIComponent) {
+	"sap/m/MessageToast"
+], function(BaseController, MessageBox, Utilities, History, MessageToast) {
 	"use strict";
 
 	return BaseController.extend("com.sap.build.standard.smartStore.controller.Inventory_S1", {
@@ -167,52 +166,6 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 		
 		_onStockChange: function(oEvent) {
 			console.log("Stock value changed to '" + oEvent.getParameter("value") + "'");
-			var button = this.getView().byId("btnSave");
-			button.setVisible(true);
-		},
-		
-		_onSave: function () {
-			var oModel = this.getView().getModel(); 
-			var hasChanges = oModel.hasPendingChanges();
-	        if (hasChanges) {
-	            var mcJson = {};
-	            var modelChanges = oModel.getPendingChanges();
-	            mcJson = modelChanges;
-	            var mcJsonLength = Object.keys(mcJson).length;
-	            var mcJsonKey = Object.keys(mcJson);
-	            for (var i = 0; i < mcJsonLength; i++) {
-	                var item = mcJsonKey[i];
-	                var change = modelChanges[item];
-	                var matches = item.match(/\((.*?)\)/);
-					if (matches) {
-					   var idLong = matches[1];
-					}
-					var id = idLong.split("l")[0];
-	                var oEntry = {};
-	                    oEntry.Id = id;
-	                    oEntry.ShelfStock = "" + change.ShelfStock + "";
-	                var str = "/Inventories("+id+")";
-	                oModel.update(str, oEntry, {
-	                    //method: "PUT",
-	                    success: function(oData) {
-	                        //sap.m.MessageBox.alert("success sent!");
-	                    },
-	                    error: function(oError) {
-	                        //sap.m.MessageBox.alert("Error Saving Entries!!");
-	                    }
-	                });
-	            }
-	            oModel.submitChanges({
-	                success: function(oData, response) {
-	                    //sap.m.MessageBox.success("Success Saving Entries!");
-	                },
-	                error: function(oError) {
-	                    //sap.m.MessageBox.error("Error Saving Entries!!");
-	                }
-	            });
-	        } else {
-	            sap.m.MessageBox.alert("No Changes To Submit");
-	        }
 		},
 		
 		updateBindingOptions: function(sCollectionId, oBindingData, sSourceId) {
