@@ -1,4 +1,14 @@
-<mvc:View xmlns:mvc="sap.ui.core.mvc" controllerName="com.sap.build.standard.smartStore.controller.AlertInfo_S2" xmlns:uxap="sap.uxap" xmlns="sap.m" xmlns:layout="sap.ui.layout" xmlns:form="sap.ui.layout.form">
+<mvc:View xmlns:mvc="sap.ui.core.mvc" controllerName="com.sap.build.standard.smartStore.controller.ProductInfo" xmlns:uxap="sap.uxap" xmlns="sap.m" xmlns:layout="sap.ui.layout" xmlns:form="sap.ui.layout.form">
+	<Shell id="shell">
+		<App id="app">
+			<pages>
+				<Page showHeader="true" title="{i18n>appTitle}" showFooter="false">
+			        <content>
+			            <ObjectHeader intro="" title="{i18n>productHeaderTitle}" icon="sap-icon://retail-store" numberUnit="Items" numberState="None" backgroundDesign="Translucent" condensed="false" visible="true">
+			                <attributes/>
+			                <statuses/>
+			                <markers/>
+			            </ObjectHeader>
     <uxap:ObjectPageLayout showTitleInHeaderContent="true" showHeaderContent="true" showAnchorBar="true" subSectionLayout="TitleOnTop">
         <uxap:headerContent/>
         <uxap:headerTitle>
@@ -172,4 +182,9 @@
         </uxap:sections>
         <uxap:footer/>
     </uxap:ObjectPageLayout>
+    </content>
+    </Page>
+    </pages>
+    </App>
+    </Shell>
 </mvc:View>

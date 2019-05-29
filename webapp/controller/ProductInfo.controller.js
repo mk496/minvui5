@@ -5,7 +5,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 ], function(BaseController, MessageBox, Utilities, History) {
 	"use strict";
 
-	return BaseController.extend("com.sap.build.standard.smartStore.controller.AlertInfo_S2", {
+	return BaseController.extend("com.sap.build.standard.smartStore.controller.ProductInfo", {
 		handleRouteMatched: function(oEvent) {
 			var sAppId = "App5cc13d57ba792f153b22e1fb";
 
@@ -33,7 +33,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 				}
 			}
 
-			this.sContext = "InventorySet('00002364')";
+		/*	this.sContext = "InventorySet('00002364')";
 
 			var oPath;
 
@@ -44,7 +44,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 				};
 				this.getView().bindObject(oPath);
 			}
-
+*/
 		},
 		_onButtonPress: function() {
 			return new Promise(function(fnResolve) {
@@ -69,7 +69,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 
 			return new Promise(function(fnResolve) {
 
-				this.doNavigate("Inventory_S1", oBindingContext, fnResolve, "");
+				this.doNavigate("Inventory", oBindingContext, fnResolve, "");
 			}.bind(this)).catch(function(err) {
 				if (err !== undefined) {
 					MessageBox.error(err.message);
@@ -133,7 +133,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 		},
 		onInit: function() {
 			this.oRouter = sap.ui.core.UIComponent.getRouterFor(this);
-			this.oRouter.getTarget("AlertInfo_S2").attachDisplay(jQuery.proxy(this.handleRouteMatched, this));
+			this.oRouter.getTarget("ProductInfo").attachDisplay(jQuery.proxy(this.handleRouteMatched, this));
 
 		}
 	});

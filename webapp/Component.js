@@ -6,11 +6,11 @@ sap.ui.define([
 ], function(UIComponent, Device, models, errorHandling) {
 	"use strict";
 
-	var navigationWithContext = {
-		"InventorySet": {
-			"AlertInfo_S2": ""
+	/*var navigationWithContext = {
+		"Inventory": {
+			"ProductInfo": ""
 		}
-	};
+	};*/
 
 	return UIComponent.extend("com.sap.build.standard.smartStore.Component", {
 
@@ -59,12 +59,12 @@ sap.ui.define([
 			}
 
 			return app;
-		},
+		}
 
-		getNavigationPropertyForNavigationWithContext: function(sEntityNameSet, targetPageName) {
+	/*	getNavigationPropertyForNavigationWithContext: function(sEntityNameSet, targetPageName) {
 			var entityNavigations = navigationWithContext[sEntityNameSet];
 			return entityNavigations == null ? null : entityNavigations[targetPageName];
-		}
+		}*/
 
 	});
 
