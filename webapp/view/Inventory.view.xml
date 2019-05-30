@@ -67,6 +67,11 @@
 			                                    </ColumnListItem>
 			                                </items>
 			                            </Table>
+			                            <Bar>
+										    <contentMiddle>
+										    	<Button id="btnSave" text="Save" press="_onSave" visible="false"/>
+										    </contentMiddle>
+									   </Bar>
 			                        </content>
 			                    </IconTabFilter>
 			                    <IconTabSeparator icon="" iconDensityAware="false"/>
