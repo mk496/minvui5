@@ -1,16 +1,39 @@
 sap.ui.define([
 		"sap/ui/core/mvc/Controller",
-		"sap/m/MessageBox",
+		"sap/ui/core/UIComponent",
 		"./utilities",
 		"sap/ui/core/routing/History",
 		"sap/m/MessageToast",
 		"sap/ui/model/json/JSONModel",
-		"sap/ui/Device"
-	], function (BaseController, MessageBox, Utilities, History, MessageToast, JSONModel, Device) {
+		"sap/ui/Device",
+		"sap/ui/model/Filter",
+		"sap/ui/model/FilterOperator"
+		
+	], function (BaseController, UIComponent, Utilities, History, MessageToast, JSONModel, Device, Filter, FilterOperator) {
 		"use strict";
 		return BaseController.extend("com.sap.build.standard.smartStore.controller.Inventory", {
+			
+			onInit: function () {
+				this.oRouter = sap.ui.core.UIComponent.getRouterFor(this);
+				this.oRouter.getTarget("Inventory").attachDisplay(jQuery.proxy(this.handleRouteMatched, this));
+				this.mAggregationBindingOptions = {};
+				this.createFiltersAndSorters();
+				this.applyFiltersAndSorters("filteredTabNonPerishable", "items");
+				this.applyFiltersAndSorters("filteredTabPerishable", "items");
+				this.applyFiltersAndSorters("filteredTabAlerts", "items");
+	
+				// Model used to manipulate control states
+				var oViewModel = new JSONModel({
+					allItemsCount: 0,
+					nonPerishableCount: 0,
+					perishableCount: 0,
+					alertsCount: 0
+				});
+				
+				this.getView().setModel(oViewModel, "inventoryView");
+			},
+			
 			handleRouteMatched: function (oEvent) {
-				var sAppId = "App5cc13d57ba792f153b22e1fb";
 				var oParams = {};
 				if (oEvent.mParameters.data.context) {
 					this.sContext = oEvent.mParameters.data.context;
@@ -36,124 +59,6 @@ sap.ui.define([
 					};
 					this.getView().bindObject(oPath);
 				}
-			},
-			/*_onPageNavButtonPress: function (oEvent) {
-				var oBindingContext = oEvent.getSource().getBindingContext();
-				return new Promise(function (fnResolve) {
-					this.doNavigate("7f3446de6ee0a8ea0d67ae610_S0", oBindingContext, fnResolve, "");
-				}.bind(this)).catch(function (err) {
-					if (err !== undefined) {
-						MessageBox.error(err.message);
-					}
-				});
-			},
-			doNavigate: function (sRouteName, oBindingContext, fnPromiseResolve, sViaRelation) {
-				var sPath = oBindingContext ? oBindingContext.getPath() : null;
-				var oModel = oBindingContext ? oBindingContext.getModel() : null;
-				var sEntityNameSet;
-				if (sPath !== null && sPath !== "") {
-					if (sPath.substring(0, 1) === "/") {
-						sPath = sPath.substring(1);
-					}
-					sEntityNameSet = sPath.split("(")[0];
-				}
-				var sNavigationPropertyName;
-				var sMasterContext = this.sMasterContext ? this.sMasterContext : sPath;
-				if (sEntityNameSet !== null) {
-					sNavigationPropertyName = sViaRelation || this.getOwnerComponent().getNavigationPropertyForNavigationWithContext(sEntityNameSet,
-						sRouteName);
-				}
-				if (sNavigationPropertyName !== null && sNavigationPropertyName !== undefined) {
-					if (sNavigationPropertyName === "") {
-						this.oRouter.navTo(sRouteName, {
-							context: sPath,
-							masterContext: sMasterContext
-						}, false);
-					} else {
-						oModel.createBindingContext(sNavigationPropertyName, oBindingContext, null, function (bindingContext) {
-							if (bindingContext) {
-								sPath = bindingContext.getPath();
-								if (sPath.substring(0, 1) === "/") {
-									sPath = sPath.substring(1);
-								}
-							} else {
-								sPath = "undefined";
-							}
-							// If the navigation is a 1-n, sPath would be "undefined" as this is not supported in Build
-							if (sPath === "undefined") {
-								this.oRouter.navTo(sRouteName);
-							} else {
-								this.oRouter.navTo(sRouteName, {
-									context: sPath,
-									masterContext: sMasterContext
-								}, false);
-							}
-						}.bind(this));
-					}
-				} else {
-					this.oRouter.navTo(sRouteName);
-				}
-				if (typeof fnPromiseResolve === "function") {
-					fnPromiseResolve();
-				}
-			},*/
-			/*_onTableItemPress: function (oEvent) {
-				var oBindingContext = oEvent.getParameter("listItem").getBindingContext();
-				return new Promise(function (fnResolve) {
-					this.doNavigate("ProductInfo", oBindingContext, fnResolve, "");
-				}.bind(this)).catch(function (err) {
-					if (err !== undefined) {
-						MessageBox.error(err.message);
-					}
-				});
-			},
-			_onTableItemPress1: function (oEvent) {
-				var oBindingContext = oEvent.getParameter("listItem").getBindingContext();
-				return new Promise(function (fnResolve) {
-					this.doNavigate("ProductInfo", oBindingContext, fnResolve, "");
-				}.bind(this)).catch(function (err) {
-					if (err !== undefined) {
-						MessageBox.error(err.message);
-					}
-				});
-			},
-			_onTableItemPress2: function (oEvent) {
-				var oBindingContext = oEvent.getParameter("listItem").getBindingContext();
-				return new Promise(function (fnResolve) {
-					this.doNavigate("ProductInfo", oBindingContext, fnResolve, "");
-				}.bind(this)).catch(function (err) {
-					if (err !== undefined) {
-						MessageBox.error(err.message);
-					}
-				});
-			},
-			_onTableItemPress3: function (oEvent) {
-				var oBindingContext = oEvent.getParameter("listItem").getBindingContext();
-				return new Promise(function (fnResolve) {
-					this.doNavigate("ProductInfo", oBindingContext, fnResolve, "");
-				}.bind(this)).catch(function (err) {
-					if (err !== undefined) {
-						MessageBox.error(err.message);
-					}
-				});
-			},*/
-			_onStockChange: function (oEvent) {
-				var value = oEvent.getParameter("value");
-				console.log("Stock value changed to '" + value + "'");
-				var btn = this.getView().byId("btnSave");
-				btn.setVisible(true);
-				
-				var sParent = oEvent.getSource().getParent();
-				var sPath = sParent.getBindingContext().getPath();
-				var model = this.getView().getModel(); 
-				model.setProperty(sPath+"/ShelfStock","" + value + "");
-			},
-			
-			_onSave: function() {
-				var model = this.getView().getModel(); 
-				model.submitChanges();
-				var btn = this.getView().byId("btnSave");
-				btn.setVisible(false);
 			},
 			
 			updateBindingOptions: function (sCollectionId, oBindingData, sSourceId) {
@@ -190,40 +95,37 @@ sap.ui.define([
 					sorters: aSorters
 				};
 			},
+			
 			createFiltersAndSorters: function () {
 				this.mBindingOptions = {};
 				var oBindingData, aPropertyFilters;
 				oBindingData = {};
 				oBindingData.filters = [];
 				aPropertyFilters = [];
-				aPropertyFilters.push(new sap.ui.model.Filter("ItemType", "EQ", "Non-Perishable"));
-				oBindingData.filters.push(new sap.ui.model.Filter(aPropertyFilters, false));
-				this.updateBindingOptions(
-					"sap_Responsive_Page_0-content-sap_m_IconTabBar-1487204151231-items-sap_m_IconTabFilter-3-content-build_simple_Table-1489097986245",
-					oBindingData);
+				aPropertyFilters.push(new Filter("ItemType", "EQ", "Non-Perishable"));
+				oBindingData.filters.push(new Filter(aPropertyFilters, false));
+				this.updateBindingOptions("filteredTabNonPerishable", oBindingData);
 				oBindingData = {};
 				oBindingData.filters = [];
 				aPropertyFilters = [];
-				aPropertyFilters.push(new sap.ui.model.Filter("ItemType", "EQ", "Perishable"));
-				oBindingData.filters.push(new sap.ui.model.Filter(aPropertyFilters, false));
-				this.updateBindingOptions(
-					"sap_Responsive_Page_0-content-sap_m_IconTabBar-1487204151231-items-sap_m_IconTabFilter-5-content-build_simple_Table-1489098016833",
-					oBindingData);
+				aPropertyFilters.push(new Filter("ItemType", "EQ", "Perishable"));
+				oBindingData.filters.push(new Filter(aPropertyFilters, false));
+				this.updateBindingOptions("filteredTabPerishable", oBindingData);
 				oBindingData = {};
 				oBindingData.filters = [];
 				aPropertyFilters = [];
-				aPropertyFilters.push(new sap.ui.model.Filter("Status", "EQ", "Re-Stock"));
-				aPropertyFilters.push(new sap.ui.model.Filter("Status", "EQ", "Deteriorating"));
+				aPropertyFilters.push(new Filter("Status", "EQ", "Re-Stock"));
+				aPropertyFilters.push(new Filter("Status", "EQ", "Deteriorating"));
 				oBindingData.filters.push(new sap.ui.model.Filter(aPropertyFilters, false));
-				this.updateBindingOptions(
-					"sap_Responsive_Page_0-content-sap_m_IconTabBar-1487204151231-items-sap_m_IconTabFilter-1487204305428-content-build_simple_Table-1489098372093",
-					oBindingData);
+				this.updateBindingOptions("filteredTabAlerts", oBindingData);
 			},
+			
 			applyFiltersAndSorters: function (sControlId, sAggregationName, chartBindingInfo) {
+				var oBindingInfo = {};
 				if (chartBindingInfo) {
-					var oBindingInfo = chartBindingInfo;
+					oBindingInfo = chartBindingInfo;
 				} else {
-					var oBindingInfo = this.getView().byId(sControlId).getBindingInfo(sAggregationName);
+					oBindingInfo = this.getView().byId(sControlId).getBindingInfo(sAggregationName);
 				}
 				var oBindingOptions = this.updateBindingOptions(sControlId);
 				this.getView().byId(sControlId).bindAggregation(sAggregationName, {
@@ -236,37 +138,31 @@ sap.ui.define([
 					filters: oBindingOptions.filters
 				});
 			},
-			onInit: function () {
-				this.oRouter = sap.ui.core.UIComponent.getRouterFor(this);
-				this.oRouter.getTarget("Inventory").attachDisplay(jQuery.proxy(this.handleRouteMatched, this));
-				this.mAggregationBindingOptions = {};
-				this.createFiltersAndSorters();
-				this.applyFiltersAndSorters(
-					"sap_Responsive_Page_0-content-sap_m_IconTabBar-1487204151231-items-sap_m_IconTabFilter-3-content-build_simple_Table-1489097986245",
-					"items");
-				this.applyFiltersAndSorters(
-					"sap_Responsive_Page_0-content-sap_m_IconTabBar-1487204151231-items-sap_m_IconTabFilter-5-content-build_simple_Table-1489098016833",
-					"items");
-				this.applyFiltersAndSorters(
-					"sap_Responsive_Page_0-content-sap_m_IconTabBar-1487204151231-items-sap_m_IconTabFilter-1487204305428-content-build_simple_Table-1489098372093",
-					"items");
-					
+			
+			onUpdateFinished : function (oEvent) {
+				var iTotalItems = oEvent.getParameter("total"),
+					oModel = this.getView().getModel("inventoryView");
+				
+				if ( oEvent.getSource().getId() === "container-SmartStore---Inventory--tableAllItems") {
+					oModel.setProperty("/allItemsCount", iTotalItems);
+				}
+				else if ( oEvent.getSource().getId() === "container-SmartStore---Inventory--filteredTabNonPerishable") {
+					oModel.setProperty("/nonPerishableCount", iTotalItems);
+				}
+				else if ( oEvent.getSource().getId() === "container-SmartStore---Inventory--filteredTabPerishable") {
+					oModel.setProperty("/perishableCount", iTotalItems);
+				}
+				else if ( oEvent.getSource().getId() === "container-SmartStore---Inventory--filteredTabAlerts") {
+					oModel.setProperty("/alertsCount", iTotalItems);
+				}
 			},
+
 			onExit: function () {
 				// to destroy templates for bound aggregations when templateShareable is true on exit to prevent duplicateId issue
-				var aControls = [{
-					"controlId": "sap_Responsive_Page_0-content-sap_m_IconTabBar-1487204151231-items-sap_m_IconTabFilter-1-content-build_simple_Table-1",
-					"groups": ["items"]
-				}, {
-					"controlId": "sap_Responsive_Page_0-content-sap_m_IconTabBar-1487204151231-items-sap_m_IconTabFilter-3-content-build_simple_Table-1489097986245",
-					"groups": ["items"]
-				}, {
-					"controlId": "sap_Responsive_Page_0-content-sap_m_IconTabBar-1487204151231-items-sap_m_IconTabFilter-5-content-build_simple_Table-1489098016833",
-					"groups": ["items"]
-				}, {
-					"controlId": "sap_Responsive_Page_0-content-sap_m_IconTabBar-1487204151231-items-sap_m_IconTabFilter-1487204305428-content-build_simple_Table-1489098372093",
-					"groups": ["items"]
-				}];
+				var aControls = [{"controlId": "filteredTabNonPerishable", "groups": ["items"]},
+								 {"controlId": "fileredTabPerishable", "groups": ["items"]},
+								 {"controlId": "fileredTabAlerts", "groups": ["items"]}];
+								 
 				for (var i = 0; i < aControls.length; i++) {
 					var oControl = this.getView().byId(aControls[i].controlId);
 					if (oControl) {
@@ -281,46 +177,107 @@ sap.ui.define([
 					}
 				}
 			},
-			/**
-			 *@memberOf com.sap.build.standard.smartStore.controller.Inventory
-			 */
-			action: function (oEvent) {
-				var that = this;
-				var actionParameters = JSON.parse(oEvent.getSource().data("wiring").replace(/'/g, "\""));
-				var eventType = oEvent.getId();
-				var aTargets = actionParameters[eventType].targets || [];
-				aTargets.forEach(function (oTarget) {
-					var oControl = that.byId(oTarget.id);
-					if (oControl) {
-						var oParams = {};
-						for (var prop in oTarget.parameters) {
-							oParams[prop] = oEvent.getParameter(oTarget.parameters[prop]);
-						}
-						oControl[oTarget.action](oParams);
+		
+			onStockChange: function (oEvent) {
+				var value = oEvent.getParameter("value");
+				
+				//console.log("Stock value changed to '" + value + "'");
+				
+				this._enableButtons("save");
+				this._enableButtons("reject");
+				
+				var sParent = oEvent.getSource().getParent();
+				var sPath = sParent.getBindingContext().getPath();
+				var model = this.getView().getModel(); 
+				model.setProperty(sPath+"/ShelfStock","" + value + "");
+			},
+			
+			onSave: function() {
+				var oModel = this.getView().getModel(); 
+				oModel.submitChanges();
+				
+				this._resetButtons("save");
+				this._resetButtons("reject");
+				this._enableButtons("order");
+				
+				MessageToast.show("Stock changes were saved!");
+			},
+			
+			onReject: function() {
+				var oModel = this.getView().getModel(); 
+				oModel.resetChanges();
+				this._resetButtons();
+				
+				MessageToast.show("Stock changes were rejected!");
+			},
+			
+			onOrder: function() {
+				this._resetButtons();
+				
+				MessageToast.show("Order has been placed!");
+			},
+			
+			onItemSearch: function (oEvent) {
+				if (oEvent.getParameters().refreshButtonPressed) {
+					this.onRefresh();
+				} else {
+					var aTableSearchState = [];
+					var sQuery = oEvent.getParameter("query");
+	
+					if (sQuery && sQuery.length > 0) {
+						aTableSearchState = [new Filter("ProductDescription", FilterOperator.Contains, sQuery)];
 					}
-				});
-				var oNavigation = actionParameters[eventType].navigation;
-				if (oNavigation) {
-					var oParams = {};
-					(oNavigation.keys || []).forEach(function (prop) {
-						oParams[prop.name] = encodeURIComponent(JSON.stringify({
-							value: oEvent.getSource().getBindingContext(oNavigation.model).getProperty(prop.name),
-							type: prop.type
-						}));
-					});
-					if (Object.getOwnPropertyNames(oParams).length !== 0) {
-						this.getOwnerComponent().getRouter().navTo(oNavigation.routeName, oParams);
-					} else {
-						this.getOwnerComponent().getRouter().navTo(oNavigation.routeName);
-					}
+					this._applySearchItem(aTableSearchState);
 				}
 			},
 
 			onItemSelect: function (oEvent) {
-				var bReplace = !Device.system.phone;
-				this.getOwnerComponent().getRouter().navTo("ProductInfo", {
-					itemId: oEvent.getSource().getBindingContext().getProperty("Id")
-				}, bReplace);
+				this._showInfo(oEvent.getSource());
+			},
+			
+			_showInfo : function (oItem) {
+				UIComponent.getRouterFor(this).navTo("ProductInfo", {
+					itemId: oItem.getBindingContext().getProperty("Id")
+				});
+			},
+			
+			_resetButtons: function (oButton) {
+				if (oButton === "save") {
+					this.getView().byId("btnSave").setEnabled(false);
+				}
+				else if (oButton === "reject") {
+					this.getView().byId("btnReject").setEnabled(false);
+				}
+				else if (oButton === "order") {
+					this.getView().byId("btnOrder").setEnabled(false);
+				} 
+				else {
+					this.getView().byId("btnSave").setEnabled(false);
+					this.getView().byId("btnReject").setEnabled(false);
+					this.getView().byId("btnOrder").setEnabled(false);
+				}
+			},
+			
+			_enableButtons: function (oButton) {
+				if (oButton === "save") {
+					this.getView().byId("btnSave").setEnabled(true);
+				}
+				else if (oButton === "reject") {
+					this.getView().byId("btnReject").setEnabled(true);
+				}
+				else if (oButton === "order") {
+					this.getView().byId("btnOrder").setEnabled(true);
+				} 
+				else {
+					this.getView().byId("btnSave").setEnabled(true);
+					this.getView().byId("btnReject").setEnabled(true);
+					this.getView().byId("btnOrder").setEnabled(true);
+				}
+			},
+			
+			_applySearchItem: function(aTableSearchState) {
+				var oTable = this.getView().byId("tableAllItems");
+				oTable.getBinding("items").filter(aTableSearchState, "Application");
 			}
 		});
 	}, /* bExport= */

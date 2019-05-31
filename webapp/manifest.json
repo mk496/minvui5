@@ -125,7 +125,7 @@
 				"target": ["Inventory"]
 			}, {
 				"name": "ProductInfo",
-				"pattern": "/ProductInfo/({itemId})",
+				"pattern": "InventorySet/({itemId})",
 				"target": ["ProductInfo"]
 			}],
 			"additionalData": {

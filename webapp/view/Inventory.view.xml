@@ -4,16 +4,39 @@
 			<pages>
 			    <Page showHeader="true" title="{i18n>appTitle}" showFooter="false">
 			        <content>
-			            <ObjectHeader intro="" title="{i18n>invHeaderTitle}" icon="sap-icon://retail-store" number="0" numberUnit="Items" numberState="None" backgroundDesign="Translucent" condensed="false" visible="true">
+			            <ObjectHeader intro="" title="{i18n>invHeaderTitle}" icon="sap-icon://retail-store" number="{inventoryView>/allItemsCount}" numberUnit="Items" numberState="None" backgroundDesign="Translucent" condensed="false" visible="true">
 			                <attributes/>
 			                <statuses/>
 			                <markers/>
 			            </ObjectHeader>
+			            <OverflowToolbar width="100%" height="auto" design="Auto" enabled="true" visible="true">
+			                <content>
+			                    <Button id="btnSave" icon="sap-icon://save" text="{i18n>btnSave}" press="onSave" type="Default" iconFirst="true" width="auto" enabled="false" visible="true" iconDensityAware="false"/>
+			                    <Button id="btnReject" icon="sap-icon://decline" text="{i18n>btnReject}" press="onReject" type="Reject" iconFirst="true" width="auto" enabled="false" visible="true" iconDensityAware="false"/>
+			                    <Button id="btnOrder" icon="sap-icon://add-activity-2" text="{i18n>btnOrder}" press="onOrder" type="Accept" iconFirst="true" width="auto" enabled="false" visible="true" iconDensityAware="false"/>
+			                     <SearchField
+									id="searchField"
+									tooltip="{i18n>inventorySearchTooltip}"
+									search="onItemSearch">
+									<layoutData>
+										<OverflowToolbarLayoutData
+											maxWidth="200px"
+											priority="NeverOverflow"/>
+									</layoutData>
+								</SearchField>
+			                </content>
+			            </OverflowToolbar>
 			            <IconTabBar expandable="false" expanded="true" applyContentPadding="false" backgroundDesign="Solid" upperCase="false" visible="true" selectedKey="Ok">
 			                <items>
-			                    <IconTabFilter icon="sap-icon://drop-down-list" iconColor="Neutral" text="All Items" count="0" design="Vertical" showAll="false" textDirection="Inherit" enabled="true" visible="true" iconDensityAware="false">
+			                    <IconTabFilter icon="sap-icon://drop-down-list" iconColor="Neutral" text="{i18n>allItems}" count="{inventoryView>/allItemsCount}" design="Vertical" showAll="false" textDirection="Inherit" enabled="true" visible="true" iconDensityAware="false">
 			                        <content>
-			                            <Table xmlns:action="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1" width="auto" noDataText="No data" mode="None" showSeparators="All" growing="false" growingThreshold="20" growingScrollToLoad="false" class="sapUiResponsiveMargin" items="{path:'/InventorySet'}">
+			                            <Table id="tableAllItems" width="auto" noDataText="{i18n>noData}" mode="None" showSeparators="All" growing="false" growingThreshold="20" growingScrollToLoad="false" class="sapUiResponsiveMargin"
+			                            	items="{
+			                            		path:'/InventorySet',
+			                            		sorter: {
+													path: 'Id',
+													descending: true
+												}}" updateFinished="onUpdateFinished">
 			                                <infoToolbar/>
 			                                <headerToolbar/>
 			                                <columns>
@@ -55,75 +78,11 @@
 			                                    </Column>
 			                                </columns>
 			                                <items>
-			                                    <ColumnListItem type="Active" press="action" action:wiring="\{'press':\{'navigation':\{'routeName':'ProductInfo'\}\}\}">
+			                                    <ColumnListItem type="Navigation" press="onItemSelect">
 			                                        <cells>
 			                                            <ObjectIdentifier text="{ProductDescription}" titleActive="false" visible="true"/>
 			                                            <ObjectNumber number="{Price}" unit="{Currency}" emphasized="true" state="None"/>
-			                                            <StepInput value="{ShelfStock}" min="0" max="999" width="230px" step="1" enabled="{enabled}" editable="{editable}" description="{Unit}" fieldWidth="50%" textAlign="Center" change="_onStockChange"/>
-			                                            <Text text="{Location}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
-			                                            <Image src="/webapp/localService/{Image}" height="50px" width="50px" visible="true" densityAware="false" tooltip="{i18n>imageTooltip}"/>
-			                                            <ObjectStatus title="" text="{Status}" state="{StatusColor}" visible="true"/>
-			                                        </cells>
-			                                    </ColumnListItem>
-			                                </items>
-			                            </Table>
-			                            <Bar>
-										    <contentMiddle>
-										    	<Button id="btnSave" text="Save" press="_onSave" visible="false"/>
-										    </contentMiddle>
-									   </Bar>
-			                        </content>
-			                    </IconTabFilter>
-			                    <IconTabSeparator icon="" iconDensityAware="false"/>
-			                    <IconTabFilter icon="sap-icon://product" iconColor="Neutral" text="Non-Perishable" count="0" design="Vertical" showAll="false" textDirection="Inherit" enabled="true" visible="true" iconDensityAware="false">
-			                        <content>
-			                            <Table xmlns:action="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1" id="sap_Responsive_Page_0-content-sap_m_IconTabBar-1487204151231-items-sap_m_IconTabFilter-3-content-build_simple_Table-1489097986245" width="auto" noDataText="No data" mode="None" showSeparators="All" growing="false" growingThreshold="20" growingScrollToLoad="false" class="sapUiResponsiveMargin" itemPress="action" items="{path:'/InventorySet', templateShareable:true}" action:wiring="\{'itemPress':\{'navigation':\{'routeName':'ProductInfo'\}\}\}">
-			                                <infoToolbar/>
-			                                <headerToolbar/>
-			                                <columns>
-			                                    <Column width="auto" hAlign="Left" vAlign="Top" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
-			                                        <header>
-			                                            <Text text="{i18n>ProductDescription}" width="auto" visible="true"/>
-			                                        </header>
-			                                        <footer/>
-			                                    </Column>
-			                                    <Column width="auto" hAlign="Left" vAlign="Top" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
-			                                        <header>
-			                                            <Text text="{i18n>PriceDescription}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
-			                                        </header>
-			                                        <footer/>
-			                                    </Column>
-			                                    <Column width="auto" hAlign="Left" vAlign="Top" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
-			                                        <header>
-			                                            <Text text="{i18n>ShelfStockDescription}" width="auto" maxLines="1" wrapping="false" textAlign="Center" textDirection="Inherit" visible="true"/>
-			                                        </header>
-			                                        <footer/>
-			                                    </Column>
-			                                    <Column width="auto" hAlign="Left" vAlign="Top" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
-			                                        <header>
-			                                            <Text text="{i18n>LocationDescription}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
-			                                        </header>
-			                                        <footer/>
-			                                    </Column>
-			                                    <Column width="auto" hAlign="Left" vAlign="Top" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
-			                                        <header>
-			                                            <Text text="{i18n>ImageDescription}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
-			                                        </header>
-			                                        <footer/>
-			                                    </Column>
-			                                    <Column width="auto" hAlign="Left" vAlign="Top" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
-			                                        <header>
-			                                            <Text text="{i18n>StatusDescription}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
-			                                        </header>
-			                                        <footer/>
-			                                    </Column>
-			                                </columns>
-			                                <items>
-			                                    <ColumnListItem type="Active" press="action" action:wiring="\{'press':\{'navigation':\{'routeName':'ProductInfo_binded','keys':[\{'name':'ID','type':'Edm.String'\}]\}\}\}">
-			                                        <cells>
-			                                            <ObjectIdentifier text="{ProductDescription}" titleActive="false" visible="true"/>
-			                                            <ObjectNumber number="{Price}" unit="{Currency}" emphasized="true" state="None"/>
-			                                            <StepInput value="{ShelfStock}" min="0" max="999" width="230px" step="1" enabled="{enabled}" editable="{editable}" description="{Unit}" fieldWidth="50%" textAlign="Center" change="_onStockChange"/>
+			                                            <StepInput value="{ShelfStock}" min="0" max="999" width="230px" step="1" enabled="{enabled}" editable="{editable}" description="{Unit}" fieldWidth="50%" textAlign="Center" change="onStockChange"/>
 			                                            <Text text="{Location}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
 			                                            <Image src="/webapp/localService/{Image}" height="50px" width="50px" visible="true" densityAware="false" tooltip="{i18n>imageTooltip}"/>
 			                                            <ObjectStatus title="" text="{Status}" state="{StatusColor}" visible="true"/>
@@ -134,9 +93,10 @@
 			                        </content>
 			                    </IconTabFilter>
 			                    <IconTabSeparator icon="" iconDensityAware="false"/>
-			                    <IconTabFilter icon="sap-icon://fridge" iconColor="Neutral" text="Perishable" count="0" design="Vertical" showAll="false" textDirection="Inherit" enabled="true" visible="true" iconDensityAware="false">
+			                    <IconTabFilter icon="sap-icon://product" iconColor="Neutral" text="{i18n>nonPerishable}" count="{inventoryView>/nonPerishableCount}" design="Vertical" showAll="false" textDirection="Inherit" enabled="true" visible="true" iconDensityAware="false">
 			                        <content>
-			                            <Table xmlns:action="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1" id="sap_Responsive_Page_0-content-sap_m_IconTabBar-1487204151231-items-sap_m_IconTabFilter-5-content-build_simple_Table-1489098016833" width="auto" noDataText="No data" mode="None" showSeparators="All" growing="false" growingThreshold="20" growingScrollToLoad="false" class="sapUiResponsiveMargin" itemPress="action" items="{path:'/InventorySet', templateShareable:true}" action:wiring="\{'itemPress':\{'navigation':\{'routeName':'ProductInfo'\}\}\}">
+			                            <Table id="filteredTabNonPerishable" width="auto" noDataText="{i18n>noData}" mode="None" showSeparators="All" growing="false" growingThreshold="20" growingScrollToLoad="false" class="sapUiResponsiveMargin"
+			                            	items="{path:'/InventorySet', templateShareable:true}" updateFinished="onUpdateFinished">
 			                                <infoToolbar/>
 			                                <headerToolbar/>
 			                                <columns>
@@ -178,11 +138,11 @@
 			                                    </Column>
 			                                </columns>
 			                                <items>
-			                                    <ColumnListItem type="Active" press="action" action:wiring="\{'press':\{'navigation':\{'routeName':'ProductInfo_binded','keys':[\{'name':'ID','type':'Edm.String'\}]\}\}\}">
+			                                    <ColumnListItem type="Active">
 			                                        <cells>
 			                                            <ObjectIdentifier text="{ProductDescription}" titleActive="false" visible="true"/>
 			                                            <ObjectNumber number="{Price}" unit="{Currency}" emphasized="true" state="None"/>
-			                                            <StepInput value="{ShelfStock}" min="0" max="999" width="230px" step="1" enabled="{enabled}" editable="{editable}" description="{Unit}" fieldWidth="50%" textAlign="Center" change="_onStockChange"/>
+			                                            <StepInput value="{ShelfStock}" min="0" max="999" width="230px" step="1" enabled="{enabled}" editable="{editable}" description="{Unit}" fieldWidth="50%" textAlign="Center" change="onStockChange"/>
 			                                            <Text text="{Location}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
 			                                            <Image src="/webapp/localService/{Image}" height="50px" width="50px" visible="true" densityAware="false" tooltip="{i18n>imageTooltip}"/>
 			                                            <ObjectStatus title="" text="{Status}" state="{StatusColor}" visible="true"/>
@@ -193,9 +153,10 @@
 			                        </content>
 			                    </IconTabFilter>
 			                    <IconTabSeparator icon="" iconDensityAware="false"/>
-			                    <IconTabFilter icon="sap-icon://alert" iconColor="Critical" text="Alerts" count="0" design="Vertical" showAll="false" textDirection="Inherit" enabled="true" visible="true" iconDensityAware="false">
+			                    <IconTabFilter icon="sap-icon://fridge" iconColor="Neutral" text="{i18n>perishable}" count="{inventoryView>/perishableCount}" design="Vertical" showAll="false" textDirection="Inherit" enabled="true" visible="true" iconDensityAware="false">
 			                        <content>
-			                            <Table xmlns:action="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1" id="sap_Responsive_Page_0-content-sap_m_IconTabBar-1487204151231-items-sap_m_IconTabFilter-1487204305428-content-build_simple_Table-1489098372093" width="auto" noDataText="No data" mode="None" showSeparators="All" growing="false" growingThreshold="20" growingScrollToLoad="false" class="sapUiResponsiveMargin" itemPress="action" items="{path:'/InventorySet', templateShareable:true}" action:wiring="\{'itemPress':\{'navigation':\{'routeName':'ProductInfo'\}\}\}">
+			                            <Table id="filteredTabPerishable" width="auto" noDataText="{i18n>noData}" mode="None" showSeparators="All" growing="false" growingThreshold="20" growingScrollToLoad="false" class="sapUiResponsiveMargin"
+			                            	items="{path:'/InventorySet', templateShareable:true}" updateFinished="onUpdateFinished">
 			                                <infoToolbar/>
 			                                <headerToolbar/>
 			                                <columns>
@@ -237,11 +198,71 @@
 			                                    </Column>
 			                                </columns>
 			                                <items>
-			                                    <ColumnListItem type="Active" press="action" action:wiring="\{'press':\{'navigation':\{'routeName':'ProductInfo_binded','keys':[\{'name':'ID','type':'Edm.String'\}]\}\}\}">
+			                                    <ColumnListItem type="Active">
 			                                        <cells>
 			                                            <ObjectIdentifier text="{ProductDescription}" titleActive="false" visible="true"/>
 			                                            <ObjectNumber number="{Price}" unit="{Currency}" emphasized="true" state="None"/>
-			                                            <StepInput value="{ShelfStock}" min="0" max="999" width="230px" step="1" enabled="{enabled}" editable="{editable}" description="{Unit}" fieldWidth="50%" textAlign="Center" change="_onStockChange"/>
+			                                            <StepInput value="{ShelfStock}" min="0" max="999" width="230px" step="1" enabled="{enabled}" editable="{editable}" description="{Unit}" fieldWidth="50%" textAlign="Center" change="onStockChange"/>
+			                                            <Text text="{Location}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+			                                            <Image src="/webapp/localService/{Image}" height="50px" width="50px" visible="true" densityAware="false" tooltip="{i18n>imageTooltip}"/>
+			                                            <ObjectStatus title="" text="{Status}" state="{StatusColor}" visible="true"/>
+			                                        </cells>
+			                                    </ColumnListItem>
+			                                </items>
+			                            </Table>
+			                        </content>
+			                    </IconTabFilter>
+			                    <IconTabSeparator icon="" iconDensityAware="false"/>
+			                    <IconTabFilter icon="sap-icon://alert" iconColor="Critical" text="{i18n>alerts}" count="{inventoryView>/alertsCount}" design="Vertical" showAll="false" textDirection="Inherit" enabled="true" visible="true" iconDensityAware="false">
+			                        <content>
+			                            <Table id="filteredTabAlerts" width="auto" noDataText="{i18n>noData}" mode="None" showSeparators="All" growing="false" growingThreshold="20" growingScrollToLoad="false" class="sapUiResponsiveMargin"
+			                            	items="{path:'/InventorySet', templateShareable:true}" updateFinished="onUpdateFinished">
+			                                <infoToolbar/>
+			                                <headerToolbar/>
+			                                <columns>
+			                                    <Column width="auto" hAlign="Left" vAlign="Top" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+			                                        <header>
+			                                            <Text text="{i18n>ProductDescription}" width="auto" visible="true"/>
+			                                        </header>
+			                                        <footer/>
+			                                    </Column>
+			                                    <Column width="auto" hAlign="Left" vAlign="Top" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+			                                        <header>
+			                                            <Text text="{i18n>PriceDescription}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+			                                        </header>
+			                                        <footer/>
+			                                    </Column>
+			                                    <Column width="auto" hAlign="Left" vAlign="Top" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+			                                        <header>
+			                                            <Text text="{i18n>ShelfStockDescription}" width="auto" maxLines="1" wrapping="false" textAlign="Center" textDirection="Inherit" visible="true"/>
+			                                        </header>
+			                                        <footer/>
+			                                    </Column>
+			                                    <Column width="auto" hAlign="Left" vAlign="Top" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+			                                        <header>
+			                                            <Text text="{i18n>LocationDescription}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+			                                        </header>
+			                                        <footer/>
+			                                    </Column>
+			                                    <Column width="auto" hAlign="Left" vAlign="Top" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+			                                        <header>
+			                                            <Text text="{i18n>ImageDescription}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+			                                        </header>
+			                                        <footer/>
+			                                    </Column>
+			                                    <Column width="auto" hAlign="Left" vAlign="Top" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+			                                        <header>
+			                                            <Text text="{i18n>StatusDescription}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+			                                        </header>
+			                                        <footer/>
+			                                    </Column>
+			                                </columns>
+			                                <items>
+			                                    <ColumnListItem type="Active">
+			                                        <cells>
+			                                            <ObjectIdentifier text="{ProductDescription}" titleActive="false" visible="true"/>
+			                                            <ObjectNumber number="{Price}" unit="{Currency}" emphasized="true" state="None"/>
+			                                            <StepInput value="{ShelfStock}" min="0" max="999" width="230px" step="1" enabled="{enabled}" editable="{editable}" description="{Unit}" fieldWidth="50%" textAlign="Center" change="onStockChange"/>
 			                                            <Text text="{Location}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
 			                                            <Image src="/webapp/localService/{Image}" height="50px" width="50px" visible="true" densityAware="false" tooltip="{i18n>imageTooltip}"/>
 			                                            <ObjectStatus title="" text="{Status}" state="{StatusColor}" visible="true"/>
@@ -252,20 +273,10 @@
 			                        </content>
 			                    </IconTabFilter>
 			                </items>
-			                <content>
-			                    <Text text="Tab Bar Content goes here ..." width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
-			                </content>
+			                <content></content>
 			            </IconTabBar>
 			        </content>
-			        <footer>
-			            <OverflowToolbar width="100%" height="auto" design="Auto" enabled="true" visible="true">
-			                <content>
-			                    <Button text="Approve" type="Accept" iconFirst="true" width="auto" enabled="true" visible="true" iconDensityAware="false"/>
-			                    <Button text="Reject" type="Reject" iconFirst="true" width="auto" enabled="true" visible="true" iconDensityAware="false"/>
-			                    <Button text="" type="Default" icon="sap-icon://action" iconFirst="true" width="auto" enabled="true" visible="true" iconDensityAware="false"/>
-			                </content>
-			            </OverflowToolbar>
-			        </footer>
+			        <footer/>
 			        <headerContent/>
 			        <subHeader/>
 			        <customHeader/>
