@@ -1,10 +1,10 @@
-<mvc:View xmlns:mvc="sap.ui.core.mvc" controllerName="com.sap.build.standard.smartStore.controller.ProductInfo" xmlns:uxap="sap.uxap" xmlns="sap.m" xmlns:layout="sap.ui.layout" xmlns:form="sap.ui.layout.form">
+<mvc:View xmlns:mvc="sap.ui.core.mvc" xmlns:uxap="sap.uxap" xmlns="sap.m" xmlns:layout="sap.ui.layout" xmlns:form="sap.ui.layout.form" controllerName="com.sap.build.standard.smartStore.controller.ProductInfo">
 	<Shell id="shell">
 		<App id="app">
 			<pages>
 				<Page showHeader="true" title="{i18n>appTitle}" showFooter="false">
 			        <content>
-			            <ObjectHeader intro="" title="{i18n>productHeaderTitle}" icon="sap-icon://retail-store" numberUnit="Items" numberState="None" backgroundDesign="Translucent" condensed="false" visible="true">
+			            <ObjectHeader title="{i18n>productHeaderTitle}" icon="sap-icon://retail-store" numberUnit="Items" numberState="None" backgroundDesign="Translucent" condensed="false" visible="true">
 			                <attributes/>
 			                <statuses/>
 			                <markers/>
@@ -12,7 +12,7 @@
     <uxap:ObjectPageLayout showTitleInHeaderContent="true" showHeaderContent="true" showAnchorBar="true" subSectionLayout="TitleOnTop">
         <uxap:headerContent/>
         <uxap:headerTitle>
-            <uxap:ObjectPageHeader objectImageURI="{Image}" objectTitle="{ProductDesc}" objectSubtitle="{ID}" headerDesign="Light" objectImageShape="Square" isObjectIconAlwaysVisible="false" isObjectTitleAlwaysVisible="false" isObjectSubtitleAlwaysVisible="false" isActionAreaAlwaysVisible="true">
+            <uxap:ObjectPageHeader objectImageURI="{Image}" objectTitle="{ProductDescription}" objectSubtitle="{Id}" headerDesign="Light" objectImageShape="Square" isObjectIconAlwaysVisible="false" isObjectTitleAlwaysVisible="false" isObjectSubtitleAlwaysVisible="false" isActionAreaAlwaysVisible="true">
                 <uxap:actions>
                     <Button text="Notify Department" type="Default" icon="sap-icon://drill-up" iconFirst="true" width="auto" enabled="true" visible="true" iconDensityAware="false" press="_onButtonPress"/>
                 </uxap:actions>

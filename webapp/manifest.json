@@ -119,22 +119,21 @@
 					"transition": "slide"
 				}
 			},
-			"routes": [
-				{
-					"pattern": "",
-					"name": "Inventory",
-					"target": [
-						"Inventory"
-					]
-				},
-				{
-					"name": "ProductInfo",
-					"pattern": "ProductInfo",
-					"target": [
-						"ProductInfo"
-					]
+			"routes": [{
+				"pattern": "",
+				"name": "Inventory",
+				"target": ["Inventory"]
+			}, {
+				"name": "ProductInfo",
+				"pattern": "InventorySet/({itemId})",
+				"target": ["ProductInfo"]
+			}],
+			"additionalData": {
+				"com.sap.build.standard.smartStore.view.ProductInfo": {
+					"routeName": "ProductInfo_binded",
+					"entitySet": "/InventorySet"
 				}
-			]
+			}
 		}
 	},
 	"sap.platform.hcp": {
