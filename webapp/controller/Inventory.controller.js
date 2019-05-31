@@ -138,8 +138,24 @@ sap.ui.define([
 				});
 			},*/
 			_onStockChange: function (oEvent) {
-				console.log("Stock value changed to '" + oEvent.getParameter("value") + "'");
+				var value = oEvent.getParameter("value");
+				console.log("Stock value changed to '" + value + "'");
+				var btn = this.getView().byId("btnSave");
+				btn.setVisible(true);
+				
+				var sParent = oEvent.getSource().getParent();
+				var sPath = sParent.getBindingContext().getPath();
+				var model = this.getView().getModel(); 
+				model.setProperty(sPath+"/ShelfStock","" + value + "");
 			},
+			
+			_onSave: function() {
+				var model = this.getView().getModel(); 
+				model.submitChanges();
+				var btn = this.getView().byId("btnSave");
+				btn.setVisible(false);
+			},
+			
 			updateBindingOptions: function (sCollectionId, oBindingData, sSourceId) {
 				this.mBindingOptions = this.mBindingOptions || {};
 				this.mBindingOptions[sCollectionId] = this.mBindingOptions[sCollectionId] || {};
