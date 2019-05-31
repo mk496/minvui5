@@ -4,7 +4,7 @@
 			<pages>
 			    <Page showHeader="true" title="{i18n>appTitle}" showFooter="false">
 			        <content>
-			            <ObjectHeader intro="" title="{i18n>invHeaderTitle}" icon="sap-icon://retail-store" numberUnit="Items" numberState="None" backgroundDesign="Translucent" condensed="false" visible="true">
+			            <ObjectHeader intro="" title="{i18n>invHeaderTitle}" icon="sap-icon://retail-store" number="0" numberUnit="Items" numberState="None" backgroundDesign="Translucent" condensed="false" visible="true">
 			                <attributes/>
 			                <statuses/>
 			                <markers/>
@@ -13,7 +13,7 @@
 			                <items>
 			                    <IconTabFilter icon="sap-icon://drop-down-list" iconColor="Neutral" text="All Items" count="0" design="Vertical" showAll="false" textDirection="Inherit" enabled="true" visible="true" iconDensityAware="false">
 			                        <content>
-			                            <Table xmlns:action="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1" width="auto" noDataText="No data" mode="None" showSeparators="All" growing="false" growingThreshold="20" growingScrollToLoad="false" class="sapUiResponsiveMargin" items="{path:'/InventorySet'}" itemPress="action" action:wiring="\{'itemPress':\{'navigation':\{'routeName':'ProductInfo'\}\}\}">
+			                            <Table xmlns:action="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1" width="auto" noDataText="No data" mode="None" showSeparators="All" growing="false" growingThreshold="20" growingScrollToLoad="false" class="sapUiResponsiveMargin" items="{path:'/InventorySet'}">
 			                                <infoToolbar/>
 			                                <headerToolbar/>
 			                                <columns>
@@ -55,7 +55,7 @@
 			                                    </Column>
 			                                </columns>
 			                                <items>
-			                                    <ColumnListItem type="Active">
+			                                    <ColumnListItem type="Active" press="action" action:wiring="\{'press':\{'navigation':\{'routeName':'ProductInfo'\}\}\}">
 			                                        <cells>
 			                                            <ObjectIdentifier text="{ProductDescription}" titleActive="false" visible="true"/>
 			                                            <ObjectNumber number="{Price}" unit="{Currency}" emphasized="true" state="None"/>
@@ -72,7 +72,7 @@
 			                    <IconTabSeparator icon="" iconDensityAware="false"/>
 			                    <IconTabFilter icon="sap-icon://product" iconColor="Neutral" text="Non-Perishable" count="0" design="Vertical" showAll="false" textDirection="Inherit" enabled="true" visible="true" iconDensityAware="false">
 			                        <content>
-			                            <Table id="sap_Responsive_Page_0-content-sap_m_IconTabBar-1487204151231-items-sap_m_IconTabFilter-3-content-build_simple_Table-1489097986245" width="auto" noDataText="No data" mode="None" showSeparators="All" growing="false" growingThreshold="20" growingScrollToLoad="false" class="sapUiResponsiveMargin" itemPress="action" items="{path:'/InventorySet', templateShareable:true}" xmlns:action="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1" action:wiring="\{'itemPress':\{'navigation':\{'routeName':'ProductInfo'\}\}\}">
+			                            <Table xmlns:action="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1" id="sap_Responsive_Page_0-content-sap_m_IconTabBar-1487204151231-items-sap_m_IconTabFilter-3-content-build_simple_Table-1489097986245" width="auto" noDataText="No data" mode="None" showSeparators="All" growing="false" growingThreshold="20" growingScrollToLoad="false" class="sapUiResponsiveMargin" itemPress="action" items="{path:'/InventorySet', templateShareable:true}" action:wiring="\{'itemPress':\{'navigation':\{'routeName':'ProductInfo'\}\}\}">
 			                                <infoToolbar/>
 			                                <headerToolbar/>
 			                                <columns>
@@ -114,7 +114,7 @@
 			                                    </Column>
 			                                </columns>
 			                                <items>
-			                                    <ColumnListItem type="Active">
+			                                    <ColumnListItem type="Active" press="action" action:wiring="\{'press':\{'navigation':\{'routeName':'ProductInfo_binded','keys':[\{'name':'ID','type':'Edm.String'\}]\}\}\}">
 			                                        <cells>
 			                                            <ObjectIdentifier text="{ProductDescription}" titleActive="false" visible="true"/>
 			                                            <ObjectNumber number="{Price}" unit="{Currency}" emphasized="true" state="None"/>
@@ -131,7 +131,7 @@
 			                    <IconTabSeparator icon="" iconDensityAware="false"/>
 			                    <IconTabFilter icon="sap-icon://fridge" iconColor="Neutral" text="Perishable" count="0" design="Vertical" showAll="false" textDirection="Inherit" enabled="true" visible="true" iconDensityAware="false">
 			                        <content>
-			                            <Table id="sap_Responsive_Page_0-content-sap_m_IconTabBar-1487204151231-items-sap_m_IconTabFilter-5-content-build_simple_Table-1489098016833" width="auto" noDataText="No data" mode="None" showSeparators="All" growing="false" growingThreshold="20" growingScrollToLoad="false" class="sapUiResponsiveMargin" itemPress="action" items="{path:'/InventorySet', templateShareable:true}" xmlns:action="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1" action:wiring="\{'itemPress':\{'navigation':\{'routeName':'ProductInfo'\}\}\}">
+			                            <Table xmlns:action="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1" id="sap_Responsive_Page_0-content-sap_m_IconTabBar-1487204151231-items-sap_m_IconTabFilter-5-content-build_simple_Table-1489098016833" width="auto" noDataText="No data" mode="None" showSeparators="All" growing="false" growingThreshold="20" growingScrollToLoad="false" class="sapUiResponsiveMargin" itemPress="action" items="{path:'/InventorySet', templateShareable:true}" action:wiring="\{'itemPress':\{'navigation':\{'routeName':'ProductInfo'\}\}\}">
 			                                <infoToolbar/>
 			                                <headerToolbar/>
 			                                <columns>
@@ -173,7 +173,7 @@
 			                                    </Column>
 			                                </columns>
 			                                <items>
-			                                    <ColumnListItem type="Active">
+			                                    <ColumnListItem type="Active" press="action" action:wiring="\{'press':\{'navigation':\{'routeName':'ProductInfo_binded','keys':[\{'name':'ID','type':'Edm.String'\}]\}\}\}">
 			                                        <cells>
 			                                            <ObjectIdentifier text="{ProductDescription}" titleActive="false" visible="true"/>
 			                                            <ObjectNumber number="{Price}" unit="{Currency}" emphasized="true" state="None"/>
@@ -190,7 +190,7 @@
 			                    <IconTabSeparator icon="" iconDensityAware="false"/>
 			                    <IconTabFilter icon="sap-icon://alert" iconColor="Critical" text="Alerts" count="0" design="Vertical" showAll="false" textDirection="Inherit" enabled="true" visible="true" iconDensityAware="false">
 			                        <content>
-			                            <Table id="sap_Responsive_Page_0-content-sap_m_IconTabBar-1487204151231-items-sap_m_IconTabFilter-1487204305428-content-build_simple_Table-1489098372093" width="auto" noDataText="No data" mode="None" showSeparators="All" growing="false" growingThreshold="20" growingScrollToLoad="false" class="sapUiResponsiveMargin" itemPress="action" items="{path:'/InventorySet', templateShareable:true}" xmlns:action="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1" action:wiring="\{'itemPress':\{'navigation':\{'routeName':'ProductInfo'\}\}\}">
+			                            <Table xmlns:action="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1" id="sap_Responsive_Page_0-content-sap_m_IconTabBar-1487204151231-items-sap_m_IconTabFilter-1487204305428-content-build_simple_Table-1489098372093" width="auto" noDataText="No data" mode="None" showSeparators="All" growing="false" growingThreshold="20" growingScrollToLoad="false" class="sapUiResponsiveMargin" itemPress="action" items="{path:'/InventorySet', templateShareable:true}" action:wiring="\{'itemPress':\{'navigation':\{'routeName':'ProductInfo'\}\}\}">
 			                                <infoToolbar/>
 			                                <headerToolbar/>
 			                                <columns>
@@ -232,7 +232,7 @@
 			                                    </Column>
 			                                </columns>
 			                                <items>
-			                                    <ColumnListItem type="Active">
+			                                    <ColumnListItem type="Active" press="action" action:wiring="\{'press':\{'navigation':\{'routeName':'ProductInfo_binded','keys':[\{'name':'ID','type':'Edm.String'\}]\}\}\}">
 			                                        <cells>
 			                                            <ObjectIdentifier text="{ProductDescription}" titleActive="false" visible="true"/>
 			                                            <ObjectNumber number="{Price}" unit="{Currency}" emphasized="true" state="None"/>

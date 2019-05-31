@@ -4,8 +4,9 @@ sap.ui.define([
 		"./utilities",
 		"sap/ui/core/routing/History",
 		"sap/m/MessageToast",
-		"sap/ui/model/json/JSONModel"
-	], function (BaseController, MessageBox, Utilities, History, MessageToast, JSONModel) {
+		"sap/ui/model/json/JSONModel",
+		"sap/ui/Device"
+	], function (BaseController, MessageBox, Utilities, History, MessageToast, JSONModel, Device) {
 		"use strict";
 		return BaseController.extend("com.sap.build.standard.smartStore.controller.Inventory", {
 			handleRouteMatched: function (oEvent) {
@@ -36,7 +37,7 @@ sap.ui.define([
 					this.getView().bindObject(oPath);
 				}
 			},
-			_onPageNavButtonPress: function (oEvent) {
+			/*_onPageNavButtonPress: function (oEvent) {
 				var oBindingContext = oEvent.getSource().getBindingContext();
 				return new Promise(function (fnResolve) {
 					this.doNavigate("7f3446de6ee0a8ea0d67ae610_S0", oBindingContext, fnResolve, "");
@@ -95,8 +96,8 @@ sap.ui.define([
 				if (typeof fnPromiseResolve === "function") {
 					fnPromiseResolve();
 				}
-			},
-			_onTableItemPress: function (oEvent) {
+			},*/
+			/*_onTableItemPress: function (oEvent) {
 				var oBindingContext = oEvent.getParameter("listItem").getBindingContext();
 				return new Promise(function (fnResolve) {
 					this.doNavigate("ProductInfo", oBindingContext, fnResolve, "");
@@ -135,7 +136,7 @@ sap.ui.define([
 						MessageBox.error(err.message);
 					}
 				});
-			},
+			},*/
 			_onStockChange: function (oEvent) {
 				console.log("Stock value changed to '" + oEvent.getParameter("value") + "'");
 			},
@@ -233,6 +234,7 @@ sap.ui.define([
 				this.applyFiltersAndSorters(
 					"sap_Responsive_Page_0-content-sap_m_IconTabBar-1487204151231-items-sap_m_IconTabFilter-1487204305428-content-build_simple_Table-1489098372093",
 					"items");
+					
 			},
 			onExit: function () {
 				// to destroy templates for bound aggregations when templateShareable is true on exit to prevent duplicateId issue
@@ -296,6 +298,13 @@ sap.ui.define([
 						this.getOwnerComponent().getRouter().navTo(oNavigation.routeName);
 					}
 				}
+			},
+
+			onItemSelect: function (oEvent) {
+				var bReplace = !Device.system.phone;
+				this.getOwnerComponent().getRouter().navTo("ProductInfo", {
+					itemId: oEvent.getSource().getBindingContext().getProperty("Id")
+				}, bReplace);
 			}
 		});
 	}, /* bExport= */
