@@ -8,11 +8,10 @@ sap.ui.define([
 		"sap/ui/Device",
 		"sap/ui/model/Filter",
 		"sap/ui/model/FilterOperator"
-		
 	], function (BaseController, UIComponent, Utilities, History, MessageToast, JSONModel, Device, Filter, FilterOperator) {
 		"use strict";
 		return BaseController.extend("com.sap.build.standard.smartStore.controller.Inventory", {
-			
+
 			onInit: function () {
 				this.oRouter = sap.ui.core.UIComponent.getRouterFor(this);
 				this.oRouter.getTarget("Inventory").attachDisplay(jQuery.proxy(this.handleRouteMatched, this));
@@ -21,7 +20,7 @@ sap.ui.define([
 				this.applyFiltersAndSorters("filteredTabNonPerishable", "items");
 				this.applyFiltersAndSorters("filteredTabPerishable", "items");
 				this.applyFiltersAndSorters("filteredTabAlerts", "items");
-	
+
 				// Model used to manipulate control states
 				var oViewModel = new JSONModel({
 					allItemsCount: 0,
@@ -29,10 +28,10 @@ sap.ui.define([
 					perishableCount: 0,
 					alertsCount: 0
 				});
-				
+
 				this.getView().setModel(oViewModel, "inventoryView");
 			},
-			
+
 			handleRouteMatched: function (oEvent) {
 				var oParams = {};
 				if (oEvent.mParameters.data.context) {
@@ -60,7 +59,7 @@ sap.ui.define([
 					this.getView().bindObject(oPath);
 				}
 			},
-			
+
 			updateBindingOptions: function (sCollectionId, oBindingData, sSourceId) {
 				this.mBindingOptions = this.mBindingOptions || {};
 				this.mBindingOptions[sCollectionId] = this.mBindingOptions[sCollectionId] || {};
@@ -95,7 +94,7 @@ sap.ui.define([
 					sorters: aSorters
 				};
 			},
-			
+
 			createFiltersAndSorters: function () {
 				this.mBindingOptions = {};
 				var oBindingData, aPropertyFilters;
@@ -119,7 +118,7 @@ sap.ui.define([
 				oBindingData.filters.push(new sap.ui.model.Filter(aPropertyFilters, false));
 				this.updateBindingOptions("filteredTabAlerts", oBindingData);
 			},
-			
+
 			applyFiltersAndSorters: function (sControlId, sAggregationName, chartBindingInfo) {
 				var oBindingInfo = {};
 				if (chartBindingInfo) {
@@ -138,31 +137,35 @@ sap.ui.define([
 					filters: oBindingOptions.filters
 				});
 			},
-			
-			onUpdateFinished : function (oEvent) {
+
+			onUpdateFinished: function (oEvent) {
 				var iTotalItems = oEvent.getParameter("total"),
 					oModel = this.getView().getModel("inventoryView");
-				
-				if ( oEvent.getSource().getId() === "container-SmartStore---Inventory--tableAllItems") {
+
+				if (oEvent.getSource().getId() === "container-SmartStore---Inventory--tableAllItems") {
 					oModel.setProperty("/allItemsCount", iTotalItems);
-				}
-				else if ( oEvent.getSource().getId() === "container-SmartStore---Inventory--filteredTabNonPerishable") {
+				} else if (oEvent.getSource().getId() === "container-SmartStore---Inventory--filteredTabNonPerishable") {
 					oModel.setProperty("/nonPerishableCount", iTotalItems);
-				}
-				else if ( oEvent.getSource().getId() === "container-SmartStore---Inventory--filteredTabPerishable") {
+				} else if (oEvent.getSource().getId() === "container-SmartStore---Inventory--filteredTabPerishable") {
 					oModel.setProperty("/perishableCount", iTotalItems);
-				}
-				else if ( oEvent.getSource().getId() === "container-SmartStore---Inventory--filteredTabAlerts") {
+				} else if (oEvent.getSource().getId() === "container-SmartStore---Inventory--filteredTabAlerts") {
 					oModel.setProperty("/alertsCount", iTotalItems);
 				}
 			},
 
 			onExit: function () {
 				// to destroy templates for bound aggregations when templateShareable is true on exit to prevent duplicateId issue
-				var aControls = [{"controlId": "filteredTabNonPerishable", "groups": ["items"]},
-								 {"controlId": "fileredTabPerishable", "groups": ["items"]},
-								 {"controlId": "fileredTabAlerts", "groups": ["items"]}];
-								 
+				var aControls = [{
+					"controlId": "filteredTabNonPerishable",
+					"groups": ["items"]
+				}, {
+					"controlId": "fileredTabPerishable",
+					"groups": ["items"]
+				}, {
+					"controlId": "fileredTabAlerts",
+					"groups": ["items"]
+				}];
+
 				for (var i = 0; i < aControls.length; i++) {
 					var oControl = this.getView().byId(aControls[i].controlId);
 					if (oControl) {
@@ -177,53 +180,71 @@ sap.ui.define([
 					}
 				}
 			},
-		
+
 			onStockChange: function (oEvent) {
 				var value = oEvent.getParameter("value");
-				
+
 				//console.log("Stock value changed to '" + value + "'");
-				
+
 				this._enableButtons("save");
 				this._enableButtons("reject");
-				
+				this._resetButtons("order");
+
 				var sParent = oEvent.getSource().getParent();
 				var sPath = sParent.getBindingContext().getPath();
-				var model = this.getView().getModel(); 
-				model.setProperty(sPath+"/ShelfStock","" + value + "");
+				var model = this.getView().getModel();
+				model.setProperty(sPath + "/ShelfStock", "" + value + "");
 			},
-			
-			onSave: function() {
-				var oModel = this.getView().getModel(); 
+
+			onSave: function () {
+				var oModel = this.getView().getModel();
 				oModel.submitChanges();
-				
+
 				this._resetButtons("save");
 				this._resetButtons("reject");
 				this._enableButtons("order");
-				
-				MessageToast.show("Stock changes were saved!");
+
+				MessageToast.show(this.getView().getModel("i18n").getResourceBundle().getText("SaveMessage"));
 			},
-			
-			onReject: function() {
-				var oModel = this.getView().getModel(); 
+
+			onReject: function () {
+				var oModel = this.getView().getModel();
 				oModel.resetChanges();
 				this._resetButtons();
-				
-				MessageToast.show("Stock changes were rejected!");
+
+				MessageToast.show(this.getView().getModel("i18n").getResourceBundle().getText("RejectMessage"));
 			},
-			
-			onOrder: function() {
+
+			onOrder: function () {
 				this._resetButtons();
-				
-				MessageToast.show("Order has been placed!");
+
+				var oView = this.getView(),
+					oModel = oView.getModel();
+
+				oModel.callFunction(
+					"/newRequisition", { 
+						method: "GET",
+						success: this._orderSuccess,
+						error: this._orderError
+					}
+				);
 			},
-			
+
+			_orderSuccess: function (oData, response) {
+				MessageToast.show("Order with ID "+oData.Id+" has been placed!");
+			},
+
+			_orderError: function (oError) {
+				MessageToast.show("Order has NOT been placed!");
+			},
+
 			onItemSearch: function (oEvent) {
 				if (oEvent.getParameters().refreshButtonPressed) {
 					this.onRefresh();
 				} else {
 					var aTableSearchState = [];
 					var sQuery = oEvent.getParameter("query");
-	
+
 					if (sQuery && sQuery.length > 0) {
 						aTableSearchState = [new Filter("ProductDescription", FilterOperator.Contains, sQuery)];
 					}
@@ -234,48 +255,42 @@ sap.ui.define([
 			onItemSelect: function (oEvent) {
 				this._showInfo(oEvent.getSource());
 			},
-			
-			_showInfo : function (oItem) {
+
+			_showInfo: function (oItem) {
 				UIComponent.getRouterFor(this).navTo("ProductInfo", {
 					itemId: oItem.getBindingContext().getProperty("Id")
 				});
 			},
-			
+
 			_resetButtons: function (oButton) {
 				if (oButton === "save") {
 					this.getView().byId("btnSave").setEnabled(false);
-				}
-				else if (oButton === "reject") {
+				} else if (oButton === "reject") {
 					this.getView().byId("btnReject").setEnabled(false);
-				}
-				else if (oButton === "order") {
+				} else if (oButton === "order") {
 					this.getView().byId("btnOrder").setEnabled(false);
-				} 
-				else {
+				} else {
 					this.getView().byId("btnSave").setEnabled(false);
 					this.getView().byId("btnReject").setEnabled(false);
 					this.getView().byId("btnOrder").setEnabled(false);
 				}
 			},
-			
+
 			_enableButtons: function (oButton) {
 				if (oButton === "save") {
 					this.getView().byId("btnSave").setEnabled(true);
-				}
-				else if (oButton === "reject") {
+				} else if (oButton === "reject") {
 					this.getView().byId("btnReject").setEnabled(true);
-				}
-				else if (oButton === "order") {
+				} else if (oButton === "order") {
 					this.getView().byId("btnOrder").setEnabled(true);
-				} 
-				else {
+				} else {
 					this.getView().byId("btnSave").setEnabled(true);
 					this.getView().byId("btnReject").setEnabled(true);
 					this.getView().byId("btnOrder").setEnabled(true);
 				}
 			},
-			
-			_applySearchItem: function(aTableSearchState) {
+
+			_applySearchItem: function (aTableSearchState) {
 				var oTable = this.getView().byId("tableAllItems");
 				oTable.getBinding("items").filter(aTableSearchState, "Application");
 			}

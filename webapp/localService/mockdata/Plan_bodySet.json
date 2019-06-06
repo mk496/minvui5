@@ -1,0 +1,111 @@
+[{
+	"ID": "1",
+	"Schritt": "1",
+	"Objekt": "Pneumatik Filterdruckregler",
+	"Turnus": "3 x wöchentlich",
+	"Aufgabe": "Inspektion",
+	"Schmierstoff": "",
+	"Bild": "/webapp/localService/assets/obj1.PNG",
+	"___FK_73729cb49196f8010f77d9c1_00000": "1"
+}, {
+	"ID": "2",
+	"Schritt": "2",
+	"Objekt": "Pneumatik Feinstluftfilter",
+	"Turnus": "3 x wöchentlich",
+	"Aufgabe": "Inspektion",
+	"Schmierstoff": "",
+	"Bild": "/webapp/localService/assets/obj2.png",
+	"___FK_73729cb49196f8010f77d9c1_00000": "1"
+}, {
+	"ID": "3",
+	"Schritt": "3",
+	"Objekt": "Sicherheitsscheibe Schutztür ",
+	"Turnus": "wöchentlich",
+	"Aufgabe": "Reinigen",
+	"Schmierstoff": "Eskapon E 5466\r\nPutztücher",
+	"Bild": "/webapp/localService/assets/obj3a.png",
+	"___FK_73729cb49196f8010f77d9c1_00000": "1"
+}, {
+	"ID": "4",
+	"Schritt": "4",
+	"Objekt": "Werkzeugabblasvorgang prüfen",
+	"Turnus": "3 x wöchentlich",
+	"Aufgabe": "Inspektion",
+	"Schmierstoff": "",
+	"Bild": "/webapp/localService/assets/obj4.png",
+	"___FK_73729cb49196f8010f77d9c1_00000": "1"
+}, {
+	"ID": "5",
+	"Schritt": "5",
+	"Objekt": "Zentralschmierung",
+	"Turnus": "wöchentlich",
+	"Aufgabe": "Inspektion",
+	"Schmierstoff": "",
+	"Bild": "/webapp/localService/assets/obj5.png",
+	"___FK_73729cb49196f8010f77d9c1_00000": "2"
+}, {
+	"ID": "ID 6",
+	"Schritt": "Schritt 6",
+	"Objekt": "Objekt 6",
+	"Turnus": "Turnus 6",
+	"Aufgabe": "Aufgabe 6",
+	"Schmierstoff": "Schmierstoff 6",
+	"Bild": "Bild 6",
+	"___FK_73729cb49196f8010f77d9c1_00000": "ID 6",
+	"__metadata": {
+		"uri": "Plan_bodySet('ID%206')",
+		"type": "b884ba1f30dac09c0f7bd31e.Plan_body"
+	}
+}, {
+	"ID": "ID 7",
+	"Schritt": "Schritt 7",
+	"Objekt": "Objekt 7",
+	"Turnus": "Turnus 7",
+	"Aufgabe": "Aufgabe 7",
+	"Schmierstoff": "Schmierstoff 7",
+	"Bild": "Bild 7",
+	"___FK_73729cb49196f8010f77d9c1_00000": "ID 7",
+	"__metadata": {
+		"uri": "Plan_bodySet('ID%207')",
+		"type": "b884ba1f30dac09c0f7bd31e.Plan_body"
+	}
+}, {
+	"ID": "ID 8",
+	"Schritt": "Schritt 8",
+	"Objekt": "Objekt 8",
+	"Turnus": "Turnus 8",
+	"Aufgabe": "Aufgabe 8",
+	"Schmierstoff": "Schmierstoff 8",
+	"Bild": "Bild 8",
+	"___FK_73729cb49196f8010f77d9c1_00000": "ID 8",
+	"__metadata": {
+		"uri": "Plan_bodySet('ID%208')",
+		"type": "b884ba1f30dac09c0f7bd31e.Plan_body"
+	}
+}, {
+	"ID": "ID 9",
+	"Schritt": "Schritt 9",
+	"Objekt": "Objekt 9",
+	"Turnus": "Turnus 9",
+	"Aufgabe": "Aufgabe 9",
+	"Schmierstoff": "Schmierstoff 9",
+	"Bild": "Bild 9",
+	"___FK_73729cb49196f8010f77d9c1_00000": "ID 9",
+	"__metadata": {
+		"uri": "Plan_bodySet('ID%209')",
+		"type": "b884ba1f30dac09c0f7bd31e.Plan_body"
+	}
+}, {
+	"ID": "ID 10",
+	"Schritt": "Schritt 10",
+	"Objekt": "Objekt 10",
+	"Turnus": "Turnus 10",
+	"Aufgabe": "Aufgabe 10",
+	"Schmierstoff": "Schmierstoff 10",
+	"Bild": "Bild 10",
+	"___FK_73729cb49196f8010f77d9c1_00000": "ID 10",
+	"__metadata": {
+		"uri": "Plan_bodySet('ID%2010')",
+		"type": "b884ba1f30dac09c0f7bd31e.Plan_body"
+	}
+}]
