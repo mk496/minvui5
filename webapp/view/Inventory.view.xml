@@ -26,9 +26,18 @@
 								</SearchField>
 			                </content>
 			            </OverflowToolbar>
-			            <IconTabBar expandable="false" expanded="true" applyContentPadding="false" backgroundDesign="Solid" upperCase="false" visible="true" selectedKey="Ok">
+			            <!--<IconTabBar
+							headerMode="Inline"
+							upperCase="true"
+							expanded="{device>/isNoPhone}">
+							<items>
+								<IconTabFilter
+									text="{i18n>items}"
+									count="3">-->
+									
+			            <IconTabBar expanded="{device>/isNoPhone}" applyContentPadding="false" backgroundDesign="Solid" upperCase="false" visible="true" selectedKey="Ok">
 			                <items>
-			                    <IconTabFilter icon="sap-icon://drop-down-list" iconColor="Neutral" text="{i18n>allItems}" count="{inventoryView>/allItemsCount}" design="Vertical" showAll="false" textDirection="Inherit" enabled="true" visible="true" iconDensityAware="false">
+			                    <IconTabFilter icon="sap-icon://drop-down-list" iconColor="Positive" text="{i18n>allItems}" count="{inventoryView>/allItemsCount}" design="Vertical" showAll="false" textDirection="Inherit" enabled="true" visible="true" iconDensityAware="false">
 			                        <content>
 			                            <Table id="tableAllItems" width="auto" noDataText="{i18n>noData}" mode="None" showSeparators="All" growing="false" growingThreshold="20" growingScrollToLoad="false" class="sapUiResponsiveMargin"
 			                            	items="{
@@ -92,7 +101,6 @@
 			                            </Table>
 			                        </content>
 			                    </IconTabFilter>
-			                    <IconTabSeparator icon="" iconDensityAware="false"/>
 			                    <IconTabFilter icon="sap-icon://product" iconColor="Neutral" text="{i18n>nonPerishable}" count="{inventoryView>/nonPerishableCount}" design="Vertical" showAll="false" textDirection="Inherit" enabled="true" visible="true" iconDensityAware="false">
 			                        <content>
 			                            <Table id="filteredTabNonPerishable" width="auto" noDataText="{i18n>noData}" mode="None" showSeparators="All" growing="false" growingThreshold="20" growingScrollToLoad="false" class="sapUiResponsiveMargin"
@@ -138,7 +146,7 @@
 			                                    </Column>
 			                                </columns>
 			                                <items>
-			                                    <ColumnListItem type="Active">
+			                                    <ColumnListItem  type="Navigation" press="onItemSelect">
 			                                        <cells>
 			                                            <ObjectIdentifier text="{ProductDescription}" titleActive="false" visible="true"/>
 			                                            <ObjectNumber number="{Price}" unit="{Currency}" emphasized="true" state="None"/>
@@ -152,7 +160,6 @@
 			                            </Table>
 			                        </content>
 			                    </IconTabFilter>
-			                    <IconTabSeparator icon="" iconDensityAware="false"/>
 			                    <IconTabFilter icon="sap-icon://fridge" iconColor="Neutral" text="{i18n>perishable}" count="{inventoryView>/perishableCount}" design="Vertical" showAll="false" textDirection="Inherit" enabled="true" visible="true" iconDensityAware="false">
 			                        <content>
 			                            <Table id="filteredTabPerishable" width="auto" noDataText="{i18n>noData}" mode="None" showSeparators="All" growing="false" growingThreshold="20" growingScrollToLoad="false" class="sapUiResponsiveMargin"
@@ -198,7 +205,7 @@
 			                                    </Column>
 			                                </columns>
 			                                <items>
-			                                    <ColumnListItem type="Active">
+			                                    <ColumnListItem  type="Navigation" press="onItemSelect">
 			                                        <cells>
 			                                            <ObjectIdentifier text="{ProductDescription}" titleActive="false" visible="true"/>
 			                                            <ObjectNumber number="{Price}" unit="{Currency}" emphasized="true" state="None"/>
@@ -212,7 +219,6 @@
 			                            </Table>
 			                        </content>
 			                    </IconTabFilter>
-			                    <IconTabSeparator icon="" iconDensityAware="false"/>
 			                    <IconTabFilter icon="sap-icon://alert" iconColor="Critical" text="{i18n>alerts}" count="{inventoryView>/alertsCount}" design="Vertical" showAll="false" textDirection="Inherit" enabled="true" visible="true" iconDensityAware="false">
 			                        <content>
 			                            <Table id="filteredTabAlerts" width="auto" noDataText="{i18n>noData}" mode="None" showSeparators="All" growing="false" growingThreshold="20" growingScrollToLoad="false" class="sapUiResponsiveMargin"
@@ -258,7 +264,7 @@
 			                                    </Column>
 			                                </columns>
 			                                <items>
-			                                    <ColumnListItem type="Active">
+			                                    <ColumnListItem  type="Navigation" press="onItemSelect">
 			                                        <cells>
 			                                            <ObjectIdentifier text="{ProductDescription}" titleActive="false" visible="true"/>
 			                                            <ObjectNumber number="{Price}" unit="{Currency}" emphasized="true" state="None"/>
@@ -272,14 +278,57 @@
 			                            </Table>
 			                        </content>
 			                    </IconTabFilter>
+			                    <IconTabSeparator icon="" iconDensityAware="false"/>
+			                    <IconTabFilter icon="sap-icon://customer-order-entry" iconColor="Positive" text="{i18n>allOrders}" count="{inventoryView>/ordersCount}" design="Vertical" showAll="false" textDirection="Inherit" enabled="true" visible="true" iconDensityAware="false">
+			                        <content>
+			                            <Table id="allOrders" width="auto" noDataText="{i18n>noData}" mode="None" showSeparators="All" growing="false" growingThreshold="20" growingScrollToLoad="false" class="sapUiResponsiveMargin"
+			                            	items="{path:'/RequisitionHeaderSet', templateShareable:true}" updateFinished="onUpdateFinished">
+			                                <infoToolbar/>
+			                                <headerToolbar/>
+			                                <columns>
+			                                	 <Column width="auto" hAlign="Left" vAlign="Top" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+			                                        <header>
+			                                            <Text text="{i18n>requisitionHeaderId}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+			                                        </header>
+			                                        <footer/>
+			                                    </Column>
+			                                    <Column width="auto" hAlign="Left" vAlign="Top" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+			                                        <header>
+			                                            <Text text="{i18n>requisitionHeaderDescription}" width="auto" visible="true"/>
+			                                        </header>
+			                                        <footer/>
+			                                    </Column>
+			                                    <Column width="auto" hAlign="Left" vAlign="Top" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+			                                        <header>
+			                                            <Text text="{i18n>requisitionHeaderAttribute}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+			                                        </header>
+			                                        <footer/>
+			                                    </Column>
+			                                    <Column width="auto" hAlign="Left" vAlign="Top" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+			                                        <header>
+			                                            <Text text="{i18n>requisitionHeaderStatus}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+			                                        </header>
+			                                        <footer/>
+			                                    </Column>
+			                                </columns>
+			                                <items>
+			                                    <ColumnListItem type="Navigation" press="onRequisitionSelect">
+			                                        <cells>
+			                                        	<ObjectNumber number="{Id}" emphasized="true" state="None"/>
+			                                            <ObjectIdentifier text="{RequisitionDescription}" titleActive="false" visible="true"/>
+			                                            <Text text="{NewAttribute}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+			                                            <ObjectStatus title="" text="" state="" visible="true"/>
+			                                        </cells>
+			                                    </ColumnListItem>
+			                                </items>
+			                            </Table>
+			                        </content>
+			                    </IconTabFilter>
 			                </items>
-			                <content></content>
 			            </IconTabBar>
+			            
+			            <!--</IconTabFilter></items></IconTabBar>-->
 			        </content>
-			        <footer/>
-			        <headerContent/>
-			        <subHeader/>
-			        <customHeader/>
 			    </Page>
 			</pages>
 		</App>

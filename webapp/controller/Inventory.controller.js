@@ -1,6 +1,5 @@
 sap.ui.define([
-		"sap/ui/core/mvc/Controller",
-		"sap/ui/core/UIComponent",
+		"./BaseController",
 		"./utilities",
 		"sap/ui/core/routing/History",
 		"sap/m/MessageToast",
@@ -8,12 +7,12 @@ sap.ui.define([
 		"sap/ui/Device",
 		"sap/ui/model/Filter",
 		"sap/ui/model/FilterOperator"
-	], function (BaseController, UIComponent, Utilities, History, MessageToast, JSONModel, Device, Filter, FilterOperator) {
+	], function (BaseController, Utilities, History, MessageToast, JSONModel, Device, Filter, FilterOperator) {
 		"use strict";
 		return BaseController.extend("com.sap.build.standard.smartStore.controller.Inventory", {
 
 			onInit: function () {
-				this.oRouter = sap.ui.core.UIComponent.getRouterFor(this);
+				this.oRouter = this.getRouter();
 				this.oRouter.getTarget("Inventory").attachDisplay(jQuery.proxy(this.handleRouteMatched, this));
 				this.mAggregationBindingOptions = {};
 				this.createFiltersAndSorters();
@@ -26,7 +25,8 @@ sap.ui.define([
 					allItemsCount: 0,
 					nonPerishableCount: 0,
 					perishableCount: 0,
-					alertsCount: 0
+					alertsCount: 0,
+					ordersCount: 0
 				});
 
 				this.getView().setModel(oViewModel, "inventoryView");
@@ -141,7 +141,7 @@ sap.ui.define([
 			onUpdateFinished: function (oEvent) {
 				var iTotalItems = oEvent.getParameter("total"),
 					oModel = this.getView().getModel("inventoryView");
-
+				
 				if (oEvent.getSource().getId() === "container-SmartStore---Inventory--tableAllItems") {
 					oModel.setProperty("/allItemsCount", iTotalItems);
 				} else if (oEvent.getSource().getId() === "container-SmartStore---Inventory--filteredTabNonPerishable") {
@@ -150,6 +150,8 @@ sap.ui.define([
 					oModel.setProperty("/perishableCount", iTotalItems);
 				} else if (oEvent.getSource().getId() === "container-SmartStore---Inventory--filteredTabAlerts") {
 					oModel.setProperty("/alertsCount", iTotalItems);
+				} else if (oEvent.getSource().getId() === "container-SmartStore---Inventory--allOrders") {
+					oModel.setProperty("/ordersCount", iTotalItems);
 				}
 			},
 
@@ -163,6 +165,9 @@ sap.ui.define([
 					"groups": ["items"]
 				}, {
 					"controlId": "fileredTabAlerts",
+					"groups": ["items"]
+				}, {
+					"controlId": "tabOrders",
 					"groups": ["items"]
 				}];
 
@@ -228,16 +233,10 @@ sap.ui.define([
 						error: this._orderError
 					}
 				);
+				
+				this.getView().byId("allOrders").getBinding("items").refresh();
 			},
-
-			_orderSuccess: function (oData, response) {
-				MessageToast.show("Order with ID "+oData.Id+" has been placed!");
-			},
-
-			_orderError: function (oError) {
-				MessageToast.show("Order has NOT been placed!");
-			},
-
+			
 			onItemSearch: function (oEvent) {
 				if (oEvent.getParameters().refreshButtonPressed) {
 					this.onRefresh();
@@ -253,13 +252,23 @@ sap.ui.define([
 			},
 
 			onItemSelect: function (oEvent) {
-				this._showInfo(oEvent.getSource());
+				this.getRouter().navTo("ProductInfo", {
+					itemId: oEvent.getSource().getBindingContext().getProperty("Id")
+				});
+			},
+			
+			onRequisitionSelect: function (oEvent) {
+				this.getRouter().navTo("Requisition", {
+					requisitionId: oEvent.getSource().getBindingContext().getProperty("Id")
+				});
 			},
 
-			_showInfo: function (oItem) {
-				UIComponent.getRouterFor(this).navTo("ProductInfo", {
-					itemId: oItem.getBindingContext().getProperty("Id")
-				});
+			_orderSuccess: function (oData, response) {
+				MessageToast.show("Order with ID "+oData.Id+" has been placed!");
+			},
+
+			_orderError: function (oError) {
+				MessageToast.show("Order has NOT been placed!");
 			},
 
 			_resetButtons: function (oButton) {

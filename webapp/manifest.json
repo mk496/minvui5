@@ -115,18 +115,32 @@
 				"ProductInfo": {
 					"viewName": "ProductInfo",
 					"viewId": "ProductInfo",
-					"viewLevel": 1,
-					"transition": "slide"
+					"viewLevel": 2,
+					"transition": "slide",
+					"controlAggregation": "pages"
+				},
+				"Requisition": {
+					"viewType": "XML",
+					"viewName": "Requisition",
+					"viewId": "Requisition",
+					"viewLevel": 2,
+					"controlAggregation": "pages"
 				}
 			},
 			"routes": [{
 				"pattern": "",
 				"name": "Inventory",
-				"target": ["Inventory"]
+				"target": ["ProductInfo", "Inventory"]
 			}, {
 				"name": "ProductInfo",
 				"pattern": "InventorySet/({itemId})",
-				"target": ["ProductInfo"]
+				"target": ["Inventory", "ProductInfo"]
+			}, {
+				"name": "Requisition",
+				"pattern": "RequisitionHeaderSet({requisitionId})",
+				"titleTarget": "",
+				"greedy": false,
+				"target": ["Requisition"]
 			}],
 			"additionalData": {
 				"com.sap.build.standard.smartStore.view.ProductInfo": {
