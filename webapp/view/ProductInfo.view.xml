@@ -2,23 +2,25 @@
 	<Shell id="shell">
 		<App id="app">
 			<pages>
-				<Page showHeader="true" title="{i18n>productHeaderTitle}" showFooter="false">
+				<Page showHeader="true" title="{i18n>productHeaderTitle}" showNavButton="true" navButtonPress="onNavBack">
 			        <content>
-					    <uxap:ObjectPageLayout showTitleInHeaderContent="true" showHeaderContent="true" showAnchorBar="true" subSectionLayout="TitleOnTop">
-					        <uxap:headerContent/>
+			        	<ObjectHeader intro="" title="{ProductDescription}" icon="/webapp/localService/{Image}" numberState="None"
+							backgroundDesign="Translucent" condensed="false" visible="true" number="{userapi>/firstName} {userapi>/lastName}" numberUnit=" ({userapi>/name})" >
+							<attributes>
+							<ObjectAttribute title="{i18n>productAttrId}" text="{Id}"/>
+							<!--<ObjectAttribute title="{i18n>productLifeRemaining}" text="{LifeRemaining}"/>
+								<ObjectAttribute title="{i18n>productLocation}" text="{Location}"/>
+								<ObjectAttribute title="{i18n>productInStock}" text="{InStock}"/>
+								<ObjectAttribute title="{i18n>productStatus}" text="{Status}"/>-->
+							</attributes>
+							<statuses>
+								<ObjectStatus title="{i18n>productStatus}" text="{Status}" state="{StatusColor}"/>
+							</statuses>
+							<markers/>
+						</ObjectHeader>
+					    <uxap:ObjectPageLayout showTitleInHeaderContent="true" showHeaderContent="false" showAnchorBar="false" subSectionLayout="TitleOnTop">
 					        <uxap:headerTitle>
-					            <uxap:ObjectPageHeader objectImageURI="/webapp/localService/{Image}" objectTitle="{ProductDescription}" objectSubtitle="{Id}" headerDesign="Light" objectImageShape="Square" isObjectIconAlwaysVisible="false" isObjectTitleAlwaysVisible="false" isObjectSubtitleAlwaysVisible="false" isActionAreaAlwaysVisible="true">
-					                <uxap:breadCrumbsLinks/>
-					                <uxap:navigationBar>
-					                    <Bar design="Auto">
-					                        <contentLeft>
-					                            <Button text="" type="Back" iconFirst="true" width="auto" enabled="true" visible="true" iconDensityAware="false" press="onNavBack"/>
-					                        </contentLeft>
-					                        <contentMiddle/>
-					                        <contentRight/>
-					                    </Bar>
-					                </uxap:navigationBar>
-					            </uxap:ObjectPageHeader>
+					            <uxap:ObjectPageHeader/>
 					        </uxap:headerTitle>
 					        <uxap:sections>
 					            <uxap:ObjectPageSection visible="true">
@@ -65,22 +67,6 @@
 															fitContainer="true">
 															<items minHeight="100px">
 																<ObjectListItem intro="" title="{i18n>productInStock}" icon="sap-icon://product" number="{InStock}" numberUnit="{Unit}" type="Active" selected="false">
-																	<layoutData>
-																		<FlexItemData growFactor="1" />
-																	</layoutData>
-																</ObjectListItem>
-															</items>
-														</FlexBox>
-													</layout:content>
-												</layout:VerticalLayout>
-												<layout:VerticalLayout width="100%">
-													<layout:content>
-														<FlexBox
-															width="95%"
-															alignItems="Stretch"
-															fitContainer="true">
-															<items minHeight="100px">
-																<ObjectListItem intro="" title="{i18n>productStatus}" icon="sap-icon://order-status" number="{Status}" numberUnit="" numberState="{StatusColor}" type="Active" selected="false">
 																	<layoutData>
 																		<FlexItemData growFactor="1" />
 																	</layoutData>

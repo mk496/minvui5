@@ -3,22 +3,17 @@
 	<Shell id="shell">
 		<App>
 			<pages>
-				<Page title="{i18n>reqHeaderTitle}">
+				<Page title="{i18n>reqHeaderTitle}" showNavButton="true" navButtonPress="onNavBack">
 					<content>
-						<Bar design="Header">
-							<contentLeft>
-								<Button text="" type="Back" iconFirst="true" width="auto" enabled="true" visible="true" iconDensityAware="false" press="onNavBack"/>
-							</contentLeft>
-							<contentMiddle/>
-							<contentRight/>
-						</Bar>
 						<ObjectHeader intro="" title="{RequisitionDescription}" icon="sap-icon://customer-order-entry" numberState="None"
-							backgroundDesign="Translucent" condensed="false" visible="true">
+							backgroundDesign="Translucent" condensed="false" visible="true" number="{userapi>/firstName} {userapi>/lastName}" numberUnit=" ({userapi>/name})" >
 							<attributes>
 								<ObjectAttribute title="{i18n>requisitionHeaderId}" text="{Id}"/>
+								<ObjectAttribute title="{i18n>requisitionHeaderDate}" text="{ path: 'RequisitionDate', type: 'sap.ui.model.type.Date', formatOptions: { pattern: 'yyyy-MM-dd hh:mm' } }"/>
+								<!--<ObjectAttribute title="{i18n>requisitionHeaderStatus}" text="{RequisitionStatus}"/>-->
 							</attributes>
 							<statuses>
-								<ObjectStatus title="{i18n>requisitionHeaderStatus}" text="Status" state="Error"/>
+								<ObjectStatus title="{i18n>requisitionHeaderStatus}" text="{RequisitionStatus}" state="{= ${RequisitionStatus} === 'Open' ? 'Success' : 'Error'}"/>
 							</statuses>
 							<markers/>
 						</ObjectHeader>
@@ -44,6 +39,12 @@
 											</Column>
 											<Column width="auto" hAlign="Left" vAlign="Top" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
 												<header>
+													<Text text="{i18n>requisitionItemInventoryId}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+												</header>
+												<footer/>
+											</Column>
+											<Column width="auto" hAlign="Left" vAlign="Top" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+												<header>
 													<Text text="{i18n>requisitionItemQuantity}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
 												</header>
 												<footer/>
@@ -54,6 +55,7 @@
 												<cells>
 													<ObjectNumber number="{Id}" emphasized="true" state="None"/>
 													<ObjectIdentifier text="{ItemDesc}" titleActive="false" visible="true"/>
+													<ObjectNumber number="{InventoryId}" emphasized="false" state="None"/>
 													<Text text="{Quantity}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
 												</cells>
 											</ColumnListItem>

@@ -19,6 +19,9 @@ sap.ui.define([
 				this.applyFiltersAndSorters("filteredTabNonPerishable", "items");
 				this.applyFiltersAndSorters("filteredTabPerishable", "items");
 				this.applyFiltersAndSorters("filteredTabAlerts", "items");
+				
+				var oUserModel = new sap.ui.model.json.JSONModel("/services/userapi/currentUser");
+				this.getView().setModel(oUserModel, "userapi");
 
 				// Model used to manipulate control states
 				var oViewModel = new JSONModel({
@@ -189,11 +192,8 @@ sap.ui.define([
 			onStockChange: function (oEvent) {
 				var value = oEvent.getParameter("value");
 
-				//console.log("Stock value changed to '" + value + "'");
-
-				this._enableButtons("save");
-				this._enableButtons("reject");
-				this._resetButtons("order");
+				this._enableButtons(null, true);
+				this._enableButtons("order", false);
 
 				var sParent = oEvent.getSource().getParent();
 				var sPath = sParent.getBindingContext().getPath();
@@ -205,9 +205,10 @@ sap.ui.define([
 				var oModel = this.getView().getModel();
 				oModel.submitChanges();
 
-				this._resetButtons("save");
-				this._resetButtons("reject");
-				this._enableButtons("order");
+				this._enableButtons(null, false);
+				this._enableButtons("order", true);
+				
+				this._setTableEdit(false);
 
 				MessageToast.show(this.getView().getModel("i18n").getResourceBundle().getText("SaveMessage"));
 			},
@@ -215,13 +216,16 @@ sap.ui.define([
 			onReject: function () {
 				var oModel = this.getView().getModel();
 				oModel.resetChanges();
-				this._resetButtons();
+				this._enableButtons(null, false);
+				this._enableButtons("order", true);
+				
+				this._setTableEdit(false);
 
 				MessageToast.show(this.getView().getModel("i18n").getResourceBundle().getText("RejectMessage"));
 			},
 
 			onOrder: function () {
-				this._resetButtons();
+				this._enableButtons(null, false);
 
 				var oView = this.getView(),
 					oModel = oView.getModel();
@@ -235,6 +239,10 @@ sap.ui.define([
 				);
 				
 				this.getView().byId("allOrders").getBinding("items").refresh();
+			},
+			
+			onEdit: function () {
+				this._setTableEdit();
 			},
 			
 			onItemSearch: function (oEvent) {
@@ -271,37 +279,37 @@ sap.ui.define([
 				MessageToast.show("Order has NOT been placed!");
 			},
 
-			_resetButtons: function (oButton) {
+			_enableButtons: function (oButton, bParam) {
 				if (oButton === "save") {
-					this.getView().byId("btnSave").setEnabled(false);
+					this.getView().byId("btnSave").setEnabled(bParam);
 				} else if (oButton === "reject") {
-					this.getView().byId("btnReject").setEnabled(false);
+					this.getView().byId("btnReject").setEnabled(bParam);
 				} else if (oButton === "order") {
-					this.getView().byId("btnOrder").setEnabled(false);
+					this.getView().byId("btnOrder").setEnabled(bParam);
 				} else {
-					this.getView().byId("btnSave").setEnabled(false);
-					this.getView().byId("btnReject").setEnabled(false);
-					this.getView().byId("btnOrder").setEnabled(false);
-				}
-			},
-
-			_enableButtons: function (oButton) {
-				if (oButton === "save") {
-					this.getView().byId("btnSave").setEnabled(true);
-				} else if (oButton === "reject") {
-					this.getView().byId("btnReject").setEnabled(true);
-				} else if (oButton === "order") {
-					this.getView().byId("btnOrder").setEnabled(true);
-				} else {
-					this.getView().byId("btnSave").setEnabled(true);
-					this.getView().byId("btnReject").setEnabled(true);
-					this.getView().byId("btnOrder").setEnabled(true);
+					this.getView().byId("btnSave").setEnabled(bParam);
+					this.getView().byId("btnReject").setEnabled(bParam);
 				}
 			},
 
 			_applySearchItem: function (aTableSearchState) {
 				var oTable = this.getView().byId("tableAllItems");
 				oTable.getBinding("items").filter(aTableSearchState, "Application");
+			},
+			
+			_setTableEdit: function (bParam) {
+				var oItems = this.byId("tableAllItems").getItems();
+				oItems.forEach( function(item) {
+					if (bParam !== undefined) {
+						item.getCells()[2].setEditable(bParam);
+					} else {
+						if (item.getCells()[2].getEditable() === true) {
+							item.getCells()[2].setEditable(false);
+						} else {
+							item.getCells()[2].setEditable(true);
+						}
+					}
+				}, this.bParam);
 			}
 		});
 	}, /* bExport= */

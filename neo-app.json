@@ -21,7 +21,14 @@
 				"entryPath": "/test-resources"
 			},
 			"description": "SAPUI5 Test Resources"
-		}
+		},
+		{
+        "path": "/services/userapi",
+        "target": {
+            "type": "service",
+            "name": "userapi"
+        }
+    }
 	],
 	"authenticationMethod": "none",
 	"sendWelcomeFileRedirect": true
