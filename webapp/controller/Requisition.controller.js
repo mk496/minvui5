@@ -13,6 +13,9 @@ sap.ui.define([
 
 			this.getRouter().getRoute("Requisition").attachPatternMatched(this._onObjectMatched, this);
 			this.getView().setModel(oViewModel, "requisitionView");
+			
+			var oUserModel = new sap.ui.model.json.JSONModel("/services/userapi/currentUser");
+			this.getView().setModel(oUserModel, "userapi");
 		},
 		
 		onUpdateFinished: function (oEvent) {

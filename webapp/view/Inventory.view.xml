@@ -2,14 +2,14 @@
 	<Shell id="shell">
 		<App id="app">
 			<pages>
-			    <Page showHeader="true" title="{i18n>appTitle}" showFooter="false">
+			    <Page showHeader="true" title="{i18n>appTitle}" showFooter="true">
 			        <content>
-			            <ObjectHeader intro="" title="{i18n>invHeaderTitle}" icon="sap-icon://retail-store" number="{inventoryView>/allItemsCount}" numberUnit="Items" numberState="None" backgroundDesign="Translucent" condensed="false" visible="true">
+			            <ObjectHeader intro="" title="{i18n>invHeaderTitle}" icon="sap-icon://retail-store" number="{userapi>/firstName} {userapi>/lastName}" numberUnit=" ({userapi>/name})" numberState="None" backgroundDesign="Translucent" condensed="false" visible="true">
 			                <attributes/>
 			                <statuses/>
 			                <markers/>
 			            </ObjectHeader>
-			            <OverflowToolbar width="100%" height="auto" design="Auto" enabled="true" visible="true">
+			            <!--<OverflowToolbar width="100%" height="auto" design="Auto" enabled="true" visible="true">
 			                <content>
 			                    <Button id="btnSave" icon="sap-icon://save" text="{i18n>btnSave}" press="onSave" iconFirst="true" width="auto" enabled="false" visible="true" iconDensityAware="false"/>
 			                    <Button id="btnOrder" icon="sap-icon://add-activity-2" text="{i18n>btnOrder}" press="onOrder" type="Accept" iconFirst="true" width="auto" enabled="false" visible="true" iconDensityAware="false"/>
@@ -25,7 +25,8 @@
 									</layoutData>
 								</SearchField>
 			                </content>
-			            </OverflowToolbar>
+			            </OverflowToolbar>-->
+			            
 			            <!--<IconTabBar
 							headerMode="Inline"
 							upperCase="true"
@@ -39,47 +40,78 @@
 			                <items>
 			                    <IconTabFilter icon="sap-icon://drop-down-list" iconColor="Positive" text="{i18n>allItems}" count="{inventoryView>/allItemsCount}" design="Vertical" showAll="false" textDirection="Inherit" enabled="true" visible="true" iconDensityAware="false">
 			                        <content>
-			                            <Table id="tableAllItems" width="auto" noDataText="{i18n>noData}" mode="None" showSeparators="All" growing="false" growingThreshold="20" growingScrollToLoad="false" class="sapUiResponsiveMargin"
+			                        	<OverflowToolbar width="100%" height="auto" design="Auto" enabled="true" visible="true">
+							                <content>
+							                     <SearchField
+													id="searchField"
+													tooltip="{i18n>inventorySearchTooltip}"
+													search="onItemSearch"
+													class="sapUiResponsiveMargin">
+													<layoutData>
+														<OverflowToolbarLayoutData
+															maxWidth="25%"
+															priority="NeverOverflow"/>
+													</layoutData>
+												</SearchField>
+												<Button id="btnSave" icon="sap-icon://save" text="{i18n>btnSave}" press="onSave" iconFirst="true" width="auto" enabled="false" visible="true" iconDensityAware="false"/>
+							                    <Button id="btnOrder" icon="sap-icon://add-activity-2" text="{i18n>btnOrder}" press="onOrder" type="Accept" iconFirst="true" width="auto" enabled="true" visible="true" iconDensityAware="false"/>
+							                    <Button id="btnReject" icon="sap-icon://decline" text="{i18n>btnReject}" press="onReject" type="Reject" iconFirst="true" width="auto" enabled="false" visible="true" iconDensityAware="false"/>
+							                    <Button id="btnEdit" icon="sap-icon://edit" text="{i18n>btnEdit}" press="onEdit" iconFirst="true" width="auto" enabled="true" visible="true" iconDensityAware="false"/>
+							                </content>
+							            </OverflowToolbar>
+			                            <Table id="tableAllItems" width="auto" noDataText="{i18n>noData}" mode="MultiSelect" showSeparators="All" growing="false" growingThreshold="20" growingScrollToLoad="false" class="sapUiResponsiveMargin"
 			                            	items="{
 			                            		path:'/InventorySet',
 			                            		sorter: {
 													path: 'Id',
 													descending: true
-												}}" updateFinished="onUpdateFinished">
+												}}" updateFinished="onUpdateFinished" rememberSelections="true" alternateRowColors="true">
 			                                <infoToolbar/>
 			                                <headerToolbar/>
 			                                <columns>
-			                                    <Column width="auto" hAlign="Left" vAlign="Top" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+			                                    <Column width="auto" hAlign="Left" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
 			                                        <header>
 			                                            <Text text="{i18n>ProductDescription}" width="auto" visible="true"/>
 			                                        </header>
 			                                        <footer/>
 			                                    </Column>
-			                                    <Column width="auto" hAlign="Left" vAlign="Top" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+			                                    <Column width="auto" hAlign="Left" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
 			                                        <header>
 			                                            <Text text="{i18n>PriceDescription}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
 			                                        </header>
 			                                        <footer/>
 			                                    </Column>
-			                                    <Column width="auto" hAlign="Left" vAlign="Top" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+			                                    <Column width="150px" hAlign="Left" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
 			                                        <header>
-			                                            <Text text="{i18n>ShelfStockDescription}" width="auto" maxLines="1" wrapping="false" textAlign="Center" textDirection="Inherit" visible="true"/>
+			                                            <Text text="{i18n>ShelfStockDescription}" width="auto" maxLines="1" wrapping="false" textAlign="Left" textDirection="Inherit" visible="true"/>
 			                                        </header>
 			                                        <footer/>
 			                                    </Column>
-			                                    <Column width="auto" hAlign="Left" vAlign="Top" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+			                                    <Column width="auto" hAlign="Left" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+			                                        <header>
+			                                            <Text text="{i18n>UnitDescription}" width="auto" maxLines="1" wrapping="false" textAlign="Center" textDirection="Inherit" visible="true"/>
+			                                        </header>
+			                                        <footer/>
+			                                    </Column>
+			                                    <Column width="auto" hAlign="Left" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+			                                        <header>
+			                                            <Text text="{i18n>IntockDescription}" width="auto" maxLines="1" wrapping="false" textAlign="Center" textDirection="Inherit" visible="true"/>
+			                                        </header>
+			                                        <footer/>
+			                                    </Column>
+			                                    <Column width="auto" hAlign="Left" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
 			                                        <header>
 			                                            <Text text="{i18n>LocationDescription}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
 			                                        </header>
 			                                        <footer/>
 			                                    </Column>
-			                                    <Column width="auto" hAlign="Left" vAlign="Top" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+			                                    <Column width="auto" hAlign="Left" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
 			                                        <header>
 			                                            <Text text="{i18n>ImageDescription}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
 			                                        </header>
 			                                        <footer/>
 			                                    </Column>
-			                                    <Column width="auto" hAlign="Left" vAlign="Top" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+			                                    <Column width="auto" hAlign="Left" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
 			                                        <header>
 			                                            <Text text="{i18n>StatusDescription}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
 			                                        </header>
@@ -87,11 +119,13 @@
 			                                    </Column>
 			                                </columns>
 			                                <items>
-			                                    <ColumnListItem type="Navigation" press="onItemSelect">
+			                                    <ColumnListItem type="Navigation" press="onItemSelect" vAlign="Middle">
 			                                        <cells>
 			                                            <ObjectIdentifier text="{ProductDescription}" titleActive="false" visible="true"/>
 			                                            <ObjectNumber number="{Price}" unit="{Currency}" emphasized="true" state="None"/>
-			                                            <StepInput value="{ShelfStock}" min="0" max="999" width="230px" step="1" enabled="{enabled}" editable="{editable}" description="{Unit}" fieldWidth="50%" textAlign="Center" change="onStockChange"/>
+			                                            <StepInput id="shelfStockInput" value="{ShelfStock}" min="0" max="999" width="50px" step="5" editable="false" fieldWidth="40px" textAlign="Center" change="onStockChange"/>
+			                                            <Text text="{Unit}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+			                                            <ObjectNumber number="{InStock}" emphasized="true" state="None"/>
 			                                            <Text text="{Location}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
 			                                            <Image src="/webapp/localService/{Image}" height="50px" width="50px" visible="true" densityAware="false" tooltip="{i18n>imageTooltip}"/>
 			                                            <ObjectStatus title="" text="{Status}" state="{StatusColor}" visible="true"/>
@@ -103,6 +137,21 @@
 			                    </IconTabFilter>
 			                    <IconTabFilter icon="sap-icon://product" iconColor="Neutral" text="{i18n>nonPerishable}" count="{inventoryView>/nonPerishableCount}" design="Vertical" showAll="false" textDirection="Inherit" enabled="true" visible="true" iconDensityAware="false">
 			                        <content>
+			                        	<OverflowToolbar width="100%" height="auto" design="Auto" enabled="true" visible="true">
+							                <content>
+							                     <SearchField
+													id="searchField2"
+													tooltip="{i18n>inventorySearchTooltip}"
+													search="onItemSearch"
+													class="sapUiResponsiveMargin">
+													<layoutData>
+														<OverflowToolbarLayoutData
+															maxWidth="25%"
+															priority="NeverOverflow"/>
+													</layoutData>
+												</SearchField>
+							                </content>
+							            </OverflowToolbar>
 			                            <Table id="filteredTabNonPerishable" width="auto" noDataText="{i18n>noData}" mode="None" showSeparators="All" growing="false" growingThreshold="20" growingScrollToLoad="false" class="sapUiResponsiveMargin"
 			                            	items="{path:'/InventorySet', templateShareable:true}" updateFinished="onUpdateFinished">
 			                                <infoToolbar/>
@@ -162,6 +211,21 @@
 			                    </IconTabFilter>
 			                    <IconTabFilter icon="sap-icon://fridge" iconColor="Neutral" text="{i18n>perishable}" count="{inventoryView>/perishableCount}" design="Vertical" showAll="false" textDirection="Inherit" enabled="true" visible="true" iconDensityAware="false">
 			                        <content>
+			                        	<OverflowToolbar width="100%" height="auto" design="Auto" enabled="true" visible="true">
+							                <content>
+							                     <SearchField
+													id="searchField3"
+													tooltip="{i18n>inventorySearchTooltip}"
+													search="onItemSearch"
+													class="sapUiResponsiveMargin">
+													<layoutData>
+														<OverflowToolbarLayoutData
+															maxWidth="25%"
+															priority="NeverOverflow"/>
+													</layoutData>
+												</SearchField>
+							                </content>
+							            </OverflowToolbar>
 			                            <Table id="filteredTabPerishable" width="auto" noDataText="{i18n>noData}" mode="None" showSeparators="All" growing="false" growingThreshold="20" growingScrollToLoad="false" class="sapUiResponsiveMargin"
 			                            	items="{path:'/InventorySet', templateShareable:true}" updateFinished="onUpdateFinished">
 			                                <infoToolbar/>
@@ -221,6 +285,21 @@
 			                    </IconTabFilter>
 			                    <IconTabFilter icon="sap-icon://alert" iconColor="Critical" text="{i18n>alerts}" count="{inventoryView>/alertsCount}" design="Vertical" showAll="false" textDirection="Inherit" enabled="true" visible="true" iconDensityAware="false">
 			                        <content>
+			                        	<OverflowToolbar width="100%" height="auto" design="Auto" enabled="true" visible="true">
+							                <content>
+							                     <SearchField
+													id="searchField4"
+													tooltip="{i18n>inventorySearchTooltip}"
+													search="onItemSearch"
+													class="sapUiResponsiveMargin">
+													<layoutData>
+														<OverflowToolbarLayoutData
+															maxWidth="25%"
+															priority="NeverOverflow"/>
+													</layoutData>
+												</SearchField>
+							                </content>
+							            </OverflowToolbar>
 			                            <Table id="filteredTabAlerts" width="auto" noDataText="{i18n>noData}" mode="None" showSeparators="All" growing="false" growingThreshold="20" growingScrollToLoad="false" class="sapUiResponsiveMargin"
 			                            	items="{path:'/InventorySet', templateShareable:true}" updateFinished="onUpdateFinished">
 			                                <infoToolbar/>
@@ -300,7 +379,7 @@
 			                                    </Column>
 			                                    <Column width="auto" hAlign="Left" vAlign="Top" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
 			                                        <header>
-			                                            <Text text="{i18n>requisitionHeaderAttribute}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+			                                            <Text text="{i18n>requisitionHeaderDate}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
 			                                        </header>
 			                                        <footer/>
 			                                    </Column>
@@ -314,10 +393,10 @@
 			                                <items>
 			                                    <ColumnListItem type="Navigation" press="onRequisitionSelect">
 			                                        <cells>
-			                                        	<ObjectNumber number="{Id}" emphasized="true" state="None"/>
+			                                        	<ObjectNumber number="{Id}" emphasized="false" state="None"/>
 			                                            <ObjectIdentifier text="{RequisitionDescription}" titleActive="false" visible="true"/>
-			                                            <Text text="{NewAttribute}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
-			                                            <ObjectStatus title="" text="" state="" visible="true"/>
+			                                            <ObjectNumber number="{ path: 'RequisitionDate', type: 'sap.ui.model.type.Date', formatOptions: { pattern: 'yyyy-MM-dd hh:mm' } }" emphasized="false"/>
+			                                            <ObjectStatus title="" text="{RequisitionStatus}" state="{= ${RequisitionStatus} === 'Open' ? 'Success' : 'Error'}" visible="true"/>
 			                                        </cells>
 			                                    </ColumnListItem>
 			                                </items>
@@ -326,9 +405,45 @@
 			                    </IconTabFilter>
 			                </items>
 			            </IconTabBar>
+			            <!--<OverflowToolbar width="100%" height="auto" design="Auto" enabled="true" visible="true">
+			                <content>
+			                    <Button id="btnSave" icon="sap-icon://save" text="{i18n>btnSave}" press="onSave" iconFirst="true" width="auto" enabled="false" visible="true" iconDensityAware="false"/>
+			                    <Button id="btnOrder" icon="sap-icon://add-activity-2" text="{i18n>btnOrder}" press="onOrder" type="Accept" iconFirst="true" width="auto" enabled="false" visible="true" iconDensityAware="false"/>
+			                    <Button id="btnReject" icon="sap-icon://decline" text="{i18n>btnReject}" press="onReject" type="Reject" iconFirst="true" width="auto" enabled="false" visible="true" iconDensityAware="false"/>
+			                     <SearchField
+									id="searchField"
+									tooltip="{i18n>inventorySearchTooltip}"
+									search="onItemSearch">
+									<layoutData>
+										<OverflowToolbarLayoutData
+											maxWidth="200px"
+											priority="NeverOverflow"/>
+									</layoutData>
+								</SearchField>
+			                </content>
+			            </OverflowToolbar>-->
 			            
 			            <!--</IconTabFilter></items></IconTabBar>-->
 			        </content>
+			        <!--<footer>
+			        	<OverflowToolbar width="100%" height="auto" design="Auto" enabled="true" visible="true">
+			                <content>
+			                    <Button id="btnSave" icon="sap-icon://save" text="{i18n>btnSave}" press="onSave" iconFirst="true" width="auto" enabled="false" visible="true" iconDensityAware="false"/>
+			                    <Button id="btnOrder" icon="sap-icon://add-activity-2" text="{i18n>btnOrder}" press="onOrder" type="Accept" iconFirst="true" width="auto" enabled="false" visible="true" iconDensityAware="false"/>
+			                    <Button id="btnReject" icon="sap-icon://decline" text="{i18n>btnReject}" press="onReject" type="Reject" iconFirst="true" width="auto" enabled="false" visible="true" iconDensityAware="false"/>
+			                     <SearchField
+									id="searchField"
+									tooltip="{i18n>inventorySearchTooltip}"
+									search="onItemSearch">
+									<layoutData>
+										<OverflowToolbarLayoutData
+											maxWidth="200px"
+											priority="NeverOverflow"/>
+									</layoutData>
+								</SearchField>
+			                </content>
+			            </OverflowToolbar>
+			        </footer>-->
 			    </Page>
 			</pages>
 		</App>
