@@ -58,10 +58,10 @@
 			"type": "XML"
 		},
 		"dependencies": {
-			"minUI5Version": "1.50.0",
+			"minUI5Version": "1.65.1",
 			"libs": {
-				"sap.ui.core": {},
 				"sap.m": {},
+				"sap.ui.core": {},
 				"sap.ui.layout": {}
 			}
 		},
@@ -90,7 +90,9 @@
 			}
 		},
 		"resources": {
-			"css": []
+		  "css": [
+		  	{ "uri": "css/style.css" }
+		  ]
 		},
 		"routing": {
 			"config": {

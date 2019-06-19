@@ -1,35 +1,35 @@
 {
-	"welcomeFile": "webapp/test/testFLPService.html",
-	"routes": [
-		{
-			"path": "/resources",
-			"target": {
-				"type": "service",
-				"name": "sapui5",
-				"version": "1.58.4",
-				"preferLocal": true,
-				"entryPath": "/resources"
-			},
-			"description": "SAPUI5 Resources"
-		},
-		{
-			"path": "/test-resources",
-			"target": {
-				"type": "service",
-				"version": "1.58.4",
-				"name": "sapui5",
-				"entryPath": "/test-resources"
-			},
-			"description": "SAPUI5 Test Resources"
-		},
-		{
-        "path": "/services/userapi",
-        "target": {
-            "type": "service",
-            "name": "userapi"
-        }
+  "welcomeFile": "webapp/test/testFLPService.html",
+  "routes": [
+    {
+      "path": "/resources",
+      "target": {
+        "type": "service",
+        "name": "sapui5",
+        "version": "1.65.1",
+        "preferLocal": true,
+        "entryPath": "/resources"
+      },
+      "description": "SAPUI5 Resources"
+    },
+    {
+      "path": "/test-resources",
+      "target": {
+        "type": "service",
+        "version": "1.65.1",
+        "name": "sapui5",
+        "entryPath": "/test-resources"
+      },
+      "description": "SAPUI5 Test Resources"
+    },
+    {
+      "path": "/services/userapi",
+      "target": {
+        "type": "service",
+        "name": "userapi"
+      }
     }
-	],
-	"authenticationMethod": "none",
-	"sendWelcomeFileRedirect": true
+  ],
+  "authenticationMethod": "none",
+  "sendWelcomeFileRedirect": true
 }

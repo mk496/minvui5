@@ -9,8 +9,7 @@
 							backgroundDesign="Translucent" condensed="false" visible="true" number="{userapi>/firstName} {userapi>/lastName}" numberUnit=" ({userapi>/name})" >
 							<attributes>
 								<ObjectAttribute title="{i18n>requisitionHeaderId}" text="{Id}"/>
-								<ObjectAttribute title="{i18n>requisitionHeaderDate}" text="{ path: 'RequisitionDate', type: 'sap.ui.model.type.Date', formatOptions: { pattern: 'yyyy-MM-dd hh:mm' } }"/>
-								<!--<ObjectAttribute title="{i18n>requisitionHeaderStatus}" text="{RequisitionStatus}"/>-->
+								<ObjectAttribute title="{i18n>requisitionHeaderDate}" text="{ path: 'RequisitionDate', type: 'sap.ui.model.type.Date', formatOptions: { pattern: 'yyyy-MM-dd hh:mm a' } }"/>
 							</attributes>
 							<statuses>
 								<ObjectStatus title="{i18n>requisitionHeaderStatus}" text="{RequisitionStatus}" state="{= ${RequisitionStatus} === 'Open' ? 'Success' : 'Error'}"/>
