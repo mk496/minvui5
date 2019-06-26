@@ -19,7 +19,7 @@ sap.ui.define([
 				this.applyFiltersAndSorters("filteredTabNonPerishable", "items");
 				this.applyFiltersAndSorters("filteredTabPerishable", "items");
 				this.applyFiltersAndSorters("filteredTabAlerts", "items");
-				
+
 				var oUserModel = new sap.ui.model.json.JSONModel("/services/userapi/currentUser");
 				this.getView().setModel(oUserModel, "userapi");
 
@@ -144,7 +144,7 @@ sap.ui.define([
 			onUpdateFinished: function (oEvent) {
 				var iTotalItems = oEvent.getParameter("total"),
 					oModel = this.getView().getModel("inventoryView");
-				
+
 				if (oEvent.getSource().getId() === "container-SmartStore---Inventory--tableAllItems") {
 					oModel.setProperty("/allItemsCount", iTotalItems);
 				} else if (oEvent.getSource().getId() === "container-SmartStore---Inventory--filteredTabNonPerishable") {
@@ -207,7 +207,7 @@ sap.ui.define([
 
 				this._enableButtons(null, false);
 				this._enableButtons("order", true);
-				
+
 				this._setTableEdit(false);
 
 				MessageToast.show(this.getView().getModel("i18n").getResourceBundle().getText("SaveMessage"));
@@ -218,7 +218,7 @@ sap.ui.define([
 				oModel.resetChanges();
 				this._enableButtons(null, false);
 				this._enableButtons("order", true);
-				
+
 				this._setTableEdit(false);
 
 				MessageToast.show(this.getView().getModel("i18n").getResourceBundle().getText("RejectMessage"));
@@ -231,20 +231,20 @@ sap.ui.define([
 					oModel = oView.getModel();
 
 				oModel.callFunction(
-					"/newRequisition", { 
+					"/newRequisition", {
 						method: "GET",
 						success: this._orderSuccess,
 						error: this._orderError
 					}
 				);
-				
+
 				this.getView().byId("allOrders").getBinding("items").refresh();
 			},
-			
+
 			onEdit: function () {
 				this._setTableEdit();
 			},
-			
+
 			onItemSearch: function (oEvent) {
 				if (oEvent.getParameters().refreshButtonPressed) {
 					this.onRefresh();
@@ -255,7 +255,8 @@ sap.ui.define([
 					if (sQuery && sQuery.length > 0) {
 						aTableSearchState = [new Filter("ProductDescription", FilterOperator.Contains, sQuery)];
 					}
-					this._applySearchItem(aTableSearchState);
+					var btableName = oEvent.getSource().getParent().getParent().getProperty("text");
+					this._applySearchItem(aTableSearchState, btableName);
 				}
 			},
 
@@ -264,7 +265,7 @@ sap.ui.define([
 					itemId: oEvent.getSource().getBindingContext().getProperty("Id")
 				});
 			},
-			
+
 			onRequisitionSelect: function (oEvent) {
 				this.getRouter().navTo("Requisition", {
 					requisitionId: oEvent.getSource().getBindingContext().getProperty("Id")
@@ -272,7 +273,7 @@ sap.ui.define([
 			},
 
 			_orderSuccess: function (oData, response) {
-				MessageToast.show("Order with ID "+oData.Id+" has been placed!");
+				MessageToast.show("Order with ID " + oData.Id + " has been placed!");
 			},
 
 			_orderError: function (oError) {
@@ -292,14 +293,24 @@ sap.ui.define([
 				}
 			},
 
-			_applySearchItem: function (aTableSearchState) {
-				var oTable = this.getView().byId("tableAllItems");
+			_applySearchItem: function (aTableSearchState, btableName) {
+				var oTable;
+				if (btableName === "All Items") {
+					oTable = this.getView().byId("tableAllItems");
+				} else if (btableName === "Non-Perishable") {
+					oTable = this.getView().byId("filteredTabNonPerishable");
+				} else if (btableName === "Perishable") {
+					oTable = this.getView().byId("filteredTabPerishable");
+				} else {
+					oTable = this.getView().byId("filteredTabAlerts");
+				}
+				
 				oTable.getBinding("items").filter(aTableSearchState, "Application");
 			},
-			
+
 			_setTableEdit: function (bParam) {
 				var oItems = this.byId("tableAllItems").getItems();
-				oItems.forEach( function(item) {
+				oItems.forEach(function (item) {
 					if (bParam !== undefined) {
 						item.getCells()[2].setEditable(bParam);
 					} else {
