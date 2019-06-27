@@ -58,8 +58,12 @@ sap.ui.define([
 				} else {
 					this.getRouter().navTo("Inventory", {}, true);
 				}
+			},
+			
+			initUserInfo: function () {
+				var oUserModel = new sap.ui.model.json.JSONModel("/services/userapi/currentUser");
+				this.getView().setModel(oUserModel, "userapi");
 			}
-
 		});
 
 	}

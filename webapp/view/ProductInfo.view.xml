@@ -8,10 +8,6 @@
 							backgroundDesign="Translucent" condensed="false" visible="true" number="{userapi>/firstName} {userapi>/lastName}" numberUnit=" ({userapi>/name})" >
 							<attributes>
 							<ObjectAttribute title="{i18n>productAttrId}" text="{Id}"/>
-							<!--<ObjectAttribute title="{i18n>productLifeRemaining}" text="{LifeRemaining}"/>
-								<ObjectAttribute title="{i18n>productLocation}" text="{Location}"/>
-								<ObjectAttribute title="{i18n>productInStock}" text="{InStock}"/>
-								<ObjectAttribute title="{i18n>productStatus}" text="{Status}"/>-->
 							</attributes>
 							<statuses>
 								<ObjectStatus title="{i18n>productStatus}" text="{Status}" state="{StatusColor}"/>

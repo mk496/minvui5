@@ -13,8 +13,8 @@ sap.ui.define([
 			this.getRouter().getRoute("ProductInfo").attachPatternMatched(this._onObjectMatched, this);
 			this.getView().setModel(oViewModel, "productView");
 			
-			var oUserModel = new sap.ui.model.json.JSONModel("/services/userapi/currentUser");
-			this.getView().setModel(oUserModel, "userapi");
+			/* Initialize User Info for displaying User Name, Last Name and ID */
+			this.initUserInfo();
 		},
 
 		_onObjectMatched : function (oEvent) {
