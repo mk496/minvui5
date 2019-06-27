@@ -90,9 +90,9 @@
 			}
 		},
 		"resources": {
-		  "css": [
-		  	{ "uri": "css/style.css" }
-		  ]
+			"css": [{
+				"uri": "css/style.css"
+			}]
 		},
 		"routing": {
 			"config": {
@@ -127,22 +127,32 @@
 					"viewId": "Requisition",
 					"viewLevel": 2,
 					"controlAggregation": "pages"
+				},
+				"AddInventory": {
+					"viewType": "XML",
+					"viewName": "AddInventory"
 				}
 			},
 			"routes": [{
 				"pattern": "",
 				"name": "Inventory",
-				"target": ["ProductInfo", "Inventory"]
+				"target": ["Inventory"]
 			}, {
 				"name": "ProductInfo",
 				"pattern": "InventorySet/({itemId})",
-				"target": ["Inventory", "ProductInfo"]
+				"target": ["ProductInfo"]
 			}, {
 				"name": "Requisition",
 				"pattern": "RequisitionHeaderSet({requisitionId})",
 				"titleTarget": "",
 				"greedy": false,
 				"target": ["Requisition"]
+			}, {
+				"name": "AddInventory",
+				"pattern": "AddItem",
+				"titleTarget": "",
+				"greedy": false,
+				"target": ["AddInventory"]
 			}],
 			"additionalData": {
 				"com.sap.build.standard.smartStore.view.ProductInfo": {

@@ -92,12 +92,12 @@
 			                                        </header>
 			                                        <footer/>
 			                                    </Column>
-			                                    <Column width="auto" hAlign="Left" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+			                                    <!--<Column width="auto" hAlign="Left" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
 			                                        <header>
 			                                            <Text text="{i18n>ImageDescription}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
 			                                        </header>
 			                                        <footer/>
-			                                    </Column>
+			                                    </Column>-->
 			                                    <Column width="auto" hAlign="Left" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
 			                                        <header>
 			                                            <Text text="{i18n>StatusDescription}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
@@ -110,11 +110,11 @@
 			                                        <cells>
 			                                            <ObjectIdentifier text="{ProductDescription}" titleActive="false" visible="true"/>
 			                                            <ObjectNumber number="{Price}" unit="{Currency}" emphasized="true" state="None"/>
-			                                            <ObjectNumber id="shelfStock" number="{ShelfStock}" emphasized="true" state="None"/>
+			                                            <StepInput id="shelfStock" fieldWidth="40px" width="80px" value="{ShelfStock}" editable="true" step="5" change="onStockChange"/>
 			                                            <Text text="{Unit}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
 			                                            <ObjectNumber number="{InStock}" emphasized="true" state="None"/>
 			                                            <Text text="{Location}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
-			                                            <Image src="/webapp/localService/{Image}" height="50px" width="50px" visible="true" densityAware="false" tooltip="{i18n>imageTooltip}"/>
+			                                            <!--<Image src="/webapp/localService/{Image}" height="50px" width="50px" visible="true" densityAware="false" tooltip="{i18n>imageTooltip}"/>-->
 			                                            <ObjectStatus title="" text="{Status}" state="{StatusColor}" visible="true"/>
 			                                            <!--<Button id="btnDel" class="roundButton" icon="sap-icon://decline" text="" type="Reject" press="onDel" iconFirst="true" width="auto" enabled="true" visible="false" iconDensityAware="false"/>-->
 			                                        </cells>
@@ -171,7 +171,6 @@
 			                    </IconTabFilter>
 			                </items>
 			            </IconTabBar>
-			            <core:Fragment fragmentName="com.sap.build.standard.smartStore.view.fragment.AddItem" type="XML"/>
 			        </content>
 			    </Page>
 			</pages>

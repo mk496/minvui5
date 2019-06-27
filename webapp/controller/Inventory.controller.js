@@ -32,6 +32,8 @@ sap.ui.define([
 				});
 
 				this.getView().setModel(oViewModel, "inventoryView");
+				
+				this.createdId = null;
 			},
 
 			handleRouteMatched: function (oEvent) {
@@ -175,19 +177,17 @@ sap.ui.define([
 					}
 				}
 			},
+			
+			onStockChange: function (oEvent) {
+				var value = oEvent.getParameter("value");
 
-			onSave: function () {
-				this.getModel().submitChanges();
-				this.getModel().refresh();
-				MessageToast.show(this.getView().getModel("i18n").getResourceBundle().getText("SaveMessage"));
-			},
-
-			onReject: function () {
-				this.getModel().resetChanges();
-				this.getModel().deleteCreatedEntry();
-				this.getModel().refresh();
-				this.byId("tableAllItems").removeSelections(true);
-				MessageToast.show(this.getView().getModel("i18n").getResourceBundle().getText("RejectMessage"));
+				var sParent = oEvent.getSource().getParent();
+				var sPath = sParent.getBindingContext().getPath();
+				var oModel = this.getView().getModel();
+				oModel.setProperty(sPath + "/ShelfStock", value.toString());
+				
+				oModel.submitChanges();
+				oModel.refresh();
 			},
 
 			onOrder: function () {
@@ -215,22 +215,32 @@ sap.ui.define([
 			},
 			
 			onAdd: function () {
-				const dialog = this.byId("dialog");
+				this.getRouter().navTo("AddInventory");
+				
+				/*var oEntry = this._createItemEntry();
+				var that = this;
+				
+				this.getModel().create("/InventorySet", oEntry, 
+					{
+						success : function(oData) {
+							that.getRouter().navTo("AddInventory",  {
+								itemId: oData.Id
+							});
+						},
+						error : this._handleErrorAddProduct
+					});*/
+					
+				/*const dialog = this.byId("dialog");
     			syncStyleClass("sapUiSizeCompact", this.getView(), dialog);
-    			dialog.open();
+    			dialog.open();*/
+    			
 				/*var oItem = this._createItemRow();
 				var oTable = this.byId("tableAllItems");
 				oTable.insertItem(oItem, 0);
-				this.aCreatedItems.push(oItem);
+				this.aCreatedItems.push(oItem);*/
 				
-				var oData = this._createItemEntry(oItem);
-				this.getModel().createEntry("/InventorySet", oData, 
-					{
-						success : this._handleAddProduct(true),
-						error : this._handleAddProduct(false)
-					});*/
-					
-				this.getModel().refresh();
+				
+				//this.getModel().refresh();
 			},
 	
 			onDelete: function() {
@@ -347,62 +357,10 @@ sap.ui.define([
 				}
 			},
 			
-			_handleAddProduct : function (bSuccess){
-				MessageToast.show(this.getModel("i18n").getResourceBundle().getText("ProductSuccessAddMessage"));	
-			},
-			
-			_createItemEntry: function (oItem) {
-				return {
-    				Id: null,
-					ProductDescription: 'X',
-					Price: '0,00',
-					Currency: 'PLN',
-					ShelfStock: '50',
-					Location: 'Location',
-					Image: '',
-					Status: 'Success',
-					StatusColor: 'Success',
-					InStock: '100',
-					Unit: 'Unit',
-					LifeRemaining: '1 Month',
-					LifeRemainingTreshold: 'Success',
-					ItemType: 'Perishable',
-					OrderingTreshold: 'Success'
-				};
-			},
-			// DIALOG ------------------------------------------------------------
-
-		    onBeforeDialogOpen: function(event) {
-		    	var oModel = this.getModel();
-		      //const context = this.getView().getBindingContext("odata");
-		    	this.setDeferred("addingItem", oModel);
-		    	var newContext = this.getModel().createEntry("/InventorySet", {
-		        	groupId: "addingItem",
-		        	properties: {
-    					Id: oModel.getProperty("Id"),
-						ProductDescription: null,
-						Price: null,
-						Currency: null,
-						ShelfStock: null,
-						Location: null,
-						Status: null,
-						InStock: null,
-						Unit: 'null',
-						LifeRemaining: 'null',
-						ItemType: 'null'
-					}
-		    	});
-		    	event.getSource().setBindingContext(newContext, "odata");
-		    },
+			_handleErrorAddProduct: function (oError) {
+				
+			}
 		
-		    setDeferred: function(groupId, model) {
-		      var groupsIds = model.getDeferredGroups();
-		      if (!groupsIds.find(id => id === groupId)) {
-		        model.setDeferredGroups(model.getDeferredGroups().concat(groupId));
-		      }
-		    },
-		
-		    // =====================================================
 		});
 	}, /* bExport= */
 	true);

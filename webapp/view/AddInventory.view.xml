@@ -1,0 +1,167 @@
+<mvc:View
+	xmlns:core="sap.ui.core"
+	xmlns:mvc="sap.ui.core.mvc"
+	xmlns="sap.m"
+	xmlns:l="sap.ui.layout"
+	xmlns:f="sap.ui.layout.form"
+	controllerName="com.sap.build.standard.smartStore.controller.AddInventory" xmlns:html="http://www.w3.org/1999/xhtml">
+	<Shell>
+		<App>
+			<pages>
+				<Page title="{i18n>inventoryAddTitle}">
+					<content>
+						 <ObjectHeader intro="" title="{i18n>invHeaderTitle}" icon="sap-icon://retail-store" number="{userapi>/firstName} {userapi>/lastName}" numberUnit=" ({userapi>/name})" numberState="None" backgroundDesign="Translucent" condensed="false" visible="true">
+			                <attributes/>
+			                <statuses/>
+			                <markers/>
+			            </ObjectHeader>
+						<VBox class="sapUiSmallMargin">
+							<f:SimpleForm id="addInventoryForm"
+								editable="true"
+								layout="ColumnLayout" 
+								title="{i18n>inventoryAddTitle}"
+								labelSpanXL="4"
+								labelSpanL="3"
+								labelSpanM="2"
+								labelSpanS="12"
+								adjustLabelSpan="false"
+								emptySpanXL="1"
+								emptySpanL="1"
+								emptySpanM="0"
+								emptySpanS="0"
+								columnsM="1"
+								columnsL="2"
+								columnsXL="2">
+								<f:content>
+									<Label text="{i18n>addMaterialLabel}" />
+									<Input id="addMaterial" value="" placeholder="E.g. Milk" required="true"/>
+									<!--<Select id="addDescription" selectedKey="1">
+										<items>
+											<core:Item text="2% Skim Milk" key="1"/>
+											<core:Item text="Broccoli Crowns" key="2"/>
+											<core:Item text="Electric Kettle" key="3"/>
+										</items>
+									</Select>-->
+									<Label text="{i18n>PriceDescription}" />
+									<Input id="addPrice" value="0.00" type="Number" placeholder="0,00" required="true">
+										<layoutData>
+											<f:ColumnElementData cellsSmall="6" cellsLarge="5"/>
+										</layoutData>
+									</Input>
+									<Select id="addCurrency" selectedKey="1">
+										<layoutData>
+											<f:ColumnElementData cellsSmall="6" cellsLarge="3" />
+										</layoutData>
+										<items>
+											<core:Item text="USD" key="1"/>
+											<core:Item text="EUR" key="2"/>
+											<core:Item text="PLN" key="3"/>
+										</items>
+									</Select>
+									<Label text="{i18n>addShelfInStocks}" />
+									<StepInput id="addShelfStock" value="0" editable="true" step="5" required="true">
+										<layoutData>
+											<f:ColumnElementData cellsSmall="6" cellsLarge="4" />
+										</layoutData>
+									</StepInput>
+									<!--<Label text="{i18n>IntockDescription}" />-->
+									<StepInput id="addInStock" value="0" editable="true" step="10" required="true">
+										<layoutData>
+											<f:ColumnElementData cellsSmall="6" cellsLarge="4" />
+										</layoutData>
+									</StepInput>
+									<Label text="{i18n>UnitDescription}" />
+									<Select id="addUnit" selectedKey="1">
+										<items>
+											<core:Item text="PCS" key="1"/>
+											<core:Item text="Bags" key="2"/>
+											<core:Item text="Cartons" key="3"/>
+										</items>
+									</Select>
+									<Label text="{i18n>LocationDescription}" />
+									<Select id="addLocation" selectedKey="1">
+										<items>
+											<core:Item text="Location 1, Kitchen 1" key="1"/>
+											<core:Item text="Location 1, Kitchen 2" key="2"/>
+											<core:Item text="Location 1, Kitchen 3" key="3"/>
+										</items>
+									</Select>
+									<Label text="{i18n>StatusDescription}" />
+									<Select id="addStatus" selectedKey="1">
+										<items>
+											<core:Item text="In-Stock" key="1"/>
+											<core:Item text="Re-Stock" key="2"/>
+											<core:Item text="Deteriorating" key="3"/>
+										</items>
+									</Select>
+									<Label text="{i18n>addItemTypeLabel}" />
+									<Select id="addItemType" selectedKey="1">
+										<items>
+											<core:Item text="Non-Perishable" key="1"/>
+											<core:Item text="Perishable" key="2"/>
+										</items>
+									</Select>
+									<Label text="{i18n>addStoringInstructionsLabel}" />
+									<Input id="addInstructions" type="Text" value="" placeholder="E.g. place in the fridger, put into shelf"/>
+									<Label text="{i18n>addLifeRemainingLabel}" />
+									<Input id="addLifeValue" value="">
+										<layoutData>
+											<f:ColumnElementData cellsSmall="6" cellsLarge="5"/>
+										</layoutData>
+									</Input>
+									<Select id="addLifeType" selectedKey="1">
+										<layoutData>
+											<f:ColumnElementData cellsSmall="6" cellsLarge="3" />
+										</layoutData>
+										<items>
+											<core:Item text="Days" key="1"/>
+											<core:Item text="Weeks" key="2"/>
+											<core:Item text="Months" key="3"/>
+											<core:Item text="%" key="4"/>
+										</items>
+									</Select>
+									<Label text="{i18n>addTreshholdLabel}" />
+									<Select id="addTreshold" selectedKey="1">
+										<items>
+											<core:Item text="Success" key="1"/>
+											<core:Item text="Error" key="2"/>
+										</items>
+									</Select>
+									<Label text="{i18n>addOrderingTreshholdLabel}" />
+									<Select id="addOrderingTreshold" selectedKey="1">
+										<items>
+											<core:Item text="Success" key="1"/>
+											<core:Item text="Error" key="2"/>
+										</items>
+									</Select>
+									<!--<Label text="{i18n>ImageDescription}" />
+									<Select id="addImage" selectedKey="1">
+										<items>
+											<core:Item text="Image 1" key="1"/>
+											<core:Item text="Image 2" key="2"/>
+											<core:Item text="Image 3" key="3"/>
+										</items>
+									</Select>-->
+								</f:content>
+							</f:SimpleForm>
+						</VBox>
+						<l:VerticalLayout
+							width="100%" >
+							<l:content>
+								<FlexBox
+									height="100px"
+									alignItems="Center"
+									justifyContent="Center">
+									<items>
+										<Button id="btnSave" icon="sap-icon://save" text="{i18n>btnSave}" type="Accept" press="onAddSave" iconFirst="true" width="auto" enabled="true" visible="true" class="sapUiSmallMarginEnd"/>
+										<Button id="btnReject" icon="sap-icon://cancel" text="{i18n>btnReject}" type="Reject" press="onAddReject" iconFirst="true" width="auto" enabled="true" visible="true" class="sapUiSmallMarginEnd"/>
+									</items>
+								</FlexBox>
+							</l:content>
+						</l:VerticalLayout>
+					</content>
+				</Page>
+			</pages>
+		</App>
+	</Shell>
+</mvc:View>
