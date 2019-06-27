@@ -20,6 +20,7 @@ sap.ui.define([
 			/*	this.createFiltersAndSorters();
 				this.applyFiltersAndSorters("filteredTabNonPerishable", "items");
 				this.applyFiltersAndSorters("filteredTabPerishable", "items");
+
 				this.applyFiltersAndSorters("filteredTabAlerts", "items");*/
 				
 				/* Initialize User Info for displaying User Name, Last Name and ID */
@@ -145,7 +146,7 @@ sap.ui.define([
 			onUpdateFinished: function (oEvent) {
 				var iTotalItems = oEvent.getParameter("total"),
 					oModel = this.getView().getModel("inventoryView");
-				
+
 				if (oEvent.getSource().getId() === "container-SmartStore---Inventory--tableAllItems") {
 					oModel.setProperty("/allItemsCount", iTotalItems);
 				} else if (oEvent.getSource().getId() === "container-SmartStore---Inventory--allOrders") {
@@ -183,6 +184,7 @@ sap.ui.define([
 
 				var sParent = oEvent.getSource().getParent();
 				var sPath = sParent.getBindingContext().getPath();
+
 				var oModel = this.getView().getModel();
 				oModel.setProperty(sPath + "/ShelfStock", value.toString());
 				
@@ -195,7 +197,7 @@ sap.ui.define([
 					oModel = oView.getModel();
 
 				oModel.callFunction(
-					"/newRequisition", { 
+					"/newRequisition", {
 						method: "GET",
 						success: function (oData, response) {
 							MessageToast.show("Order with ID "+oData.Id+" has been placed!")
@@ -205,14 +207,16 @@ sap.ui.define([
 						}
 					}
 				);
+
 				this.byId("allOrders").getBinding("items").refresh();
 			},
-			
+
 			onEdit: function () {
 				if ((this._checkHasSelected()) === true ) {
 					
 				}
 			},
+
 			
 			onAdd: function () {
 				this.getRouter().navTo("AddInventory");
@@ -292,7 +296,8 @@ sap.ui.define([
 							new Filter("tolower(ProductDescription)", FilterOperator.Contains,"'" + sQuery.toLowerCase().replace("'","''") + "'")
 						], false);
 					}
-					this._applySearchItem(aTableSearchState);
+					var btableName = oEvent.getSource().getParent().getParent().getProperty("text");
+					this._applySearchItem(aTableSearchState, btableName);
 				}
 			},
 			
@@ -305,12 +310,14 @@ sap.ui.define([
 					itemId: oEvent.getSource().getBindingContext().getProperty("Id")
 				});
 			},
+
 			
 			onRequisitionPress: function (oEvent) {
 				this.getRouter().navTo("Requisition", {
 					requisitionId: oEvent.getSource().getBindingContext().getProperty("Id")
 				});
 			},
+
 
 			_enableButton: function (sButton, bParam) {
 				if (sButton !== undefined && sButton !== null) {
@@ -337,6 +344,7 @@ sap.ui.define([
 					return false;
 				}
 			},
+
 			
 			_setButtonVisible: function(sButton) {
 				if (this.byId(sButton).getVisible() !== true) {
