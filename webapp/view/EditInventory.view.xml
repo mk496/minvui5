@@ -4,11 +4,11 @@
 	xmlns="sap.m"
 	xmlns:l="sap.ui.layout"
 	xmlns:f="sap.ui.layout.form"
-	controllerName="com.sap.build.standard.smartStore.controller.AddInventory" xmlns:html="http://www.w3.org/1999/xhtml">
+	controllerName="com.sap.build.standard.smartStore.controller.EditInventory" xmlns:html="http://www.w3.org/1999/xhtml">
 	<Shell>
 		<App>
 			<pages>
-				<Page title="{i18n>inventoryAddTitle}">
+				<Page title="{i18n>inventoryEditTitle}">
 					<content>
 						 <ObjectHeader intro="" title="{i18n>invHeaderTitle}" icon="sap-icon://retail-store" number="{userapi>/firstName} {userapi>/lastName}" numberUnit=" ({userapi>/name})" numberState="None" backgroundDesign="Translucent" condensed="false" visible="true">
 			                <attributes/>
@@ -16,10 +16,10 @@
 			                <markers/>
 			            </ObjectHeader>
 						<VBox class="sapUiSmallMargin">
-							<f:SimpleForm id="addInventoryForm"
+							<f:SimpleForm id="EditInventoryForm"
 								editable="true"
 								layout="ColumnLayout" 
-								title="{i18n>inventoryAddTitle}"
+								title="{i18n>inventoryEditTitle} ({Id})"
 								labelSpanXL="4"
 								labelSpanL="3"
 								labelSpanM="2"
@@ -34,7 +34,7 @@
 								columnsXL="2">
 								<f:content>
 									<Label text="{i18n>addMaterialLabel}" />
-									<Input id="addMaterial" value="" placeholder="E.g. Milk" required="true"/>
+									<Input id="editMaterial" value="{ProductDescription}" placeholder="E.g. Milk" required="true"/>
 									<!--<Select id="addDescription" selectedKey="1">
 										<items>
 											<core:Item text="2% Skim Milk" key="1"/>
@@ -43,73 +43,78 @@
 										</items>
 									</Select>-->
 									<Label text="{i18n>PriceDescription}" />
-									<Input id="addPrice" value="0.00" type="Number" placeholder="0,00" required="true">
+									<Input id="editPrice" value="{Price}" placeholder="0,00" required="true">
 										<layoutData>
 											<f:ColumnElementData cellsSmall="6" cellsLarge="5"/>
 										</layoutData>
 									</Input>
-									<Select id="addCurrency" selectedKey="1">
+									<Select id="editCurrency" selectedKey="4">
 										<layoutData>
 											<f:ColumnElementData cellsSmall="6" cellsLarge="3" />
 										</layoutData>
 										<items>
+											<core:Item text="{Currency}" key="4"/>
 											<core:Item text="USD" key="1"/>
 											<core:Item text="EUR" key="2"/>
 											<core:Item text="PLN" key="3"/>
 										</items>
 									</Select>
 									<Label text="{i18n>addShelfInStocks}" />
-									<StepInput id="addShelfStock" value="0" editable="true" step="5" required="true">
+									<StepInput id="editShelfStock" value="{ShelfStock}" editable="true" step="5" required="true">
 										<layoutData>
 											<f:ColumnElementData cellsSmall="6" cellsLarge="4" />
 										</layoutData>
 									</StepInput>
 									<!--<Label text="{i18n>IntockDescription}" />-->
-									<StepInput id="addInStock" value="0" editable="true" step="10" required="true">
+									<StepInput id="editInStock" value="{InStock}" editable="true" step="10" required="true">
 										<layoutData>
 											<f:ColumnElementData cellsSmall="6" cellsLarge="4" />
 										</layoutData>
 									</StepInput>
 									<Label text="{i18n>UnitDescription}" />
-									<Select id="addUnit" selectedKey="1">
+									<Select id="editUnit" selectedKey="4">
 										<items>
+											<core:Item text="{Unit}" key="4"/>
 											<core:Item text="PCS" key="1"/>
 											<core:Item text="Bags" key="2"/>
 											<core:Item text="Cartons" key="3"/>
 										</items>
 									</Select>
 									<Label text="{i18n>LocationDescription}" />
-									<Select id="addLocation" selectedKey="1">
+									<Select id="editLocation" selectedKey="4">
 										<items>
+											<core:Item text="{Location}" key="1"/>
 											<core:Item text="Location 1, Kitchen 1" key="1"/>
 											<core:Item text="Location 1, Kitchen 2" key="2"/>
 											<core:Item text="Location 1, Kitchen 3" key="3"/>
 										</items>
 									</Select>
 									<Label text="{i18n>StatusDescription}" />
-									<Select id="addStatus" selectedKey="1">
+									<Select id="editStatus" selectedKey="4">
 										<items>
+											<core:Item text="{Status}" key="4"/>
 											<core:Item text="In-Stock" key="1"/>
 											<core:Item text="Re-Stock" key="2"/>
 											<core:Item text="Deteriorating" key="3"/>
 										</items>
 									</Select>
 									<Label text="{i18n>addItemTypeLabel}" />
-									<Select id="addItemType" selectedKey="1">
+									<Select id="editItemType" selectedKey="3">
 										<items>
+											<core:Item text="{ItemType}" key="3"/>
 											<core:Item text="Non-Perishable" key="1"/>
 											<core:Item text="Perishable" key="2"/>
 										</items>
 									</Select>
 									<Label text="{i18n>addStoringInstructionsLabel}" />
-									<Input id="addInstructions" type="Text" value="" placeholder="E.g. place in the fridger, put into shelf"/>
+									<Input id="editInstructions" type="Text" value="{StoringInstruction}" placeholder="E.g. place in the fridger, put into shelf"/>
 									<Label text="{i18n>addLifeRemainingLabel}" />
-									<Input id="addLifeValue" value="">
+									<Input id="editLifeValue" value="{LifeRemaining}">
 										<layoutData>
 											<f:ColumnElementData cellsSmall="6" cellsLarge="5"/>
 										</layoutData>
 									</Input>
-									<Select id="addLifeType" selectedKey="5">
+									<Select id="editLifeType" selectedKey="5">
 										<layoutData>
 											<f:ColumnElementData cellsSmall="6" cellsLarge="3" />
 										</layoutData>
@@ -122,17 +127,19 @@
 										</items>
 									</Select>
 									<Label text="{i18n>addTreshholdLabel}" />
-									<Select id="addTreshold" selectedKey="1">
+									<Select id="editTreshold" selectedKey="3">
 										<items>
 											<core:Item text="Success" key="1"/>
 											<core:Item text="Error" key="2"/>
+											<core:Item text="{LifeRemainingTreshold}" key="3"/>
 										</items>
 									</Select>
 									<Label text="{i18n>addOrderingTreshholdLabel}" />
-									<Select id="addOrderingTreshold" selectedKey="1">
+									<Select id="editOrderingTreshold" selectedKey="3">
 										<items>
 											<core:Item text="Success" key="1"/>
 											<core:Item text="Error" key="2"/>
+											<core:Item text="{OrderingTreshold}" key="3"/>
 										</items>
 									</Select>
 									<!--<Label text="{i18n>ImageDescription}" />
@@ -154,8 +161,8 @@
 									alignItems="Center"
 									justifyContent="Center">
 									<items>
-										<Button id="btnSave" icon="sap-icon://save" text="{i18n>btnSave}" type="Accept" press="onAddSave" iconFirst="true" width="auto" enabled="true" visible="true" class="sapUiSmallMarginEnd"/>
-										<Button id="btnReject" icon="sap-icon://cancel" text="{i18n>btnReject}" type="Reject" press="onAddReject" iconFirst="true" width="auto" enabled="true" visible="true" class="sapUiSmallMarginEnd"/>
+										<Button id="btnSave" icon="sap-icon://save" text="{i18n>btnSave}" type="Accept" press="onEditSave" iconFirst="true" width="auto" enabled="true" visible="true" class="sapUiSmallMarginEnd"/>
+										<Button id="btnReject" icon="sap-icon://cancel" text="{i18n>btnReject}" type="Reject" press="onEditReject" iconFirst="true" width="auto" enabled="true" visible="true" class="sapUiSmallMarginEnd"/>
 									</items>
 								</FlexBox>
 							</l:content>

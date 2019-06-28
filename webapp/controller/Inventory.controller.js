@@ -187,7 +187,6 @@ sap.ui.define([
 				oModel.setProperty(sPath + "/ShelfStock", value.toString());
 				
 				oModel.submitChanges();
-				oModel.refresh();
 			},
 
 			onOrder: function () {
@@ -211,36 +210,17 @@ sap.ui.define([
 			onEdit: function () {
 				if ((this._checkHasSelected()) === true ) {
 					
+					// Get first selected item
+					var oSelectedItem = this.byId("tableAllItems").getSelectedItems()[0];
+					
+					this.getRouter().navTo("EditInventory", {
+						Id: oSelectedItem.getBindingContext().getProperty("Id")
+					});
 				}
 			},
 			
 			onAdd: function () {
 				this.getRouter().navTo("AddInventory");
-				
-				/*var oEntry = this._createItemEntry();
-				var that = this;
-				
-				this.getModel().create("/InventorySet", oEntry, 
-					{
-						success : function(oData) {
-							that.getRouter().navTo("AddInventory",  {
-								itemId: oData.Id
-							});
-						},
-						error : this._handleErrorAddProduct
-					});*/
-					
-				/*const dialog = this.byId("dialog");
-    			syncStyleClass("sapUiSizeCompact", this.getView(), dialog);
-    			dialog.open();*/
-    			
-				/*var oItem = this._createItemRow();
-				var oTable = this.byId("tableAllItems");
-				oTable.insertItem(oItem, 0);
-				this.aCreatedItems.push(oItem);*/
-				
-				
-				//this.getModel().refresh();
 			},
 	
 			onDelete: function() {
@@ -268,7 +248,7 @@ sap.ui.define([
 											error : that._handleDeleteProduct.bind(that, oProductId, false, i+1, aSelectedProducts.length)
 										});
 									}
-									that.getModel().refresh();
+									//that.getModel().refresh();
 								} else {
 									that.byId("tableAllItems").removeSelections(); 
 								}
@@ -311,38 +291,16 @@ sap.ui.define([
 					requisitionId: oEvent.getSource().getBindingContext().getProperty("Id")
 				});
 			},
-
-			_enableButton: function (sButton, bParam) {
-				if (sButton !== undefined && sButton !== null) {
-					this.byId(sButton).setEnabled(bParam);
-				} else {
-					var aEditButtons = sap.ui.getCore().byFieldGroupId("edit");
-					aEditButtons.forEach(function(button) {
-						var sId = button.getId();
-						if ((sId.includes("-img")) !== true) {
-							button.setEnabled(bParam);
-						}
-					});
-				}
-			},
 			
 			_checkHasSelected: function () {
 				var oTable = this.byId("tableAllItems"),
 					oSelectedItems = oTable.getSelectedItems();
 					
-				if	(oSelectedItems.length === 1) {
+				if	(oSelectedItems.length > 0) {
 					return true;
 				} else {
-					MessageToast.show(this.getModel("i18n").getResourceBundle().getText("TableSelectProductMsg"));
+					MessageToast.show(this.getModel("i18n").getResourceBundle().getText("TableSelectAtLEastOneProductMsg"));
 					return false;
-				}
-			},
-			
-			_setButtonVisible: function(sButton) {
-				if (this.byId(sButton).getVisible() !== true) {
-					this.byId(sButton).setVisible(true);
-				} else {
-					this.byId(sButton).setVisible(false);
 				}
 			},
 			
@@ -355,12 +313,7 @@ sap.ui.define([
 					}
 					
 				}
-			},
-			
-			_handleErrorAddProduct: function (oError) {
-				
 			}
-		
 		});
 	}, /* bExport= */
 	true);
