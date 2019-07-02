@@ -38,13 +38,23 @@ sap.ui.define([
 
 			var sPath = this.getView().getBindingContext().sPath,
 				oModel = this.getModel(),
-				//sProductDescription = this.byId("editMaterial").getValue(),
 				dPrice = this.byId("editPrice").getValue(),
-				//sCurrency = this.byId("editCurrency").getSelectedItem().getProperty("text"),
 				iShelfStock = this.byId("editShelfStock").getValue(),
-				iInStock = this.byId("editInStock").getValue();
-				/*sLocation = this.byId("editLocation").getSelectedItem().getProperty("text"),
-				sUnit = this.byId("editUnit").getSelectedItem().getProperty("text"),
+				iInStock = this.byId("editInStock").getValue(),
+				sLocation = this.byId("editLocation").getSelectedItem().getProperty("text");
+			
+			oModel.setProperty(sPath + "/Price", dPrice.toString());
+			oModel.setProperty(sPath + "/ShelfStock", iShelfStock.toString());
+			oModel.setProperty(sPath + "/InStock", iInStock.toString());
+			oModel.setProperty(sPath + "/Location", sLocation);
+			
+			oModel.submitChanges();
+			this.onNavBack();
+			    
+			    // Saved for further purposes - maybe?
+				//sProductDescription = this.byId("editMaterial").getValue(),
+				//sCurrency = this.byId("editCurrency").getSelectedItem().getProperty("text"),
+				/*sUnit = this.byId("editUnit").getSelectedItem().getProperty("text"),
 				sStatus = this.byId("editStatus").getSelectedItem().getProperty("text"),
 				sItemType = this.byId("editItemType").getSelectedItem().getProperty("text"),
 				sStoringInstruction = this.byId("editInstructions").getValue(),
@@ -53,21 +63,14 @@ sap.ui.define([
 				sOrderingTreshold = this.byId("editOrderingTreshold").getSelectedItem().getProperty("text");*/
 				
 			    //oModel.setProperty(sPath + "/ProductDescription", sProductDescription);
-			    oModel.setProperty(sPath + "/Price", dPrice.toString());
 			    //oModel.setProperty(sPath + "/Currency", sCurrency);
-			    oModel.setProperty(sPath + "/ShelfStock", iShelfStock.toString());
-			    oModel.setProperty(sPath + "/InStock", iInStock.toString());
-			    /*oModel.setProperty(sPath + "/Location", sLocation);
-			    oModel.setProperty(sPath + "/Unit", sUnit);
+			    /*oModel.setProperty(sPath + "/Unit", sUnit);
 			    oModel.setProperty(sPath + "/Status", sStatus);
 			    oModel.setProperty(sPath + "/ItemType", sItemType);
 			    oModel.setProperty(sPath + "/StoringInstruction", sStoringInstruction);
 			    oModel.setProperty(sPath + "/LifeRemaining", sLifeRemaining);
 			    oModel.setProperty(sPath + "/LifeRemainingTreshold", sLifeRemainingTreshold);
 			    oModel.setProperty(sPath + "/OrderingTreshold", sOrderingTreshold);*/
-			    
-			oModel.submitChanges();
-			this.onNavBack();
 		},
 
 		onEditReject: function () {

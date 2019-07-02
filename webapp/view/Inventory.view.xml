@@ -15,12 +15,11 @@
 			            </ObjectHeader>
 			            <IconTabBar expanded="{device>/isNoPhone}" applyContentPadding="false" backgroundDesign="Solid" upperCase="false" visible="true" selectedKey="Ok">
 			                <items>
-			                    <IconTabFilter icon="sap-icon://drop-down-list" iconColor="Positive" text="{i18n>allItems}" count="{inventoryView>/allItemsCount}" design="Vertical" showAll="false" textDirection="Inherit" enabled="true" visible="true" iconDensityAware="false">
+			                    <IconTabFilter text="{i18n>allItems}" count="{inventoryView>/allItemsCount}" design="Vertical" showAll="true" textDirection="Inherit" enabled="true" visible="true">
 			                        <content>
 			                        	<OverflowToolbar width="100%" height="auto" design="Auto" enabled="true" visible="true">
 							                <content>
 							                     <SearchField
-													id="searchField"
 													tooltip="{i18n>inventorySearchTooltip}"
 													search="onItemSearch"
 													class="sapUiSmallMargin">
@@ -30,29 +29,16 @@
 															priority="NeverOverflow"/>
 													</layoutData>
 												</SearchField>
-												<Select
-													id="itemFilter"
-													class="sapUiSmallMargin">
-													<core:ListItem icon="sap-icon://cart-full" key="" text="{i18n>allItems}"/>
-													<core:ListItem icon="sap-icon://product" key="NonPerishable" text="{i18n>nonPerishable}"/>
-													<core:ListItem icon="sap-icon://fridge" key="Perishable" text="{i18n>perishable}"/>
-													<core:ListItem icon="sap-icon://alert" key="Alerts" text="{i18n>alerts}"/>
-													<layoutData>
-														<OverflowToolbarLayoutData
-															maxWidth="20%"
-															priority="NeverOverflow"/>
-													</layoutData>
-												</Select>
-												<Button id="btnEdit" icon="sap-icon://edit" text="{i18n>btnEdit}" press="onEdit" iconFirst="true" width="auto" enabled="true" visible="true"/>
-							                    <Button id="btnAdd" icon="sap-icon://add" text="{i18n>btnAdd}" type="Accept" press="onAdd" iconFirst="true" width="auto" enabled="true" visible="true"/>
-							                    <Button id="btnDel" icon="sap-icon://decline" text="{i18n>btnDel}" type="Reject" press="onDelete" iconFirst="true" width="auto" enabled="true" visible="true"/>
-							                    <Button id="btnOrder" class="sapUiSmallMargin" icon="sap-icon://add-activity-2" text="{i18n>btnOrder}" press="onOrder" type="Emphasized" iconFirst="true" width="auto" enabled="true" visible="true"/>
-							                    <Button id="btnMaterials" class="sapUiSmallMargin" icon="sap-icon://action-settings" text="{i18n>btnMaterials}" press="onMaterials" type="Ghost" iconFirst="true" width="auto" enabled="true" visible="true"/>
-							                    <Button id="btnLocations" icon="sap-icon://building" text="{i18n>btnLocations}" press="onLocations" type="Ghost" iconFirst="true" width="auto" enabled="true" visible="true"/>
+												<Button icon="sap-icon://edit" text="{i18n>btnEdit}" press="onEdit" iconFirst="true" width="auto" enabled="true" visible="true"/>
+							                    <Button icon="sap-icon://add" text="{i18n>btnAdd}" type="Accept" press="onAdd" iconFirst="true" width="auto" enabled="true" visible="true"/>
+							                    <Button icon="sap-icon://decline" text="{i18n>btnDel}" type="Reject" press="onDelete" iconFirst="true" width="auto" enabled="true" visible="true"/>
+							                    <Button class="sapUiSmallMargin" icon="sap-icon://add-activity-2" text="{i18n>btnOrder}" press="onOrder" type="Emphasized" iconFirst="true" width="auto" enabled="true" visible="true"/>
+							                    <Button class="sapUiSmallMargin" icon="sap-icon://action-settings" text="{i18n>btnMaterials}" press="onMaterial" type="Ghost" iconFirst="true" width="auto" enabled="true" visible="true"/>
+							                    <Button icon="sap-icon://building" text="{i18n>btnLocations}" press="onLocation" type="Ghost" iconFirst="true" width="auto" enabled="true" visible="true"/>
 							                </content>
 							            </OverflowToolbar>
-			                            <Table id="tableAllItems" width="auto" noDataText="{i18n>noData}" mode="MultiSelect" showSeparators="All" growing="false" growingThreshold="20" growingScrollToLoad="false" class="sapUiSmallMargin"
-			                            	items="{ path:'/InventorySet', sorter: { path: 'ProductDescription'}}" updateFinished="onUpdateFinished" rememberSelections="true" alternateRowColors="true">
+			                            <Table id="tableAllItems" class="sapUiSmallMargin" width="auto" noDataText="{i18n>noData}" mode="MultiSelect" showSeparators="All" growing="false" growingThreshold="20" growingScrollToLoad="false"
+			                            	items="{ path:'/InventorySet', sorter: { path: 'ProductDescription'}}" updateFinished="onUpdateFinished" rememberSelections="false" alternateRowColors="true">
 			                                <infoToolbar/>
 			                                <headerToolbar/>
 			                                <columns>
@@ -92,12 +78,6 @@
 			                                        </header>
 			                                        <footer/>
 			                                    </Column>
-			                                    <!--<Column width="auto" hAlign="Left" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
-			                                        <header>
-			                                            <Text text="{i18n>ImageDescription}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
-			                                        </header>
-			                                        <footer/>
-			                                    </Column>-->
 			                                    <Column width="auto" hAlign="Left" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
 			                                        <header>
 			                                            <Text text="{i18n>StatusDescription}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
@@ -114,9 +94,7 @@
 			                                            <Text text="{Unit}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
 			                                            <ObjectNumber number="{InStock}" emphasized="true" state="None"/>
 			                                            <Text text="{Location}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
-			                                            <!--<Image src="/webapp/localService/{Image}" height="50px" width="50px" visible="true" densityAware="false" tooltip="{i18n>imageTooltip}"/>-->
 			                                            <ObjectStatus title="" text="{Status}" state="{StatusColor}" visible="true"/>
-			                                            <!--<Button id="btnDel" class="roundButton" icon="sap-icon://decline" text="" type="Reject" press="onDel" iconFirst="true" width="auto" enabled="true" visible="false" iconDensityAware="false"/>-->
 			                                        </cells>
 			                                    </ColumnListItem>
 			                                </items>
@@ -124,9 +102,268 @@
 			                        </content>
 			                    </IconTabFilter>
 			                    <IconTabSeparator icon="" iconDensityAware="false"/>
+			                    <IconTabFilter icon="sap-icon://product" iconColor="Neutral" text="{i18n>nonPerishable}" count="{inventoryView>/filteredItemsNonPerishable}" design="Vertical" showAll="false" textDirection="Inherit" enabled="true" visible="true" iconDensityAware="false">
+			                        <content>
+			                        	<OverflowToolbar width="100%" height="auto" design="Auto" enabled="true" visible="true">
+							                <content>
+							                     <SearchField
+													tooltip="{i18n>inventorySearchTooltip}"
+													search="onItemSearch"
+													class="sapUiSmallMargin">
+													<layoutData>
+														<OverflowToolbarLayoutData
+															maxWidth="20%"
+															priority="NeverOverflow"/>
+													</layoutData>
+												</SearchField>
+												<Button icon="sap-icon://edit" text="{i18n>btnEdit}" press="onEdit" iconFirst="true" width="auto" enabled="true" visible="true"/>
+							                    <Button icon="sap-icon://add" text="{i18n>btnAdd}" type="Accept" press="onAdd" iconFirst="true" width="auto" enabled="true" visible="true"/>
+							                    <Button icon="sap-icon://decline" text="{i18n>btnDel}" type="Reject" press="onDelete" iconFirst="true" width="auto" enabled="true" visible="true"/>
+							                    <Button class="sapUiSmallMargin" icon="sap-icon://add-activity-2" text="{i18n>btnOrder}" press="onOrder" type="Emphasized" iconFirst="true" width="auto" enabled="true" visible="true"/>
+							                    <Button class="sapUiSmallMargin" icon="sap-icon://action-settings" text="{i18n>btnMaterials}" press="onMaterial" type="Ghost" iconFirst="true" width="auto" enabled="true" visible="true"/>
+							                    <Button icon="sap-icon://building" text="{i18n>btnLocations}" press="onLocation" type="Ghost" iconFirst="true" width="auto" enabled="true" visible="true"/>
+							                </content>
+							            </OverflowToolbar>
+			                            <Table id="filteredTabNonPerishable" width="auto" noDataText="No data" mode="MultiSelect" showSeparators="All" growing="false" growingThreshold="20" growingScrollToLoad="false" class="sapUiSmallMargin" 
+			                            	items="{path:'/InventorySet', sorter: { path: 'ProductDescription'}}" updateFinished="onUpdateFinished" rememberSelections="false" alternateRowColors="true">
+			                                <infoToolbar/>
+			                                <headerToolbar/>
+			                                <columns>
+			                                    <Column width="auto" hAlign="Left" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+			                                        <header>
+			                                            <Text text="{i18n>ProductDescription}" width="auto" visible="true"/>
+			                                        </header>
+			                                        <footer/>
+			                                    </Column>
+			                                    <Column width="auto" hAlign="Left" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+			                                        <header>
+			                                            <Text text="{i18n>PriceDescription}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+			                                        </header>
+			                                        <footer/>
+			                                    </Column>
+			                                    <Column width="150px" hAlign="Left" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+			                                        <header>
+			                                            <Text text="{i18n>ShelfStockDescription}" width="auto" maxLines="1" wrapping="false" textAlign="Left" textDirection="Inherit" visible="true"/>
+			                                        </header>
+			                                        <footer/>
+			                                    </Column>
+			                                    <Column width="auto" hAlign="Left" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+			                                        <header>
+			                                            <Text text="{i18n>UnitDescription}" width="auto" maxLines="1" wrapping="false" textAlign="Center" textDirection="Inherit" visible="true"/>
+			                                        </header>
+			                                        <footer/>
+			                                    </Column>
+			                                    <Column width="auto" hAlign="Left" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+			                                        <header>
+			                                            <Text text="{i18n>IntockDescription}" width="auto" maxLines="1" wrapping="false" textAlign="Center" textDirection="Inherit" visible="true"/>
+			                                        </header>
+			                                        <footer/>
+			                                    </Column>
+			                                    <Column width="auto" hAlign="Left" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+			                                        <header>
+			                                            <Text text="{i18n>LocationDescription}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+			                                        </header>
+			                                        <footer/>
+			                                    </Column>
+			                                    <Column width="auto" hAlign="Left" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+			                                        <header>
+			                                            <Text text="{i18n>StatusDescription}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+			                                        </header>
+			                                        <footer/>
+			                                    </Column>
+			                                </columns>
+			                                <items>
+			                                    <ColumnListItem type="Navigation" press="onItemPress" vAlign="Middle">
+			                                        <cells>
+			                                            <ObjectIdentifier text="{ProductDescription}" titleActive="false" visible="true"/>
+			                                            <ObjectNumber number="{Price}" unit="{Currency}" emphasized="true" state="None"/>
+			                                            <StepInput fieldWidth="40px" width="80px" value="{ShelfStock}" editable="true" step="5" change="onStockChange"/>
+			                                            <Text text="{Unit}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+			                                            <ObjectNumber number="{InStock}" emphasized="true" state="None"/>
+			                                            <Text text="{Location}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+			                                            <ObjectStatus title="" text="{Status}" state="{StatusColor}" visible="true"/>
+			                                        </cells>
+			                                    </ColumnListItem>
+			                                </items>
+			                            </Table>
+			                    	</content>
+			                    </IconTabFilter>
+			                    <IconTabFilter icon="sap-icon://fridge" iconColor="Default" text="{i18n>perishable}" count="{inventoryView>/filteredItemsPerishable}" design="Vertical" showAll="false" textDirection="Inherit" enabled="true" visible="true" iconDensityAware="false">
+			                        <content>
+			                        	<OverflowToolbar width="100%" height="auto" design="Auto" enabled="true" visible="true">
+							                <content>
+							                     <SearchField
+													tooltip="{i18n>inventorySearchTooltip}"
+													search="onItemSearch"
+													class="sapUiSmallMargin">
+													<layoutData>
+														<OverflowToolbarLayoutData
+															maxWidth="20%"
+															priority="NeverOverflow"/>
+													</layoutData>
+												</SearchField>
+												<Button icon="sap-icon://edit" text="{i18n>btnEdit}" press="onEdit" iconFirst="true" width="auto" enabled="true" visible="true"/>
+							                    <Button icon="sap-icon://add" text="{i18n>btnAdd}" type="Accept" press="onAdd" iconFirst="true" width="auto" enabled="true" visible="true"/>
+							                    <Button icon="sap-icon://decline" text="{i18n>btnDel}" type="Reject" press="onDelete" iconFirst="true" width="auto" enabled="true" visible="true"/>
+							                    <Button class="sapUiSmallMargin" icon="sap-icon://add-activity-2" text="{i18n>btnOrder}" press="onOrder" type="Emphasized" iconFirst="true" width="auto" enabled="true" visible="true"/>
+							                    <Button class="sapUiSmallMargin" icon="sap-icon://action-settings" text="{i18n>btnMaterials}" press="onMaterial" type="Ghost" iconFirst="true" width="auto" enabled="true" visible="true"/>
+							                    <Button icon="sap-icon://building" text="{i18n>btnLocations}" press="onLocation" type="Ghost" iconFirst="true" width="auto" enabled="true" visible="true"/>
+							                </content>
+							            </OverflowToolbar>
+			                            <Table id="filteredTabPerishable" width="auto" noDataText="No data" mode="MultiSelect" showSeparators="All" growing="false" growingThreshold="20" growingScrollToLoad="false" class="sapUiSmallMargin"
+			                            items="{path:'/InventorySet', sorter: { path: 'ProductDescription'}}" updateFinished="onUpdateFinished" rememberSelections="false" alternateRowColors="true">
+			                                <infoToolbar/>
+			                                <headerToolbar/>
+			                                <columns>
+			                                    <Column width="auto" hAlign="Left" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+			                                        <header>
+			                                            <Text text="{i18n>ProductDescription}" width="auto" visible="true"/>
+			                                        </header>
+			                                        <footer/>
+			                                    </Column>
+			                                    <Column width="auto" hAlign="Left" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+			                                        <header>
+			                                            <Text text="{i18n>PriceDescription}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+			                                        </header>
+			                                        <footer/>
+			                                    </Column>
+			                                    <Column width="150px" hAlign="Left" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+			                                        <header>
+			                                            <Text text="{i18n>ShelfStockDescription}" width="auto" maxLines="1" wrapping="false" textAlign="Left" textDirection="Inherit" visible="true"/>
+			                                        </header>
+			                                        <footer/>
+			                                    </Column>
+			                                    <Column width="auto" hAlign="Left" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+			                                        <header>
+			                                            <Text text="{i18n>UnitDescription}" width="auto" maxLines="1" wrapping="false" textAlign="Center" textDirection="Inherit" visible="true"/>
+			                                        </header>
+			                                        <footer/>
+			                                    </Column>
+			                                    <Column width="auto" hAlign="Left" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+			                                        <header>
+			                                            <Text text="{i18n>IntockDescription}" width="auto" maxLines="1" wrapping="false" textAlign="Center" textDirection="Inherit" visible="true"/>
+			                                        </header>
+			                                        <footer/>
+			                                    </Column>
+			                                    <Column width="auto" hAlign="Left" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+			                                        <header>
+			                                            <Text text="{i18n>LocationDescription}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+			                                        </header>
+			                                        <footer/>
+			                                    </Column>
+			                                    <Column width="auto" hAlign="Left" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+			                                        <header>
+			                                            <Text text="{i18n>StatusDescription}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+			                                        </header>
+			                                        <footer/>
+			                                    </Column>
+			                                </columns>
+			                                <items>
+			                                    <ColumnListItem type="Navigation" press="onItemPress" vAlign="Middle">
+			                                        <cells>
+			                                            <ObjectIdentifier text="{ProductDescription}" titleActive="false" visible="true"/>
+			                                            <ObjectNumber number="{Price}" unit="{Currency}" emphasized="true" state="None"/>
+			                                            <StepInput fieldWidth="40px" width="80px" value="{ShelfStock}" editable="true" step="5" change="onStockChange"/>
+			                                            <Text text="{Unit}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+			                                            <ObjectNumber number="{InStock}" emphasized="true" state="None"/>
+			                                            <Text text="{Location}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+			                                            <ObjectStatus title="" text="{Status}" state="{StatusColor}" visible="true"/>
+			                                        </cells>
+			                                    </ColumnListItem>
+			                                </items>
+			                            </Table>
+			                    	</content>
+			                    </IconTabFilter>
+			                    <IconTabFilter icon="sap-icon://alert" iconColor="Critical" text="{i18n>alerts}" count="{inventoryView>/filteredItemsAlerts}" design="Vertical" showAll="false" textDirection="Inherit" enabled="true" visible="true" iconDensityAware="false">
+			                        <content>
+			                        	<OverflowToolbar width="100%" height="auto" design="Auto" enabled="true" visible="true">
+							                <content>
+							                     <SearchField
+													tooltip="{i18n>inventorySearchTooltip}"
+													search="onItemSearch"
+													class="sapUiSmallMargin">
+													<layoutData>
+														<OverflowToolbarLayoutData
+															maxWidth="20%"
+															priority="NeverOverflow"/>
+													</layoutData>
+												</SearchField>
+												<Button icon="sap-icon://edit" text="{i18n>btnEdit}" press="onEdit" iconFirst="true" width="auto" enabled="true" visible="true"/>
+							                    <Button icon="sap-icon://add" text="{i18n>btnAdd}" type="Accept" press="onAdd" iconFirst="true" width="auto" enabled="true" visible="true"/>
+							                    <Button icon="sap-icon://decline" text="{i18n>btnDel}" type="Reject" press="onDelete" iconFirst="true" width="auto" enabled="true" visible="true"/>
+							                    <Button class="sapUiSmallMargin" icon="sap-icon://add-activity-2" text="{i18n>btnOrder}" press="onOrder" type="Emphasized" iconFirst="true" width="auto" enabled="true" visible="true"/>
+							                    <Button class="sapUiSmallMargin" icon="sap-icon://action-settings" text="{i18n>btnMaterials}" press="onMaterial" type="Ghost" iconFirst="true" width="auto" enabled="true" visible="true"/>
+							                    <Button icon="sap-icon://building" text="{i18n>btnLocations}" press="onLocation" type="Ghost" iconFirst="true" width="auto" enabled="true" visible="true"/>
+							                </content>
+							            </OverflowToolbar>
+			                            <Table id="filteredTabAlerts" width="auto" noDataText="No data" mode="MultiSelect" showSeparators="All" growing="false" growingThreshold="20" growingScrollToLoad="false" class="sapUiSmallMargin"
+			                            	items="{path:'/InventorySet', sorter: { path: 'ProductDescription'}}" updateFinished="onUpdateFinished" rememberSelections="false" alternateRowColors="true">
+			                                <infoToolbar/>
+			                                <headerToolbar/>
+			                                <columns>
+			                                    <Column width="auto" hAlign="Left" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+			                                        <header>
+			                                            <Text text="{i18n>ProductDescription}" width="auto" visible="true"/>
+			                                        </header>
+			                                        <footer/>
+			                                    </Column>
+			                                    <Column width="auto" hAlign="Left" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+			                                        <header>
+			                                            <Text text="{i18n>PriceDescription}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+			                                        </header>
+			                                        <footer/>
+			                                    </Column>
+			                                    <Column width="150px" hAlign="Left" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+			                                        <header>
+			                                            <Text text="{i18n>ShelfStockDescription}" width="auto" maxLines="1" wrapping="false" textAlign="Left" textDirection="Inherit" visible="true"/>
+			                                        </header>
+			                                        <footer/>
+			                                    </Column>
+			                                    <Column width="auto" hAlign="Left" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+			                                        <header>
+			                                            <Text text="{i18n>UnitDescription}" width="auto" maxLines="1" wrapping="false" textAlign="Center" textDirection="Inherit" visible="true"/>
+			                                        </header>
+			                                        <footer/>
+			                                    </Column>
+			                                    <Column width="auto" hAlign="Left" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+			                                        <header>
+			                                            <Text text="{i18n>IntockDescription}" width="auto" maxLines="1" wrapping="false" textAlign="Center" textDirection="Inherit" visible="true"/>
+			                                        </header>
+			                                        <footer/>
+			                                    </Column>
+			                                    <Column width="auto" hAlign="Left" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+			                                        <header>
+			                                            <Text text="{i18n>LocationDescription}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+			                                        </header>
+			                                        <footer/>
+			                                    </Column>
+			                                    <Column width="auto" hAlign="Left" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+			                                        <header>
+			                                            <Text text="{i18n>StatusDescription}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+			                                        </header>
+			                                        <footer/>
+			                                    </Column>
+			                                </columns>
+			                                <items>
+			                                    <ColumnListItem type="Navigation" press="onItemPress" vAlign="Middle">
+			                                        <cells>
+			                                            <ObjectIdentifier text="{ProductDescription}" titleActive="false" visible="true"/>
+			                                            <ObjectNumber number="{Price}" unit="{Currency}" emphasized="true" state="None"/>
+			                                            <StepInput fieldWidth="40px" width="80px" value="{ShelfStock}" editable="true" step="5" change="onStockChange"/>
+			                                            <Text text="{Unit}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+			                                            <ObjectNumber number="{InStock}" emphasized="true" state="None"/>
+			                                            <Text text="{Location}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+			                                            <ObjectStatus title="" text="{Status}" state="{StatusColor}" visible="true"/>
+			                                        </cells>
+			                                    </ColumnListItem>
+			                                </items>
+			                            </Table>
+			                    	</content>
+			                    </IconTabFilter>
+			                    <IconTabSeparator icon="" iconDensityAware="false"/>
 			                    <IconTabFilter icon="sap-icon://customer-order-entry" iconColor="Positive" text="{i18n>allOrders}" count="{inventoryView>/ordersCount}" design="Vertical" showAll="false" textDirection="Inherit" enabled="true" visible="true" iconDensityAware="false">
 			                        <content>
-			                            <Table id="allOrders" width="auto" noDataText="{i18n>noData}" mode="None" showSeparators="All" growing="false" growingThreshold="20" growingScrollToLoad="false" class="sapUiResponsiveMargin"
+			                            <Table id="allOrders" width="auto" noDataText="{i18n>noData}" mode="None" showSeparators="All" growing="false" growingThreshold="20" growingScrollToLoad="false" class="sapUiSmallMargin"
 			                            	items="{path:'/RequisitionHeaderSet', templateShareable:true}" updateFinished="onUpdateFinished">
 			                                <infoToolbar/>
 			                                <headerToolbar/>
@@ -177,3 +414,20 @@
 		</App>
     </Shell>
 </mvc:View>
+
+<!-- Section for old, commented code to keep right version clean -->
+<!--<Select
+	id="itemFilter"
+	class="sapUiSmallMargin">
+	<core:ListItem icon="sap-icon://cart-full" key="" text="{i18n>allItems}"/>
+	<core:ListItem icon="sap-icon://product" key="NonPerishable" text="{i18n>nonPerishable}"/>
+	<core:ListItem icon="sap-icon://fridge" key="Perishable" text="{i18n>perishable}"/>
+	<core:ListItem icon="sap-icon://alert" key="Alerts" text="{i18n>alerts}"/>
+		<layoutData>
+			<OverflowToolbarLayoutData
+				maxWidth="20%"
+				priority="NeverOverflow"/>
+		</layoutData>
+</Select>-->
+<!--<Image src="/webapp/localService/{Image}" height="50px" width="50px" visible="true" densityAware="false" tooltip="{i18n>imageTooltip}"/>-->
+<!--<Button id="btnDel" class="roundButton" icon="sap-icon://decline" text="" type="Reject" press="onDel" iconFirst="true" width="auto" enabled="true" visible="false" iconDensityAware="false"/>-->

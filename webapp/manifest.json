@@ -136,6 +136,7 @@
 					"viewType": "XML",
 					"viewName": "EditInventory"
 				},
+
 				"Material": {
 					"viewName": "Material",
 					"viewId": "Material",
@@ -179,6 +180,7 @@
 				"greedy": false,
 				"target": ["EditInventory"]
 			}, {
+
 				"name": "Material",
 				"pattern": "Material",
 				"titleTarget": "",

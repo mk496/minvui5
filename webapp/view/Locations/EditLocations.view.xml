@@ -1,0 +1,62 @@
+<mvc:View xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form"
+	controllerName="com.sap.build.standard.smartStore.controller.EditLocations" xmlns:html="http://www.w3.org/1999/xhtml">
+	<Shell>
+		<App>
+			<pages>
+				<Page title="{i18n>locationsEditTitle}" showNavButton="true" navButtonPress="onNavBack">
+					<content>
+						<ObjectHeader intro="" title="{i18n>locationsDisplayTitle}" icon="sap-icon://building" number="{userapi>/firstName} {userapi>/lastName}"
+							numberUnit=" ({userapi>/name})" numberState="None" backgroundDesign="Translucent" condensed="false" visible="true">
+							<attributes/>
+							<statuses/>
+							<markers/>
+						</ObjectHeader>
+						<VBox class="sapUiSmallMargin">
+							<f:SimpleForm id="editLocationsForm"
+								editable="true"
+								layout="ColumnLayout" 
+								title="{i18n>locationsEditSubTitle} ({Id})"
+								labelSpanXL="4"
+								labelSpanL="3"
+								labelSpanM="2"
+								labelSpanS="12"
+								adjustLabelSpan="false"
+								emptySpanXL="1"
+								emptySpanL="1"
+								emptySpanM="0"
+								emptySpanS="0"
+								columnsM="1"
+								columnsL="2"
+								columnsXL="2">
+								<f:content>
+									<Label text="{i18n>labelLocationDescription}" />
+									<Input id="editLocationDescription" value="{LocationDescription}" required="true"/>
+									<Label text="{i18n>labelLocationBuilding}" />
+									<Input id="editLocationBuilding" value="{Building}" required="true"/>
+									<Label text="{i18n>labelLocationFloor}" />
+									<Input id="editLocationFloor" value="{Floor}" required="true"/>
+									<Label text="{i18n>labelLocationRoom}" />
+									<Input id="editLocationRoom" value="{Room}" required="true"/>
+								</f:content>
+							</f:SimpleForm>
+						</VBox>
+						<l:VerticalLayout
+							width="100%" >
+							<l:content>
+								<FlexBox
+									height="100px"
+									alignItems="Center"
+									justifyContent="Center">
+									<items>
+										<Button id="btnSave" icon="sap-icon://save" text="{i18n>btnSave}" type="Accept" press="onEditSave" iconFirst="true" width="auto" enabled="true" visible="true" class="sapUiSmallMarginEnd"/>
+										<Button id="btnReject" icon="sap-icon://cancel" text="{i18n>btnReject}" type="Reject" press="onEditReject" iconFirst="true" width="auto" enabled="true" visible="true" class="sapUiSmallMarginEnd"/>
+									</items>
+								</FlexBox>
+							</l:content>
+						</l:VerticalLayout>
+					</content>
+				</Page>
+			</pages>
+		</App>
+	</Shell>
+</mvc:View>
