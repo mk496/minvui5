@@ -199,10 +199,10 @@ sap.ui.define([
 					"/newRequisition", {
 						method: "GET",
 						success: function (oData, response) {
-							MessageToast.show("Order with ID "+oData.Id+" has been placed!")
+							MessageToast.show("Order with ID "+oData.Id+" has been placed!");
 						},
 						error: function (oError) {
-							MessageToast.show("Order has NOT been placed!")
+							MessageToast.show("Order has NOT been placed!");
 						}
 					}
 				);
@@ -262,6 +262,10 @@ sap.ui.define([
 				} else {
 					MessageToast.show(this.getModel("i18n").getResourceBundle().getText("TableSelectAtLEastOneProductMsg"));
 				}
+			},
+			
+			onMaterials: function() {
+				this.getRouter().navTo("Material");
 			},
 	
 			onItemSearch: function (oEvent) {

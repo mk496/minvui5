@@ -135,6 +135,21 @@
 				"EditInventory": {
 					"viewType": "XML",
 					"viewName": "EditInventory"
+				},
+				"Material": {
+					"viewName": "Material",
+					"viewId": "Material",
+					"transition": "slide",
+					"controlAggregation": "pages",
+					"title": "Material"
+				},
+				"EditMaterial": {
+					"viewType": "XML",
+					"viewName": "EditMaterial"
+				},
+				"AddMaterial": {
+					"viewType": "XML",
+					"viewName": "AddMaterial"
 				}
 			},
 			"routes": [{
@@ -163,6 +178,24 @@
 				"titleTarget": "",
 				"greedy": false,
 				"target": ["EditInventory"]
+			}, {
+				"name": "Material",
+				"pattern": "Material",
+				"titleTarget": "",
+				"greedy": false,
+				"target": ["Material"]
+			}, {
+				"name": "EditMaterial",
+				"pattern": "EditMaterial/({Id})",
+				"titleTarget": "",
+				"greedy": false,
+				"target": ["EditMaterial"]
+			}, {
+				"name": "AddMaterial",
+				"pattern": "AddMaterial",
+				"titleTarget": "",
+				"greedy": false,
+				"target": ["AddMaterial"]
 			}],
 			"additionalData": {
 				"com.sap.build.standard.smartStore.view.ProductInfo": {
