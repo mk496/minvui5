@@ -135,6 +135,49 @@
 				"EditInventory": {
 					"viewType": "XML",
 					"viewName": "EditInventory"
+				},
+				"Materials": {
+					"viewType": "XML",
+					"transition": "slide",
+					"clearControlAggregation": false,
+					"viewName": "Material",
+					"title": "Materials",
+					"viewId": "Materials",
+					"controlAggregation": "pages",
+					"viewLevel": 1
+				},
+				"DisplayLocations": {
+					"viewType": "XML",
+					"transition": "slide",
+					"clearControlAggregation": false,
+					"viewName": "DisplayLocations",
+					"title": "",
+					"viewId": "displayLocations",
+					"viewLevel": 1,
+					"controlAggregation": "pages",
+					"viewPath": "com.sap.build.standard.smartStore.view.Locations"
+				},
+				"EditLocations": {
+					"viewType": "XML",
+					"transition": "slide",
+					"clearControlAggregation": false,
+					"viewName": "EditLocations",
+					"title": "",
+					"viewId": "editLocations",
+					"viewLevel": 2,
+					"controlAggregation": "pages",
+					"viewPath": "com.sap.build.standard.smartStore.view.Locations"
+				},
+				"AddLocations": {
+					"viewType": "XML",
+					"transition": "slide",
+					"clearControlAggregation": false,
+					"viewName": "AddLocations",
+					"title": "",
+					"viewId": "addLocations",
+					"viewLevel": 2,
+					"controlAggregation": "pages",
+					"viewPath": "com.sap.build.standard.smartStore.view.Locations"
 				}
 			},
 			"routes": [{
@@ -163,6 +206,30 @@
 				"titleTarget": "",
 				"greedy": false,
 				"target": ["EditInventory"]
+			}, {
+				"name": "Materials",
+				"pattern": "MaterialSet",
+				"titleTarget": "",
+				"greedy": false,
+				"target": ["Materials"]
+			}, {
+				"name": "DisplayLocations",
+				"pattern": "LocationsSet",
+				"titleTarget": "",
+				"greedy": false,
+				"target": ["DisplayLocations"]
+			}, {
+				"name": "EditLocations",
+				"pattern": "EditLocations/({Id})",
+				"titleTarget": "",
+				"greedy": false,
+				"target": ["EditLocations"]
+			}, {
+				"name": "AddLocations",
+				"pattern": "AddLocations",
+				"titleTarget": "",
+				"greedy": false,
+				"target": ["AddLocations"]
 			}],
 			"additionalData": {
 				"com.sap.build.standard.smartStore.view.ProductInfo": {

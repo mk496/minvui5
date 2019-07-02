@@ -1,0 +1,33 @@
+<mvc:View xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m"
+	controllerName="com.sap.build.standard.smartStore.controller.Material" xmlns:html="http://www.w3.org/1999/xhtml">
+	<Shell>
+		<App>
+			<pages>
+				<Page title="Material">
+					<content>
+						<Table width="auto" noDataText="{i18n>noData}" mode="None" showSeparators="All" growing="false" growingThreshold="20"
+							growingScrollToLoad="false" class="sapUiResponsiveMargin" items="{/MaterialSet}" updateFinished="onUpdateFinished">
+							<infoToolbar/>
+							<headerToolbar/>
+							<columns>
+								<Column width="auto" hAlign="Left" vAlign="Top" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+									<header>
+										<Text text="Material Description" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+									</header>
+									<footer/>
+								</Column>
+							</columns>
+							<items>
+								<ColumnListItem>
+									<cells>
+										<Text text="{MaterialDescription}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+									</cells>
+								</ColumnListItem>
+							</items>
+						</Table>
+					</content>
+				</Page>
+			</pages>
+		</App>
+	</Shell>
+</mvc:View>

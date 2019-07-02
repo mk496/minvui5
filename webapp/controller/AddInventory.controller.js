@@ -9,19 +9,10 @@ sap.ui.define([
 		onInit: function () {
 			var oViewModel = new JSONModel({});
 
-			this.getRouter().getRoute("AddInventory").attachPatternMatched(this._onObjectMatched, this);
 			this.getView().setModel(oViewModel, "addInventoryView");
 
 			/* Initialize User Info for displaying User Name, Last Name and ID */
 			this.initUserInfo();
-		},
-
-		_onObjectMatched: function (oEvent) {
-			//var sObjectId =  oEvent.getParameter("arguments").itemId;
-			/*this.getView().getModel().metadataLoaded().then( function() {
-				var sObjectPath = this.getView().getModel().createKey("InventorySet");
-				this._bindView("/" + sObjectPath);
-			}.bind(this));*/
 		},
 
 		_bindView: function (sObjectPath) {
@@ -40,7 +31,6 @@ sap.ui.define([
 				error: function () {}
 			});
 
-			//this.getModel().refresh();
 			this.onNavBack();
 		},
 
@@ -53,7 +43,6 @@ sap.ui.define([
 				Currency: this.byId("addCurrency").getSelectedItem().getProperty("text"),
 				ShelfStock: this.byId("addShelfStock").getValue().toString(),
 				Location: this.byId("addLocation").getSelectedItem().getProperty("text"),
-				//Image: '', //this.byId("addImage").getSelectedItem().getProperty("text"),
 				Status: sStatus,
 				StatusColor: (sStatus === "In-Stock") ? sap.ui.core.ValueState.Success : sap.ui.core.ValueState.Error,
 				InStock: this.byId("addInStock").getValue().toString(),
