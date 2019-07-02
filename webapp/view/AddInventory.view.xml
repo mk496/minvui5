@@ -35,13 +35,6 @@
 								<f:content>
 									<Label text="{i18n>addMaterialLabel}" />
 									<Input id="addMaterial" value="" placeholder="E.g. Milk" required="true"/>
-									<!--<Select id="addDescription" selectedKey="1">
-										<items>
-											<core:Item text="2% Skim Milk" key="1"/>
-											<core:Item text="Broccoli Crowns" key="2"/>
-											<core:Item text="Electric Kettle" key="3"/>
-										</items>
-									</Select>-->
 									<Label text="{i18n>PriceDescription}" />
 									<Input id="addPrice" value="0.00" type="Number" placeholder="0,00" required="true">
 										<layoutData>
@@ -64,7 +57,6 @@
 											<f:ColumnElementData cellsSmall="6" cellsLarge="4" />
 										</layoutData>
 									</StepInput>
-									<!--<Label text="{i18n>IntockDescription}" />-->
 									<StepInput id="addInStock" value="0" editable="true" step="10" required="true">
 										<layoutData>
 											<f:ColumnElementData cellsSmall="6" cellsLarge="4" />
@@ -79,12 +71,14 @@
 										</items>
 									</Select>
 									<Label text="{i18n>LocationDescription}" />
-									<Select id="addLocation" selectedKey="1">
-										<items>
-											<core:Item text="Location 1, Kitchen 1" key="1"/>
-											<core:Item text="Location 1, Kitchen 2" key="2"/>
-											<core:Item text="Location 1, Kitchen 3" key="3"/>
-										</items>
+									<Select
+										forceSelection="true"
+										id="addLocation"
+										items="{
+											path: '/LocationsSet',
+											sorter: { path: 'LocationDescription' }
+										}">
+										<core:Item key="{Id}" text="{LocationDescription}" />
 									</Select>
 									<Label text="{i18n>StatusDescription}" />
 									<Select id="addStatus" selectedKey="1">
@@ -135,14 +129,6 @@
 											<core:Item text="Error" key="2"/>
 										</items>
 									</Select>
-									<!--<Label text="{i18n>ImageDescription}" />
-									<Select id="addImage" selectedKey="1">
-										<items>
-											<core:Item text="Image 1" key="1"/>
-											<core:Item text="Image 2" key="2"/>
-											<core:Item text="Image 3" key="3"/>
-										</items>
-									</Select>-->
 								</f:content>
 							</f:SimpleForm>
 						</VBox>

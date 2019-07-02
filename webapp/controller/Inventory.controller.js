@@ -17,11 +17,10 @@ sap.ui.define([
 				this.oRouter = this.getRouter();
 				this.oRouter.getTarget("Inventory").attachDisplay(jQuery.proxy(this.handleRouteMatched, this));
 				this.mAggregationBindingOptions = {};
-			/*	this.createFiltersAndSorters();
+				this.createFiltersAndSorters();
 				this.applyFiltersAndSorters("filteredTabNonPerishable", "items");
 				this.applyFiltersAndSorters("filteredTabPerishable", "items");
-
-				this.applyFiltersAndSorters("filteredTabAlerts", "items");*/
+				this.applyFiltersAndSorters("filteredTabAlerts", "items");
 				
 				/* Initialize User Info for displaying User Name, Last Name and ID */
 				this.initUserInfo();
@@ -29,12 +28,13 @@ sap.ui.define([
 				// Model used to manipulate control states
 				var oViewModel = new JSONModel({
 					allItemsCount: 0,
+					filteredItemsNonPerishable: 0,
+					filteredItemsPerishable: 0,
+					filteredItemsAlerts: 0,
 					ordersCount: 0
 				});
 
 				this.getView().setModel(oViewModel, "inventoryView");
-				
-				this.createdId = null;
 			},
 
 			handleRouteMatched: function (oEvent) {
@@ -149,6 +149,12 @@ sap.ui.define([
 
 				if (oEvent.getSource().getId() === "container-SmartStore---Inventory--tableAllItems") {
 					oModel.setProperty("/allItemsCount", iTotalItems);
+				} else if (oEvent.getSource().getId() === "container-SmartStore---Inventory--filteredTabPerishable") {
+					oModel.setProperty("/filteredItemsPerishable", iTotalItems);
+				} else if (oEvent.getSource().getId() === "container-SmartStore---Inventory--filteredTabNonPerishable") {
+					oModel.setProperty("/filteredItemsNonPerishable", iTotalItems);
+				} else if (oEvent.getSource().getId() === "container-SmartStore---Inventory--filteredTabAlerts") {
+					oModel.setProperty("/filteredItemsAlerts", iTotalItems);
 				} else if (oEvent.getSource().getId() === "container-SmartStore---Inventory--allOrders") {
 					oModel.setProperty("/ordersCount", iTotalItems);
 				}
@@ -209,29 +215,54 @@ sap.ui.define([
 
 				this.byId("allOrders").getBinding("items").refresh();
 			},
-
-			onEdit: function () {
-				if ((this._checkHasSelected()) === true ) {
+			
+			onEdit: function (oEvent) {
+				var sId = oEvent.getSource().getParent().getParent().sId,
+					oTable = {};
+				
+				if (sId === "__filter0") {
+					oTable = this.byId("tableAllItems");
+				} else if (sId === "__filter1") {
+					oTable = this.byId("filteredTabNonPerishable");
+				} else if (sId === "__filter2") {
+					oTable = this.byId("filteredTabPerishable");
+				} else {
+					oTable = this.byId("filteredTabAlerts");
+				}
+				
+				if (oTable.getSelectedItems().length > 0) {
 					
 					// Get first selected item
-					var oSelectedItem = this.byId("tableAllItems").getSelectedItems()[0];
-					
+					var oSelectedItem = oTable.getSelectedItems()[0];
+					oTable.removeSelections();
 					this.getRouter().navTo("EditInventory", {
 						Id: oSelectedItem.getBindingContext().getProperty("Id")
 					});
+				} else {
+					MessageToast.show(this.getModel("i18n").getResourceBundle().getText("TableSelectAtLEastOneProductMsg"));
 				}
 			},
 
-			
 			onAdd: function () {
 				this.getRouter().navTo("AddInventory");
 			},
 	
-			onDelete: function() {
-				var aSelectedProducts, i, sPath, oProduct, oProductId,
-					oTable = this.byId("tableAllItems"),
+			onDelete: function(oEvent) {
+				var sId = oEvent.getSource().getParent().getParent().sId,
+					aSelectedProducts, i, sPath, oProduct, oProductId,
 					oModel = this.getModel(),
-					that = this;
+					that = this,
+					oTable = {};
+				
+				if (sId === "__filter0") {
+					oTable = this.byId("tableAllItems");
+				} else if (sId === "__filter1") {
+					oTable = this.byId("filteredTabNonPerishable");
+				} else if (sId === "__filter2") {
+					oTable = this.byId("filteredTabPerishable");
+				} else {
+					oTable = this.byId("filteredTabAlerts");
+				}
 	
 				aSelectedProducts = oTable.getSelectedItems();
 				if (aSelectedProducts.length) {
@@ -252,9 +283,9 @@ sap.ui.define([
 											error : that._handleDeleteProduct.bind(that, oProductId, false, i+1, aSelectedProducts.length)
 										});
 									}
-									//that.getModel().refresh();
+								// Reject
 								} else {
-									that.byId("tableAllItems").removeSelections(); 
+									oTable.removeSelections(); 
 								}
 							}
 						}
@@ -263,8 +294,23 @@ sap.ui.define([
 					MessageToast.show(this.getModel("i18n").getResourceBundle().getText("TableSelectAtLEastOneProductMsg"));
 				}
 			},
+			
+			_getTableId: function (sTableName) {
+				if (sTableName === "All Items") {
+					return "tableAllItems";
+				} else if (sTableName === "Non-Perishable") {
+					return "filteredTabNonPerishable";
+				} else if (sTableName === "Perishable") {
+					return "filteredTabPerishable";
+				} else {
+					return "filteredTabAlerts";
+				}
+			},
 	
 			onItemSearch: function (oEvent) {
+				var sTableName = oEvent.getSource().getParent().getParent().getProperty("text"),
+					sTableId = this._getTableId(sTableName);
+					
 				if (oEvent.getParameters().refreshButtonPressed) {
 					this.onRefresh();
 				} else {
@@ -275,14 +321,28 @@ sap.ui.define([
 						aTableSearchState = new Filter([
 							new Filter("tolower(ProductDescription)", FilterOperator.Contains,"'" + sQuery.toLowerCase().replace("'","''") + "'")
 						], false);
+						
+						this._applySearchItem(aTableSearchState, sTableName);
+					} else {
+						this.applyFiltersAndSorters(sTableId, "items");
 					}
-					var btableName = oEvent.getSource().getParent().getParent().getProperty("text");
-					this._applySearchItem(aTableSearchState, btableName);
 				}
 			},
 			
-			_applySearchItem: function (aTableSearchState) {
-				this.byId("tableAllItems").getBinding("items").filter(aTableSearchState, "Application");
+			_applySearchItem: function (aTableSearchState, sTableName) {
+				var sTableId = "";
+				
+				if (sTableName === "All Items") {
+					sTableId="tableAllItems";
+				} else if (sTableName === "Non-Perishable") {
+					sTableId="filteredTabNonPerishable";
+				} else if (sTableName === "Perishable") {
+					sTableId="filteredTabPerishable";
+				} else {
+					sTableId="filteredTabAlerts";
+				}
+				
+				this.byId(sTableId).getBinding("items").filter(aTableSearchState, "Application");
 			},
 
 			onItemPress: function (oEvent) {
@@ -312,20 +372,7 @@ sap.ui.define([
 					});
 				}
 			},
-			
-			_checkHasSelected: function () {
-				var oTable = this.byId("tableAllItems"),
-					oSelectedItems = oTable.getSelectedItems();
-					
-				if	(oSelectedItems.length > 0) {
-					return true;
-				} else {
-					MessageToast.show(this.getModel("i18n").getResourceBundle().getText("TableSelectAtLEastOneProductMsg"));
-					return false;
-				}
-			},
-
-			
+	
 			_handleDeleteProduct : function (sProductId, bSuccess, iRequestNumber, iTotalRequests){
 				if (iRequestNumber === iTotalRequests) {
 					if (iRequestNumber > 1) {
@@ -335,6 +382,14 @@ sap.ui.define([
 					}
 					
 				}
+			},
+			
+			onMaterial: function () {
+				this.getRouter().navTo("Materials");
+			},
+			
+			onLocation: function () {
+				this.getRouter().navTo("DisplayLocations");
 			}
 		});
 	}, /* bExport= */
