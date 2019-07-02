@@ -136,48 +136,21 @@
 					"viewType": "XML",
 					"viewName": "EditInventory"
 				},
-				"Materials": {
-					"viewType": "XML",
-					"transition": "slide",
-					"clearControlAggregation": false,
+
+				"Material": {
 					"viewName": "Material",
-					"title": "Materials",
-					"viewId": "Materials",
-					"controlAggregation": "pages",
-					"viewLevel": 1
-				},
-				"DisplayLocations": {
-					"viewType": "XML",
+					"viewId": "Material",
 					"transition": "slide",
-					"clearControlAggregation": false,
-					"viewName": "DisplayLocations",
-					"title": "",
-					"viewId": "displayLocations",
-					"viewLevel": 1,
 					"controlAggregation": "pages",
-					"viewPath": "com.sap.build.standard.smartStore.view.Locations"
+					"title": "Material"
 				},
-				"EditLocations": {
+				"EditMaterial": {
 					"viewType": "XML",
-					"transition": "slide",
-					"clearControlAggregation": false,
-					"viewName": "EditLocations",
-					"title": "",
-					"viewId": "editLocations",
-					"viewLevel": 2,
-					"controlAggregation": "pages",
-					"viewPath": "com.sap.build.standard.smartStore.view.Locations"
+					"viewName": "EditMaterial"
 				},
-				"AddLocations": {
+				"AddMaterial": {
 					"viewType": "XML",
-					"transition": "slide",
-					"clearControlAggregation": false,
-					"viewName": "AddLocations",
-					"title": "",
-					"viewId": "addLocations",
-					"viewLevel": 2,
-					"controlAggregation": "pages",
-					"viewPath": "com.sap.build.standard.smartStore.view.Locations"
+					"viewName": "AddMaterial"
 				}
 			},
 			"routes": [{
@@ -207,29 +180,24 @@
 				"greedy": false,
 				"target": ["EditInventory"]
 			}, {
-				"name": "Materials",
-				"pattern": "MaterialSet",
+
+				"name": "Material",
+				"pattern": "Material",
 				"titleTarget": "",
 				"greedy": false,
-				"target": ["Materials"]
+				"target": ["Material"]
 			}, {
-				"name": "DisplayLocations",
-				"pattern": "LocationsSet",
+				"name": "EditMaterial",
+				"pattern": "EditMaterial/({Id})",
 				"titleTarget": "",
 				"greedy": false,
-				"target": ["DisplayLocations"]
+				"target": ["EditMaterial"]
 			}, {
-				"name": "EditLocations",
-				"pattern": "EditLocations/({Id})",
+				"name": "AddMaterial",
+				"pattern": "AddMaterial",
 				"titleTarget": "",
 				"greedy": false,
-				"target": ["EditLocations"]
-			}, {
-				"name": "AddLocations",
-				"pattern": "AddLocations",
-				"titleTarget": "",
-				"greedy": false,
-				"target": ["AddLocations"]
+				"target": ["AddMaterial"]
 			}],
 			"additionalData": {
 				"com.sap.build.standard.smartStore.view.ProductInfo": {

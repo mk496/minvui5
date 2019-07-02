@@ -1,0 +1,51 @@
+<mvc:View xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form"
+	controllerName="com.sap.build.standard.smartStore.controller.EditMaterial" xmlns:html="http://www.w3.org/1999/xhtml">
+	<Shell>
+		<App>
+			<pages>
+				<Page title="{i18n>materialEditTitle}">
+					<content>
+						<ObjectHeader intro="" title="{i18n>matHeaderTitle}" icon="sap-icon://retail-store" number="{userapi>/firstName} {userapi>/lastName}"
+							numberUnit=" ({userapi>/name})" numberState="None" backgroundDesign="Translucent" condensed="false" visible="true">
+							<attributes/>
+							<statuses/>
+							<markers/>
+						</ObjectHeader>
+						<VBox class="sapUiMediumMargin">
+							<f:SimpleForm id="EditMaterialForm" editable="true" layout="ColumnLayout" title="{i18n>materialEditTitle} ({Id})" labelSpanXL="4"
+								labelSpanL="3" labelSpanM="2" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="1" emptySpanL="1" emptySpanM="0" emptySpanS="0"
+								columnsM="1" columnsL="1" columnsXL="1">
+								<f:content>
+									<Label text="{i18n>materialDescription}"/>
+									<Input id="editMaterial" value="{MaterialDescription}" required="true"/>
+									<Label text="{i18n>materialExpirationDays}"/>
+									<Input id="editExpDays" value="{ExpirationDays}" required="true"/>
+									<Label text="{i18n>materialExpirationType}"/>
+									<Select id="editMaterialType" selectedKey="3">
+										<items>
+											<core:Item text="{ExpirationType}" key="3"/>
+											<core:Item text="Non-Perishable" key="1"/>
+											<core:Item text="Perishable" key="2"/>
+										</items>
+									</Select>
+								</f:content>
+							</f:SimpleForm>
+						</VBox>
+						<l:VerticalLayout width="100%">
+							<l:content>
+								<FlexBox height="100px" alignItems="Center" justifyContent="Center">
+									<items>
+										<Button id="btnSave" icon="sap-icon://save" text="{i18n>btnSave}" type="Accept" press="onEditSave" iconFirst="true" width="auto"
+											enabled="true" visible="true" class="sapUiSmallMarginEnd"/>
+										<Button id="btnReject" icon="sap-icon://cancel" text="{i18n>btnReject}" type="Reject" press="onEditReject" iconFirst="true" width="auto"
+											enabled="true" visible="true" class="sapUiSmallMarginEnd"/>
+									</items>
+								</FlexBox>
+							</l:content>
+						</l:VerticalLayout>
+					</content>
+				</Page>
+			</pages>
+		</App>
+	</Shell>
+</mvc:View>

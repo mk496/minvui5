@@ -205,10 +205,10 @@ sap.ui.define([
 					"/newRequisition", {
 						method: "GET",
 						success: function (oData, response) {
-							MessageToast.show("Order with ID "+oData.Id+" has been placed!")
+							MessageToast.show("Order with ID "+oData.Id+" has been placed!");
 						},
 						error: function (oError) {
-							MessageToast.show("Order has NOT been placed!")
+							MessageToast.show("Order has NOT been placed!");
 						}
 					}
 				);
@@ -295,16 +295,10 @@ sap.ui.define([
 				}
 			},
 			
-			_getTableId: function (sTableName) {
-				if (sTableName === "All Items") {
-					return "tableAllItems";
-				} else if (sTableName === "Non-Perishable") {
-					return "filteredTabNonPerishable";
-				} else if (sTableName === "Perishable") {
-					return "filteredTabPerishable";
-				} else {
-					return "filteredTabAlerts";
-				}
+
+			onMaterials: function() {
+				this.getRouter().navTo("Material");
+
 			},
 	
 			onItemSearch: function (oEvent) {

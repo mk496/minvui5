@@ -1,44 +1,64 @@
+
 sap.ui.define([
 	"./BaseController",
-], function (BaseController) {
+	"sap/m/MessageBox",
+	"sap/m/MessageToast"
+], function (BaseController, MessageBox, MessageToast) {
 	"use strict";
 
 	return BaseController.extend("com.sap.build.standard.smartStore.controller.Material", {
 
-		/**
-		 * Called when a controller is instantiated and its View controls (if available) are already created.
-		 * Can be used to modify the View before it is displayed, to bind event handlers and do other one-time initialization.
-		 * @memberOf com.sap.build.standard.smartStore.view.Material
-		 */
-		onInit: function () {
+		onInit: function () {},
 
+		onSelectionChange: function () {
+			this.byId("btnMaterialEdit").setEnabled();
+			this.byId("btnMaterialDel").setEnabled();
 		},
 
-		/**
-		 * Similar to onAfterRendering, but this hook is invoked before the controller's View is re-rendered
-		 * (NOT before the first rendering! onInit() is used for that one!).
-		 * @memberOf com.sap.build.standard.smartStore.view.Material
-		 */
-		//	onBeforeRendering: function() {
-		//
-		//	},
-
-		/**
-		 * Called when the View has been rendered (so its HTML is part of the document). Post-rendering manipulations of the HTML could be done here.
-		 * This hook is the same one that SAPUI5 controls get after being rendered.
-		 * @memberOf com.sap.build.standard.smartStore.view.Material
-		 */
-		//	onAfterRendering: function() {
-		//
-		//	},
-
-		/**
-		 * Called when the Controller is destroyed. Use this one to free resources and finalize activities.
-		 * @memberOf com.sap.build.standard.smartStore.view.Material
-		 */
-		//	onExit: function() {
-		//
-		//	}
+		onDelete: function () {
+			var sPath, oProduct,
+				oTable = this.byId("tableMaterials"),
+				oModel = this.getModel(),
+				that = this;
+			oProduct = oTable.getSelectedItem();
+			if (oProduct !== null || typeof (oProduct) !== 'undefined') {
+				var bCompact = !!this.getView().$().closest(".sapUiSizeCompact").length;
+				MessageBox.warning(
+					that.getModel("i18n").getResourceBundle().getText("dialogDeleteWarning"), {
+						actions: [sap.m.MessageBox.Action.OK, sap.m.MessageBox.Action.CANCEL],
+						styleClass: bCompact ? "sapUiSizeCompact" : "",
+						onClose: function (sAction) {
+							if (sAction === "OK") {
+								sPath = oProduct.getBindingContext().getPath();
+								oModel.remove(sPath, {
+									success: that._handleDeleteProduct.bind(that),
+									error: that._handleDeleteProduct.bind(that)
+								});
+								that.getModel().refresh();
+							} else {
+								that.byId("tableMaterials").removeSelections();
+							}
+						}
+					}
+				);
+			} else {
+				MessageToast.show(this.getModel("i18n").getResourceBundle().getText("TableSelectMaterial"));
+			}
+		},
+		_handleDeleteProduct: function () {
+			MessageToast.show(this.getModel("i18n").getResourceBundle().getText("MaterialDeleteSuccessMsg"));
+		},
+		
+		onEdit: function(){
+			var oSelectedItem = this.byId("tableMaterials").getSelectedItem();
+					
+					this.getRouter().navTo("EditMaterial", {
+						Id: oSelectedItem.getBindingContext().getProperty("Id")
+					});
+		},
+		onAdd: function(){
+			this.getRouter().navTo("AddMaterial");
+		}
 
 	});
 
