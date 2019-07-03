@@ -136,7 +136,6 @@
 					"viewType": "XML",
 					"viewName": "EditInventory"
 				},
-
 				"Material": {
 					"viewName": "Material",
 					"viewId": "Material",
@@ -151,6 +150,37 @@
 				"AddMaterial": {
 					"viewType": "XML",
 					"viewName": "AddMaterial"
+				},
+				"EditLocations": {
+					"viewType": "XML",
+					"transition": "slide",
+					"clearControlAggregation": false,
+					"viewName": "EditLocations",
+					"title": "",
+					"viewId": "editLocations",
+					"viewLevel": 2,
+					"controlAggregation": "pages",
+					"viewPath": "com.sap.build.standard.smartStore.view.Locations"
+				},
+				"AddLocations": {
+					"viewType": "XML",
+					"transition": "slide",
+					"clearControlAggregation": false,
+					"viewName": "AddLocations",
+					"title": "",
+					"viewId": "addLocations",
+					"viewLevel": 2,
+					"controlAggregation": "pages",
+					"viewPath": "com.sap.build.standard.smartStore.view.Locations"
+				},
+				"DisplayLocations": {
+					"viewType": "XML",
+					"transition": "slide",
+					"clearControlAggregation": false,
+					"viewName": "DisplayLocations",
+					"controlAggregation": "pages",
+					"viewPath": "com.sap.build.standard.smartStore.view.Locations",
+					"viewLevel": 1
 				}
 			},
 			"routes": [{
@@ -180,7 +210,6 @@
 				"greedy": false,
 				"target": ["EditInventory"]
 			}, {
-
 				"name": "Material",
 				"pattern": "Material",
 				"titleTarget": "",
@@ -198,6 +227,24 @@
 				"titleTarget": "",
 				"greedy": false,
 				"target": ["AddMaterial"]
+			}, {
+				"name": "AddLocations",
+				"pattern": "AddLocation",
+				"titleTarget": "",
+				"greedy": false,
+				"target": ["AddLocations"]
+			}, {
+				"name": "DisplayLocations",
+				"pattern": "Locations",
+				"titleTarget": "",
+				"greedy": false,
+				"target": ["DisplayLocations"]
+			}, {
+				"name": "EditLocations",
+				"pattern": "EditLocation/({Id})",
+				"titleTarget": "",
+				"greedy": false,
+				"target": ["EditLocations"]
 			}],
 			"additionalData": {
 				"com.sap.build.standard.smartStore.view.ProductInfo": {

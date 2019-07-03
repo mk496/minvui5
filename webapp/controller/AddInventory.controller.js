@@ -30,7 +30,8 @@ sap.ui.define([
 				success: function () {},
 				error: function () {}
 			});
-
+			
+			this.clearScreenInventory();
 			this.onNavBack();
 		},
 
@@ -38,7 +39,7 @@ sap.ui.define([
 			var sStatus = this.byId("addStatus").getSelectedItem().getProperty("text");
 			return {
 				Id: null,
-				ProductDescription: this.byId("addMaterial").getValue(),
+				ProductDescription: this.byId("addMaterial").getSelectedItem().getProperty("text"),
 				Price: this.byId("addPrice").getValue(),
 				Currency: this.byId("addCurrency").getSelectedItem().getProperty("text"),
 				ShelfStock: this.byId("addShelfStock").getValue().toString(),
@@ -58,6 +59,23 @@ sap.ui.define([
 		onAddReject: function () {
 			MessageToast.show(this.getView().getModel("i18n").getResourceBundle().getText("RejectMessage"));
 			this.onNavBack();
+		},
+		
+		clearScreenInventory: function () {
+			this.byId("addMaterial").getSelectedItem().setKey("");
+			this.byId("addPrice").setValue("");
+			this.byId("addCurrency").getSelectedItem().setKey("1");
+			this.byId("addShelfStock").setValue("0");
+			this.byId("addLocation").getSelectedItem().setKey("");
+			this.byId("addStatus").getSelectedItem().setKey("1");
+			this.byId("addInStock").setValue("0");
+			this.byId("addUnit").getSelectedItem().setKey("1");
+			this.byId("addInstructions").setValue("");
+			this.byId("addLifeValue").setValue("");
+			this.byId("addLifeType").getSelectedItem().setKey("5");
+			this.byId("addTreshold").getSelectedItem().setKey("1");
+			this.byId("addItemType").getSelectedItem().setKey("1");
+			this.byId("addOrderingTreshold").getSelectedItem().setKey("1");
 		}
 	});
 

@@ -34,7 +34,15 @@
 								columnsXL="2">
 								<f:content>
 									<Label text="{i18n>addMaterialLabel}" />
-									<Input id="editMaterial" value="{ProductDescription}" placeholder="E.g. Milk" required="true"/>
+									<Select
+										forceSelection="true"
+										id="editMaterial"
+										items="{
+											path: '/MaterialSet',
+											sorter: { path: 'MaterialDescription' }
+										}">
+										<core:Item key="{Id}" text="{MaterialDescription}" />
+									</Select>
 									<Label text="{i18n>PriceDescription}" />
 									<Input id="editPrice" value="{Price}" placeholder="0,00" required="true">
 										<layoutData>
