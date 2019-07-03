@@ -52,9 +52,9 @@ sap.ui.define([
 		onEdit: function(){
 			var oSelectedItem = this.byId("tableMaterials").getSelectedItem();
 					
-					this.getRouter().navTo("EditMaterial", {
-						Id: oSelectedItem.getBindingContext().getProperty("Id")
-					});
+			this.getRouter().navTo("EditMaterial", {
+				Id: oSelectedItem.getBindingContext().getProperty("Id")
+			});
 		},
 		onAdd: function(){
 			this.getRouter().navTo("AddMaterial");

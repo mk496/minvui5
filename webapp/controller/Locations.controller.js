@@ -86,8 +86,16 @@ sap.ui.define([
 				success: function () {},
 				error: function () {}
 			});
-
+			
+			this.clearScreenLocations();
 			this.onNavBack();
+		},
+		
+		clearScreenLocations: function () {
+			this.byId("addLocationDescription").setValue("");
+			this.byId("addLocationBuilding").setValue("");
+			this.byId("addLocationFloor").setValue("");
+			this.byId("addLocationRoom").setValue("");
 		},
 
 		_createNewLocation: function () {

@@ -41,8 +41,10 @@ sap.ui.define([
 				dPrice = this.byId("editPrice").getValue(),
 				iShelfStock = this.byId("editShelfStock").getValue(),
 				iInStock = this.byId("editInStock").getValue(),
-				sLocation = this.byId("editLocation").getSelectedItem().getProperty("text");
+				sLocation = this.byId("editLocation").getSelectedItem().getProperty("text"),
+				sMaterial = this.byId("editMaterial").getSelectedItem().getProperty("text");
 			
+			oModel.setProperty(sPath + "/ProductDescription", sMaterial);
 			oModel.setProperty(sPath + "/Price", dPrice.toString());
 			oModel.setProperty(sPath + "/ShelfStock", iShelfStock.toString());
 			oModel.setProperty(sPath + "/InStock", iInStock.toString());

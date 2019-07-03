@@ -379,7 +379,7 @@ sap.ui.define([
 			},
 			
 			onMaterial: function () {
-				this.getRouter().navTo("Materials");
+				this.getRouter().navTo("Material");
 			},
 			
 			onLocation: function () {
