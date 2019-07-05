@@ -40,7 +40,8 @@
 										items="{
 											path: '/MaterialSet',
 											sorter: { path: 'MaterialDescription' }
-										}">
+										}"
+										change="onMaterialSelect">
 										<core:Item key="{Id}" text="{MaterialDescription}" />
 									</Select>
 									<Label text="{i18n>PriceDescription}" />
@@ -96,22 +97,13 @@
 											<core:Item text="Deteriorating" key="3"/>
 										</items>
 									</Select>
-									<Label text="{i18n>addItemTypeLabel}" />
-									<Select id="addItemType" selectedKey="1">
-										<items>
-											<core:Item text="Non-Perishable" key="1"/>
-											<core:Item text="Perishable" key="2"/>
-										</items>
-									</Select>
 									<Label text="{i18n>addStoringInstructionsLabel}" />
 									<Input id="addInstructions" type="Text" value="" placeholder="E.g. place in the fridger, put into shelf"/>
+									<Label text="{i18n>addItemTypeLabel}" />
+									<Input id="addItemType" value="" editable="false"/>
 									<Label text="{i18n>addLifeRemainingLabel}" />
-									<Input id="addLifeValue" value="">
-										<layoutData>
-											<f:ColumnElementData cellsSmall="6" cellsLarge="5"/>
-										</layoutData>
-									</Input>
-									<Select id="addLifeType" selectedKey="5">
+									<Input id="addLifeValue" value="" description="{i18n>daysLabel}" editable="false"/>
+									<!--<Select id="addLifeType" selectedKey="5">
 										<layoutData>
 											<f:ColumnElementData cellsSmall="6" cellsLarge="3" />
 										</layoutData>
@@ -122,21 +114,16 @@
 											<core:Item text="%" key="4"/>
 											<core:Item text="" key="5"/>
 										</items>
-									</Select>
-									<Label text="{i18n>addTreshholdLabel}" />
+									</Select>-->
+									<!--<Label text="{i18n>addTreshholdLabel}" />
 									<Select id="addTreshold" selectedKey="1">
 										<items>
 											<core:Item text="Success" key="1"/>
 											<core:Item text="Error" key="2"/>
 										</items>
-									</Select>
+									</Select>-->
 									<Label text="{i18n>addOrderingTreshholdLabel}" />
-									<Select id="addOrderingTreshold" selectedKey="1">
-										<items>
-											<core:Item text="Success" key="1"/>
-											<core:Item text="Error" key="2"/>
-										</items>
-									</Select>
+									<Input id="addOrderingTreshold" value="{OrderingTreshold}" editable="false" description="{i18n>daysLabel}"/>
 								</f:content>
 							</f:SimpleForm>
 						</VBox>

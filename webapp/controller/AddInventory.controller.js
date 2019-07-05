@@ -49,10 +49,10 @@ sap.ui.define([
 				InStock: this.byId("addInStock").getValue().toString(),
 				Unit: this.byId("addUnit").getSelectedItem().getProperty("text"),
 				StoringInstruction: this.byId("addInstructions").getValue(),
-				LifeRemaining: this.byId("addLifeValue").getValue() + " " + this.byId("addLifeType").getSelectedItem().getProperty("text"),
-				LifeRemainingTreshold: this.byId("addTreshold").getSelectedItem().getProperty("text"),
-				ItemType: this.byId("addItemType").getSelectedItem().getProperty("text"),
-				OrderingTreshold: this.byId("addOrderingTreshold").getSelectedItem().getProperty("text")
+				LifeRemaining: this.byId("addLifeValue").getValue(),
+				//LifeRemainingTreshold: this.byId("addTreshold").getSelectedItem().getProperty("text"),
+				ItemType: this.byId("addItemType").getValue(),
+				OrderingTreshold: this.byId("addOrderingTreshold").getValue()
 			};
 		},
 
@@ -72,10 +72,24 @@ sap.ui.define([
 			this.byId("addUnit").getSelectedItem().setKey("1");
 			this.byId("addInstructions").setValue("");
 			this.byId("addLifeValue").setValue("");
-			this.byId("addLifeType").getSelectedItem().setKey("5");
-			this.byId("addTreshold").getSelectedItem().setKey("1");
-			this.byId("addItemType").getSelectedItem().setKey("1");
-			this.byId("addOrderingTreshold").getSelectedItem().setKey("1");
+			//this.byId("addLifeType").setValue("");
+			//this.byId("addTreshold").getSelectedItem().setKey("1");
+			this.byId("addItemType").setValue("");
+			this.byId("addOrderingTreshold").setValue("");
+		},
+		
+		onMaterialSelect: function (oEvent) {
+			var sKey = oEvent.getSource().getSelectedKey(),
+				iLifeValue = this.getModel().oData["MaterialSet(" + sKey + "l)"].ExpirationDays,
+				//iOrderingTreshold = this.getModel().oData["MaterialSet(" + sKey + "l)"].OrderingTreshold,
+				sItemType = this.getModel().oData["MaterialSet(" + sKey + "l)"].ExpirationType;
+				
+			//There should be another, more prettier way to get this data, but currently cannot find out how
+				
+			this.byId("addLifeValue").setValue(iLifeValue);
+			this.byId("addItemType").setValue(sItemType);
+			//this.byId("editOrderingTreshhold").setValue(iOrderingTreshold;
+
 		}
 	});
 

@@ -80,6 +80,20 @@ sap.ui.define([
 			
 			this.getModel().resetChanges();
 			this.onNavBack();
+		},
+		
+		onMaterialSelect: function (oEvent) {
+			var sKey = oEvent.getSource().getSelectedKey(),
+				iLifeValue = this.getModel().oData["MaterialSet(" + sKey + "l)"].ExpirationDays,
+				//iOrderingTreshold = this.getModel().oData["MaterialSet(" + sKey + "l)"].OrderingTreshold,
+				sItemType = this.getModel().oData["MaterialSet(" + sKey + "l)"].ExpirationType;
+				
+			//There should be another, more prettier way to get this data, but currently cannot find out how
+				
+			this.byId("editLifeValue").setValue(iLifeValue);
+			this.byId("editItemType").setValue(sItemType);
+			//this.byId("editOrderingTreshhold").setValue(iOrderingTreshold;
+
 		}
 	});
 
