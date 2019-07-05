@@ -100,7 +100,7 @@ sap.ui.define([
 
 		_createNewLocation: function () {
 			return {
-				Id: "0",
+				//Id: null,
 				LocationDescription: this.byId("addLocationDescription").getValue(),
 				Building: this.byId("addLocationBuilding").getValue(),
 				Floor: this.byId("addLocationFloor").getValue(),
