@@ -50,7 +50,7 @@ sap.ui.define([
 				Unit: this.byId("addUnit").getSelectedItem().getProperty("text"),
 				StoringInstruction: this.byId("addInstructions").getValue(),
 				LifeRemaining: this.byId("addLifeValue").getValue(),
-				//LifeRemainingTreshold: this.byId("addTreshold").getSelectedItem().getProperty("text"),
+				LifeRemainingTreshold: "Success",
 				ItemType: this.byId("addItemType").getValue(),
 				OrderingTreshold: this.byId("addOrderingTreshold").getValue()
 			};
