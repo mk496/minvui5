@@ -282,6 +282,7 @@ sap.ui.define([
 											success : that._handleDeleteProduct.bind(that, oProductId, true, i+1, aSelectedProducts.length),
 											error : that._handleDeleteProduct.bind(that, oProductId, false, i+1, aSelectedProducts.length)
 										});
+										oTable.removeSelections();
 									}
 								// Reject
 								} else {
