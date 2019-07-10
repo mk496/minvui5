@@ -41,10 +41,12 @@ sap.ui.define([
 				oModel = this.getModel(),
 				sMaterialDesc = this.byId("editMaterial").getValue(),
 				iExpDays = this.byId("editExpDays").getValue(),
-				sExpType = this.byId("editMaterialType").getSelectedItem().getText();
+				sExpType = this.byId("editMaterialType").getSelectedItem().getText(),
+				iOrdering = this.byId("editOrdering").getValue();
 			oModel.setProperty(sPath + "/MaterialDescription", sMaterialDesc.toString());
 			oModel.setProperty(sPath + "/ExpirationDays", parseInt(iExpDays, 10));
 			oModel.setProperty(sPath + "/ExpirationType", sExpType.toString());
+			oModel.setProperty(sPath + "/Treshold", parseInt(iOrdering, 10));
 			oModel.submitChanges();
 			this.onNavBack();
 		},

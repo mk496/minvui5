@@ -35,7 +35,6 @@
 								<f:content>
 									<Label text="{i18n>addMaterialLabel}" />
 									<Select
-										forceSelection="true"
 										id="editMaterial"
 										items="{
 											path: '/MaterialSet',

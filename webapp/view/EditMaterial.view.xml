@@ -20,6 +20,8 @@
 									<Input id="editMaterial" value="{MaterialDescription}" required="true"/>
 									<Label text="{i18n>materialExpirationDays}"/>
 									<Input id="editExpDays" value="{ExpirationDays}" required="true"/>
+									<Label text="{i18n>materialThreshold}"/>
+									<Input id="editOrdering" value="{Treshold}" required="true"/>
 									<Label text="{i18n>materialExpirationType}"/>
 									<Select id="editMaterialType" selectedKey="3">
 										<items>
