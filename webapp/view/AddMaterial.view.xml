@@ -12,18 +12,24 @@
 							<markers/>
 						</ObjectHeader>
 						<VBox class="sapUiSmallMargin">
-							<f:SimpleForm id="addMaterialForm"
-								editable="true"
-								layout="ColumnLayout" 
-								title="{i18n>materialAddTitle}" labelSpanXL="4" labelSpanL="3"
-								labelSpanM="2" labelSpanS="12" 
-								adjustLabelSpan="false" emptySpanXL="1" emptySpanL="1" emptySpanM="0" emptySpanS="0" columnsM="1"
+							<f:SimpleForm id="addMaterialForm" editable="true" layout="ColumnLayout" title="{i18n>materialAddTitle}" labelSpanXL="4" labelSpanL="3"
+								labelSpanM="2" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="1" emptySpanL="1" emptySpanM="0" emptySpanS="0" columnsM="1"
 								columnsL="1" columnsXL="1">
 								<f:content>
 									<Label text="{i18n>materialDescription}"/>
 									<Input id="addMaterialDesc" value="" placeholder="E.g. Milk" required="true"/>
 									<Label text="{i18n>materialExpirationDays}"/>
-									<Input id="addMaterialExpDays" value="" placeholder="60" required="true"/>
+									<StepInput id="addMaterialExpDays" value="60" editable="true" step="10" required="true" textAlign="Center">
+										<layoutData>
+											<f:ColumnElementData cellsSmall="6" cellsLarge="4"/>
+										</layoutData>
+									</StepInput>
+									<Label text="{i18n>materialThreshold}"/>
+									<StepInput id="addMaterialOrdering" value="30" editable="true" step="5" required="true" textAlign="Center">
+										<layoutData>
+											<f:ColumnElementData cellsSmall="6" cellsLarge="4"/>
+										</layoutData>
+									</StepInput>
 									<Label text="{i18n>materialExpirationType}"/>
 									<Select id="addMaterialType" selectedKey="1">
 										<items>

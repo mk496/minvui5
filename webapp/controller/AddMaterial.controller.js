@@ -17,13 +17,15 @@ sap.ui.define([
 
 		onAddSave: function () {
 			var desc = this.byId("addMaterialDesc").getValue().toString(),
-				days = parseInt(this.byId("addMaterialExpDays").getValue(), 10),
-				type = this.byId("addMaterialType").getSelectedItem().getText().toString();
+				days = this.byId("addMaterialExpDays").getValue().toString(),
+				type = this.byId("addMaterialType").getSelectedItem().getText().toString(),
+				order = this.byId("addMaterialOrdering").getValue().toString();
 			if (desc && days && type) {
 				var oData = {
 					MaterialDescription: desc,
 					ExpirationDays: days,
-					ExpirationType: type
+					ExpirationType: type,
+					Treshold: order
 				};
 				this.getModel().create("/MaterialSet", oData, {
 					success: function () {},
@@ -40,6 +42,7 @@ sap.ui.define([
 		clear: function () {
 			this.getView().byId("addMaterialDesc").setValue("");
 			this.getView().byId("addMaterialExpDays").setValue("");
+			this.getView().byId("addMaterialOrdering").setValue("");
 		},
 
 		onAddReject: function () {
