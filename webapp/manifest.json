@@ -18,7 +18,7 @@
 				}
 			},
 			"mobinv.local": {
-				"uri": "http://localhost:8081/mobinv/services/odata.svc/",
+					"uri": "https://165.22.77.142:8081/mobinv/services/odata.svc/",
 				"type": "OData",
 				"settings": {
 					"odataVersion": "2.0"
