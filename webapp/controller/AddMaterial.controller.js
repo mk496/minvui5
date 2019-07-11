@@ -17,9 +17,9 @@ sap.ui.define([
 
 		onAddSave: function () {
 			var desc = this.byId("addMaterialDesc").getValue().toString(),
-				days = this.byId("addMaterialExpDays").getValue().toString(),
+				days = parseInt(this.byId("addMaterialExpDays").getValue(), 10),
 				type = this.byId("addMaterialType").getSelectedItem().getText().toString(),
-				order = this.byId("addMaterialOrdering").getValue().toString();
+				order = parseInt(this.byId("addMaterialOrdering").getValue(), 10);
 			if (desc && days && type) {
 				var oData = {
 					MaterialDescription: desc,

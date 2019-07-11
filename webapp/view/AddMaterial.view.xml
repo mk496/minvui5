@@ -19,17 +19,7 @@
 									<Label text="{i18n>materialDescription}"/>
 									<Input id="addMaterialDesc" value="" placeholder="E.g. Milk" required="true"/>
 									<Label text="{i18n>materialExpirationDays}"/>
-									<StepInput id="addMaterialExpDays" value="60" editable="true" step="10" required="true" textAlign="Center">
-										<layoutData>
-											<f:ColumnElementData cellsSmall="6" cellsLarge="4"/>
-										</layoutData>
-									</StepInput>
-									<Label text="{i18n>materialThreshold}"/>
-									<StepInput id="addMaterialOrdering" value="30" editable="true" step="5" required="true" textAlign="Center">
-										<layoutData>
-											<f:ColumnElementData cellsSmall="6" cellsLarge="4"/>
-										</layoutData>
-									</StepInput>
+									<Input id="addMaterialExpDays" value="" placeholder="60" required="true"/>
 									<Label text="{i18n>materialExpirationType}"/>
 									<Select id="addMaterialType" selectedKey="1">
 										<items>
@@ -37,6 +27,8 @@
 											<core:Item text="Perishable" key="2"/>
 										</items>
 									</Select>
+									<Label text="{i18n>materialThreshold}"/>
+									<Input id="addMaterialOrdering" value="" placeholder="30" required="true"/>
 								</f:content>
 							</f:SimpleForm>
 						</VBox>

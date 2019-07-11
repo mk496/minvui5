@@ -19,17 +19,9 @@
 									<Label text="{i18n>materialDescription}"/>
 									<Input id="editMaterial" value="{MaterialDescription}" required="true"/>
 									<Label text="{i18n>materialExpirationDays}"/>
-									<StepInput id="editExpDays" value="{ExpirationDays}" editable="true" step="10" required="true" textAlign="Center">
-										<layoutData>
-											<f:ColumnElementData cellsSmall="6" cellsLarge="4"/>
-										</layoutData>
-									</StepInput>
+									<Input id="editExpDays" value="{ExpirationDays}" required="true"/>
 									<Label text="{i18n>materialThreshold}"/>
-									<StepInput id="editOrdering" value="{Treshold}" editable="true" step="5" required="true" textAlign="Center">
-										<layoutData>
-											<f:ColumnElementData cellsSmall="6" cellsLarge="4"/>
-										</layoutData>
-									</StepInput>
+									<Input id="editOrdering" value="{Treshold}" required="true"/>
 									<Label text="{i18n>materialExpirationType}"/>
 									<Select id="editMaterialType" selectedKey="3">
 										<items>
