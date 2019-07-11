@@ -317,7 +317,6 @@ sap.ui.define([
 					} else {
 						this.onRefresh();
 					}
-
 				}
 			},
 
