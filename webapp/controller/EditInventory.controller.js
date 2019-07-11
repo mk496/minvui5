@@ -19,8 +19,7 @@ sap.ui.define([
 		_onObjectMatched: function (oEvent) {
 			var itemId =  oEvent.getParameter("arguments").Id,
 				that = this;
-		/*	var item =  oEvent.getParameter("arguments");*/
-			var oModel = this.getView().getModel();
+
 			this.getView().bindElement({
 				path: "/InventorySet("+ itemId +")",
 				events : {
