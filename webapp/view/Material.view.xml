@@ -12,15 +12,18 @@
 							<markers/>
 						</ObjectHeader>
 						<OverflowToolbar width="100%" height="auto" design="Auto" enabled="true" visible="true">
-							<ToolbarSpacer/>
-							<Button id="btnMaterialEdit" icon="sap-icon://edit" text="{i18n>btnEdit}" press="onEdit" iconFirst="true" width="auto" enabled="false" visible="true"/>
-							<Button id="btnMaterialDel" icon="sap-icon://decline" text="{i18n>btnDel}" type="Reject" press="onDelete" iconFirst="true" width="auto"
-								enabled="false" visible="true"/>
-							<Button id="btnAdd" icon="sap-icon://add" text="{i18n>btnAdd}" type="Accept" press="onAdd" iconFirst="true" width="auto" enabled="true"
-								visible="true"/>
+							<content>
+								<Button id="btnMaterialEdit" class="sapUiSmallMarginBegin sapUiSmallMarginTopBottom" icon="sap-icon://edit" text="{i18n>btnEdit}" press="onEdit" iconFirst="true" width="auto" enabled="false"
+									visible="true"/>
+								<Button id="btnMaterialDel" icon="sap-icon://decline" text="{i18n>btnDel}" type="Reject" press="onDelete" iconFirst="true" width="auto"
+									enabled="false" visible="true"/>
+								<Button id="btnAdd" icon="sap-icon://add" text="{i18n>btnAdd}" type="Accept" press="onAdd" iconFirst="true" width="auto" enabled="true"
+									visible="true"/>
+							</content>
 						</OverflowToolbar>
 						<Table id="tableMaterials" width="auto" noDataText="No Data" mode="SingleSelect" showSeparators="All" growing="false" growingThreshold="20"
-							growingScrollToLoad="false" class="sapUiResponsiveMargin" items="{/MaterialSet}" updateFinished="onUpdateFinished" selectionChange="onSelectionChange" >
+							growingScrollToLoad="false" class="sapUiResponsiveMargin" items="{/MaterialSet}" updateFinished="onUpdateFinished"
+							selectionChange="onSelectionChange">
 							<infoToolbar/>
 							<headerToolbar/>
 							<columns>
@@ -42,13 +45,12 @@
 								</Column>
 								<Column width="auto" hAlign="Left" vAlign="Top" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
 									<header>
-										<Text text="{i18n>materialExpirationType}" width="auto" maxLines="1" wrapping="false" textAlign="Center" textDirection="Inherit"
-											visible="true"/>
+										<Text text="{i18n>materialThreshold}" width="auto" maxLines="1" wrapping="false" textAlign="Center" textDirection="Inherit" visible="true"/>
 									</header>
 								</Column>
-									<Column width="auto" hAlign="Left" vAlign="Top" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+								<Column width="auto" hAlign="Left" vAlign="Top" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
 									<header>
-										<Text text="{i18n>materialThreshold}" width="auto" maxLines="1" wrapping="false" textAlign="Center" textDirection="Inherit"
+										<Text text="{i18n>materialExpirationType}" width="auto" maxLines="1" wrapping="false" textAlign="Center" textDirection="Inherit"
 											visible="true"/>
 									</header>
 								</Column>
@@ -59,8 +61,8 @@
 										<ObjectNumber number="{Id}" emphasized="true" state="None" textAlign="Center"/>
 										<Text text="{MaterialDescription}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
 										<ObjectNumber number="{ExpirationDays}" emphasized="true" state="None" textAlign="Center"/>
-										<Text text="{ExpirationType}" width="auto" maxLines="1" wrapping="false" textAlign="Center" textDirection="Inherit" visible="true"/>
 										<ObjectNumber number="{Treshold}" emphasized="true" state="None" textAlign="Center"/>
+										<Text text="{ExpirationType}" width="auto" maxLines="1" wrapping="false" textAlign="Center" textDirection="Inherit" visible="true"/>
 									</cells>
 								</ColumnListItem>
 							</items>

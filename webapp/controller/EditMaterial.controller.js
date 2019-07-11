@@ -44,9 +44,9 @@ sap.ui.define([
 				sExpType = this.byId("editMaterialType").getSelectedItem().getText(),
 				iOrdering = this.byId("editOrdering").getValue();
 			oModel.setProperty(sPath + "/MaterialDescription", sMaterialDesc.toString());
-			oModel.setProperty(sPath + "/ExpirationDays", parseInt(iExpDays, 10));
+			oModel.setProperty(sPath + "/ExpirationDays",iExpDays.toString());
 			oModel.setProperty(sPath + "/ExpirationType", sExpType.toString());
-			oModel.setProperty(sPath + "/Treshold", parseInt(iOrdering, 10));
+			oModel.setProperty(sPath + "/Treshold", iOrdering.toString());
 			oModel.submitChanges();
 			this.onNavBack();
 		},

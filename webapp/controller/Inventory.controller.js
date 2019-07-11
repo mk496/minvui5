@@ -7,8 +7,8 @@ sap.ui.define([
 		"sap/ui/Device",
 		"sap/ui/model/Filter",
 		"sap/ui/model/FilterOperator",
-		 "sap/ui/core/syncStyleClass",
-		 "sap/m/MessageBox"
+		"sap/ui/core/syncStyleClass",
+		"sap/m/MessageBox"
 	], function (BaseController, Utilities, History, MessageToast, JSONModel, Device, Filter, FilterOperator, syncStyleClass, MessageBox) {
 		"use strict";
 		return BaseController.extend("com.sap.build.standard.smartStore.controller.Inventory", {
@@ -21,7 +21,7 @@ sap.ui.define([
 				this.applyFiltersAndSorters("filteredTabNonPerishable", "items");
 				this.applyFiltersAndSorters("filteredTabPerishable", "items");
 				this.applyFiltersAndSorters("filteredTabAlerts", "items");
-				
+
 				/* Initialize User Info for displaying User Name, Last Name and ID */
 				this.initUserInfo();
 
@@ -184,7 +184,7 @@ sap.ui.define([
 					}
 				}
 			},
-			
+
 			onStockChange: function (oEvent) {
 				var value = oEvent.getParameter("value");
 
@@ -193,7 +193,7 @@ sap.ui.define([
 
 				var oModel = this.getView().getModel();
 				oModel.setProperty(sPath + "/ShelfStock", value.toString());
-				
+
 				oModel.submitChanges();
 			},
 
@@ -205,7 +205,7 @@ sap.ui.define([
 					"/newRequisition", {
 						method: "GET",
 						success: function (oData, response) {
-							MessageToast.show("Order with ID "+oData.Id+" has been placed!");
+							MessageToast.show("Order with ID " + oData.Id + " has been placed!");
 						},
 						error: function (oError) {
 							MessageToast.show("Order has NOT been placed!");
@@ -215,11 +215,11 @@ sap.ui.define([
 
 				this.byId("allOrders").getBinding("items").refresh();
 			},
-			
+
 			onEdit: function (oEvent) {
 				var sId = oEvent.getSource().getParent().getParent().sId,
 					oTable = {};
-				
+
 				if (sId === "__filter0") {
 					oTable = this.byId("tableAllItems");
 				} else if (sId === "__filter1") {
@@ -229,9 +229,9 @@ sap.ui.define([
 				} else {
 					oTable = this.byId("filteredTabAlerts");
 				}
-				
+
 				if (oTable.getSelectedItems().length > 0) {
-					
+
 					// Get first selected item
 					var oSelectedItem = oTable.getSelectedItems()[0];
 					oTable.removeSelections();
@@ -246,14 +246,14 @@ sap.ui.define([
 			onAdd: function () {
 				this.getRouter().navTo("AddInventory");
 			},
-	
-			onDelete: function(oEvent) {
+
+			onDelete: function (oEvent) {
 				var sId = oEvent.getSource().getParent().getParent().sId,
 					aSelectedProducts, i, sPath, oProduct, oProductId,
 					oModel = this.getModel(),
 					that = this,
 					oTable = {};
-				
+
 				if (sId === "__filter0") {
 					oTable = this.byId("tableAllItems");
 				} else if (sId === "__filter1") {
@@ -263,30 +263,29 @@ sap.ui.define([
 				} else {
 					oTable = this.byId("filteredTabAlerts");
 				}
-	
+
 				aSelectedProducts = oTable.getSelectedItems();
 				if (aSelectedProducts.length) {
 					var bCompact = !!this.getView().$().closest(".sapUiSizeCompact").length;
 					MessageBox.warning(
-						that.getModel("i18n").getResourceBundle().getText("dialogDeleteWarning"),
-						{
+						that.getModel("i18n").getResourceBundle().getText("dialogDeleteWarning"), {
 							actions: [sap.m.MessageBox.Action.OK, sap.m.MessageBox.Action.CANCEL],
 							styleClass: bCompact ? "sapUiSizeCompact" : "",
-							onClose: function(sAction) {
+							onClose: function (sAction) {
 								if (sAction === "OK") {
 									for (i = 0; i < aSelectedProducts.length; i++) {
 										oProduct = aSelectedProducts[i];
 										oProductId = oProduct.getBindingContext().getProperty("Id");
 										sPath = oProduct.getBindingContext().getPath();
 										oModel.remove(sPath, {
-											success : that._handleDeleteProduct.bind(that, oProductId, true, i+1, aSelectedProducts.length),
-											error : that._handleDeleteProduct.bind(that, oProductId, false, i+1, aSelectedProducts.length)
+											success: that._handleDeleteProduct.bind(that, oProductId, true, i + 1, aSelectedProducts.length),
+											error: that._handleDeleteProduct.bind(that, oProductId, false, i + 1, aSelectedProducts.length)
 										});
 										oTable.removeSelections();
 									}
-								// Reject
+									// Reject
 								} else {
-									oTable.removeSelections(); 
+									oTable.removeSelections();
 								}
 							}
 						}
@@ -295,17 +294,15 @@ sap.ui.define([
 					MessageToast.show(this.getModel("i18n").getResourceBundle().getText("TableSelectAtLEastOneProductMsg"));
 				}
 			},
-			
 
-			onMaterials: function() {
+			onMaterials: function () {
 				this.getRouter().navTo("Material");
 
 			},
-	
+
 			onItemSearch: function (oEvent) {
-				var sTableName = oEvent.getSource().getParent().getParent().getProperty("text"),
-					sTableId = this._getTableId(sTableName);
-					
+				var sTableName = oEvent.getSource().getParent().getParent().getProperty("text");
+
 				if (oEvent.getParameters().refreshButtonPressed) {
 					this.onRefresh();
 				} else {
@@ -314,29 +311,36 @@ sap.ui.define([
 
 					if (sQuery && sQuery.length > 0) {
 						aTableSearchState = new Filter([
-							new Filter("tolower(ProductDescription)", FilterOperator.Contains,"'" + sQuery.toLowerCase().replace("'","''") + "'")
+							new Filter("tolower(ProductDescription)", FilterOperator.Contains, "'" + sQuery.toLowerCase().replace("'", "''") + "'")
 						], false);
-						
 						this._applySearchItem(aTableSearchState, sTableName);
 					} else {
-						this.applyFiltersAndSorters(sTableId, "items");
+						this.onRefresh();
 					}
+
 				}
 			},
-			
+
+			onRefresh: function () {
+				this.applyFiltersAndSorters("tableAllItems", "items");
+				this.applyFiltersAndSorters("filteredTabNonPerishable", "items");
+				this.applyFiltersAndSorters("filteredTabPerishable", "items");
+				this.applyFiltersAndSorters("filteredTabAlerts", "items");
+			},
+
 			_applySearchItem: function (aTableSearchState, sTableName) {
 				var sTableId = "";
-				
+
 				if (sTableName === "All Items") {
-					sTableId="tableAllItems";
+					sTableId = "tableAllItems";
 				} else if (sTableName === "Non-Perishable") {
-					sTableId="filteredTabNonPerishable";
+					sTableId = "filteredTabNonPerishable";
 				} else if (sTableName === "Perishable") {
-					sTableId="filteredTabPerishable";
+					sTableId = "filteredTabPerishable";
 				} else {
-					sTableId="filteredTabAlerts";
+					sTableId = "filteredTabAlerts";
 				}
-				
+
 				this.byId(sTableId).getBinding("items").filter(aTableSearchState, "Application");
 			},
 
@@ -346,20 +350,18 @@ sap.ui.define([
 				});
 			},
 
-			
 			onRequisitionPress: function (oEvent) {
 				this.getRouter().navTo("Requisition", {
 					requisitionId: oEvent.getSource().getBindingContext().getProperty("Id")
 				});
 			},
 
-
 			_enableButton: function (sButton, bParam) {
 				if (sButton !== undefined && sButton !== null) {
 					this.byId(sButton).setEnabled(bParam);
 				} else {
 					var aEditButtons = sap.ui.getCore().byFieldGroupId("edit");
-					aEditButtons.forEach(function(button) {
+					aEditButtons.forEach(function (button) {
 						var sId = button.getId();
 						if ((sId.includes("-img")) !== true) {
 							button.setEnabled(bParam);
@@ -367,22 +369,22 @@ sap.ui.define([
 					});
 				}
 			},
-	
-			_handleDeleteProduct : function (sProductId, bSuccess, iRequestNumber, iTotalRequests){
+
+			_handleDeleteProduct: function (sProductId, bSuccess, iRequestNumber, iTotalRequests) {
 				if (iRequestNumber === iTotalRequests) {
 					if (iRequestNumber > 1) {
 						MessageToast.show(this.getModel("i18n").getResourceBundle().getText("ProductsDeleteSuccessMsg", [iTotalRequests]));
 					} else {
 						MessageToast.show(this.getModel("i18n").getResourceBundle().getText("ProductDeleteSuccessMsg", [iTotalRequests]));
 					}
-					
+
 				}
 			},
-			
+
 			onMaterial: function () {
 				this.getRouter().navTo("Material");
 			},
-			
+
 			onLocation: function () {
 				this.getRouter().navTo("DisplayLocations");
 			}
