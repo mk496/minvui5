@@ -35,7 +35,7 @@
 								<f:content>
 									<Label text="{i18n>addMaterialLabel}" />
 									<Select
-										forceSelection="false"
+										forceSelection="true"
 										id="addMaterial"
 										items="{
 											path: '/MaterialSet',
@@ -123,7 +123,7 @@
 										</items>
 									</Select>-->
 									<Label text="{i18n>addOrderingTreshholdLabel}" />
-									<Input id="addOrderingTreshold" value="" editable="false" description="{i18n>daysLabel}"/>
+									<Input id="addOrderingTreshold" value="{OrderingTreshold}" editable="false" description="{i18n>daysLabel}"/>
 								</f:content>
 							</f:SimpleForm>
 						</VBox>

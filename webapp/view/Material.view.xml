@@ -24,14 +24,14 @@
 							<infoToolbar/>
 							<headerToolbar/>
 							<columns>
-								<Column width="150px" hAlign="Left" vAlign="Top" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+								<Column width="auto" hAlign="Left" vAlign="Top" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
 									<header>
-										<Text text="{i18n>materialId}" width="auto" maxLines="1" wrapping="false" textAlign="Center" textDirection="Inherit" visible="true"/>
+										<Text text="{i18n>materialDescription}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
 									</header>
 								</Column>
 								<Column width="auto" hAlign="Left" vAlign="Top" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
 									<header>
-										<Text text="{i18n>materialDescription}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+										<Text text="{i18n>materialId}" width="auto" maxLines="1" wrapping="false" textAlign="Center" textDirection="Inherit" visible="true"/>
 									</header>
 								</Column>
 								<Column width="auto" hAlign="Left" vAlign="Top" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
@@ -46,21 +46,14 @@
 											visible="true"/>
 									</header>
 								</Column>
-									<Column width="auto" hAlign="Left" vAlign="Top" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
-									<header>
-										<Text text="{i18n>materialThreshold}" width="auto" maxLines="1" wrapping="false" textAlign="Center" textDirection="Inherit"
-											visible="true"/>
-									</header>
-								</Column>
 							</columns>
 							<items>
 								<ColumnListItem>
 									<cells>
-										<ObjectNumber number="{Id}" emphasized="true" state="None" textAlign="Center"/>
 										<Text text="{MaterialDescription}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+										<ObjectNumber number="{Id}" emphasized="true" state="None" textAlign="Center"/>
 										<ObjectNumber number="{ExpirationDays}" emphasized="true" state="None" textAlign="Center"/>
 										<Text text="{ExpirationType}" width="auto" maxLines="1" wrapping="false" textAlign="Center" textDirection="Inherit" visible="true"/>
-										<ObjectNumber number="{Treshold}" emphasized="true" state="None" textAlign="Center"/>
 									</cells>
 								</ColumnListItem>
 							</items>

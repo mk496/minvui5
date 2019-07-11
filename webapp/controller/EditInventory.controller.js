@@ -19,8 +19,7 @@ sap.ui.define([
 		_onObjectMatched: function (oEvent) {
 			var itemId =  oEvent.getParameter("arguments").Id,
 				that = this;
-		/*	var item =  oEvent.getParameter("arguments");*/
-			var oModel = this.getView().getModel();
+				
 			this.getView().bindElement({
 				path: "/InventorySet("+ itemId +")",
 				events : {
@@ -86,14 +85,14 @@ sap.ui.define([
 		onMaterialSelect: function (oEvent) {
 			var sKey = oEvent.getSource().getSelectedKey(),
 				iLifeValue = this.getModel().oData["MaterialSet(" + sKey + "l)"].ExpirationDays,
-				iOrderingTreshold = this.getModel().oData["MaterialSet(" + sKey + "l)"].Treshold,
+				//iOrderingTreshold = this.getModel().oData["MaterialSet(" + sKey + "l)"].OrderingTreshold,
 				sItemType = this.getModel().oData["MaterialSet(" + sKey + "l)"].ExpirationType;
 				
 			//There should be another, more prettier way to get this data, but currently cannot find out how
 				
 			this.byId("editLifeValue").setValue(iLifeValue);
 			this.byId("editItemType").setValue(sItemType);
-			this.byId("editOrderingTreshhold").setValue(iOrderingTreshold);
+			//this.byId("editOrderingTreshhold").setValue(iOrderingTreshold;
 
 		}
 	});

@@ -12,8 +12,12 @@
 							<markers/>
 						</ObjectHeader>
 						<VBox class="sapUiSmallMargin">
-							<f:SimpleForm id="addMaterialForm" editable="true" layout="ColumnLayout" title="{i18n>materialAddTitle}" labelSpanXL="4" labelSpanL="3"
-								labelSpanM="2" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="1" emptySpanL="1" emptySpanM="0" emptySpanS="0" columnsM="1"
+							<f:SimpleForm id="addMaterialForm"
+								editable="true"
+								layout="ColumnLayout" 
+								title="{i18n>materialAddTitle}" labelSpanXL="4" labelSpanL="3"
+								labelSpanM="2" labelSpanS="12" 
+								adjustLabelSpan="false" emptySpanXL="1" emptySpanL="1" emptySpanM="0" emptySpanS="0" columnsM="1"
 								columnsL="1" columnsXL="1">
 								<f:content>
 									<Label text="{i18n>materialDescription}"/>
@@ -27,8 +31,6 @@
 											<core:Item text="Perishable" key="2"/>
 										</items>
 									</Select>
-									<Label text="{i18n>materialThreshold}"/>
-									<Input id="addMaterialOrdering" value="" placeholder="30" required="true"/>
 								</f:content>
 							</f:SimpleForm>
 						</VBox>

@@ -27,9 +27,7 @@ sap.ui.define([
 			var oData = this._createNewItem();
 
 			this.getModel().create("/InventorySet", oData, {
-				success: function () {
-					
-				},
+				success: function () {},
 				error: function () {}
 			});
 			
@@ -83,14 +81,14 @@ sap.ui.define([
 		onMaterialSelect: function (oEvent) {
 			var sKey = oEvent.getSource().getSelectedKey(),
 				iLifeValue = this.getModel().oData["MaterialSet(" + sKey + "l)"].ExpirationDays,
-				iOrderingTreshold = this.getModel().oData["MaterialSet(" + sKey + "l)"].Treshold,
+				//iOrderingTreshold = this.getModel().oData["MaterialSet(" + sKey + "l)"].OrderingTreshold,
 				sItemType = this.getModel().oData["MaterialSet(" + sKey + "l)"].ExpirationType;
 				
 			//There should be another, more prettier way to get this data, but currently cannot find out how
 				
 			this.byId("addLifeValue").setValue(iLifeValue);
 			this.byId("addItemType").setValue(sItemType);
-			this.byId("addOrderingTreshold").setValue(iOrderingTreshold);
+			//this.byId("editOrderingTreshhold").setValue(iOrderingTreshold;
 
 		}
 	});
