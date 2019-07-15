@@ -25,7 +25,7 @@
 				}
 			},
 			"mobinv.DigitalOcean": {
-				"uri": "https://mobinv2.cfapps.eu10.hana.ondemand.com/mobinv/services/odata.svc/",
+				"uri": "https://165.22.77.142:8081/mobinv/services/odata.svc/",
 				"type": "OData",
 				"settings": {
 					"odataVersion": "2.0"
@@ -89,7 +89,7 @@
 				"uri": "i18n/i18n.properties"
 			},
 			"": {
-				"dataSource": "mobinv.local",
+				"dataSource": "mobinv.DigitalOcean",
 				"type": "sap.ui.model.odata.v2.ODataModel",
 				"settings": {
 					"loadMetadataAsync": false,
