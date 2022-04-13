@@ -4,7 +4,7 @@ sap.ui.define([
 	"sap/m/MessageToast"
 ], function (BaseController, JSONModel, MessageToast) {
 	"use strict";
-
+  
 	return BaseController.extend("com.sap.build.standard.smartStore.controller.AddMaterial", {
 
 		onInit: function () {
